@@ -14,12 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Aceptar"
-        android:id="@+id/buttonWelcome"
+        android:id="@+id/button"
         android:textSize="20sp"
         android:layout_below="@+id/editTextNombre"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:onClick="buttonOnClick" />
+        android:layout_marginTop="31dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,11 +34,11 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textCapWords"
+        android:inputType="textPersonName"
+        android:text="@string/NombreWelcome"
         android:ems="10"
         android:id="@+id/editTextNombre"
         android:textSize="25sp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/NombreWelcome" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

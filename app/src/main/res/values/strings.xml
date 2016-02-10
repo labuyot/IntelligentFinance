@@ -3,4 +3,5 @@
     <string name="Aceptar">Aceptar</string>
     <string name="Titulo">Bienvenido a Intelligent Finance</string>
     <string name="NombreWelcome">Nombre</string>
+    <string name="title_activity_dashboard">Dashboard</string>
 </resources>

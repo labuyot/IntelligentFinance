@@ -1,34 +1,85 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-public class WelcomeScreen extends AppCompatActivity {
+public class WelcomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences mPrefs;
     final String welcomeScreenShownPref = "welcomeScreenShown";
+
+    Button buttonWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
+        buttonWelcome = (Button)findViewById(R.id.buttonWelcome);
+        buttonWelcome.setOnClickListener(this);
+        final EditText editTextNombre = (EditText)findViewById(R.id.editTextNombre);
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mPrefs = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+        if(mPrefs.getBoolean("activity_executed", false)){
+            Intent intent = new Intent(this, Dashboard.class);
+            startActivity(intent);
+            finish();
+        } else {
 
-        Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+            buttonWelcome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    if (editTextNombre.getText().toString().isEmpty()) {
+
+                        Toast.makeText(getApplicationContext(), "Llenar campo",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+
+                        SharedPreferences.Editor ed = mPrefs.edit();
+                        ed.putBoolean("activity_executed", true);
+                        ed.commit(); // Very important to save the preference
+
+                        //ir al Dashboard
+                        startActivity(new Intent(WelcomeScreen.this, Dashboard.class));
+                        finish();
+                    }
+                }
+            });
+        }
+
+
+        //mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
+/*
         if (!welcomeScreenShown) {
             // here you can launch another activity if you like
             // the code below will display a popup
 
 
-            SharedPreferences.Editor editor = mPrefs.edit();
-            editor.putBoolean(welcomeScreenShownPref, true);
-            editor.commit(); // Very important to save the preference
-        }
+        }*/
+    }
+
+    public void onClickButton(){
+
+        startActivity(new Intent(WelcomeScreen.this, Dashboard.class));
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+
     }
 }
