@@ -56,18 +56,6 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
                 }
             });
         }
-
-
-        //mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        //Boolean welcomeScreenShown = mPrefs.getBoolean(welcomeScreenShownPref, false);
-/*
-        if (!welcomeScreenShown) {
-            // here you can launch another activity if you like
-            // the code below will display a popup
-
-
-        }*/
     }
 
     public void onClickButton(){

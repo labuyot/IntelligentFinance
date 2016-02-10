@@ -4,4 +4,10 @@
     <string name="Titulo">Bienvenido a Intelligent Finance</string>
     <string name="NombreWelcome">Nombre</string>
     <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_dashboard_test">DashboardTest</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
