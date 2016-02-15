@@ -30,7 +30,7 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
 
         mPrefs = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
         if(mPrefs.getBoolean("activity_executed", false)){
-            Intent intent = new Intent(this, Dashboard.class);
+            Intent intent = new Intent(this, DashboardDrawer.class);
             startActivity(intent);
             finish();
         } else {
@@ -50,7 +50,7 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
                         ed.commit(); // Very important to save the preference
 
                         //ir al Dashboard
-                        startActivity(new Intent(WelcomeScreen.this, Dashboard.class));
+                        startActivity(new Intent(WelcomeScreen.this, DashboardDrawer.class));
                         finish();
                     }
                 }
@@ -60,7 +60,7 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
 
     public void onClickButton(){
 
-        startActivity(new Intent(WelcomeScreen.this, Dashboard.class));
+        startActivity(new Intent(WelcomeScreen.this, DashboardDrawer.class));
 
     }
 

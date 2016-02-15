@@ -16,7 +16,26 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeScreen" />
-        <activity android:name=".Dashboard" />
+        <activity
+            android:name=".DashboardDrawer"
+            android:label="@string/title_activity_dashboard_drawer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MenuIngreso"
+            android:label="@string/title_activity_menu_ingreso"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MenuGasto"
+            android:label="@string/title_activity_menu_gasto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MenuMetas"
+            android:label="@string/title_activity_menu_metas"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MenuTarjetas"
+            android:label="@string/title_activity_menu_tarjetas"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
