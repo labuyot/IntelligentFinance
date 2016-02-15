@@ -11,8 +11,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_dashboard_drawer">DashboardDrawer</string>
-    <string name="title_activity_menu_ingreso">MenuIngreso</string>
-    <string name="title_activity_menu_gasto">MenuGasto</string>
-    <string name="title_activity_menu_metas">MenuMetas</string>
-    <string name="title_activity_menu_tarjetas">MenuTarjetas</string>
+    <string name="title_activity_menu_ingreso">Menu Ingreso</string>
+    <string name="title_activity_menu_gasto">Menu Gasto</string>
+    <string name="title_activity_menu_metas">Menu Metas</string>
+    <string name="title_activity_menu_tarjetas">Menu Tarjetas</string>
 </resources>
