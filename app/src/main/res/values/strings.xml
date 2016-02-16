@@ -10,17 +10,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_dashboard_drawer">DashboardDrawer</string>
+    <string name="title_activity_dashboard_drawer">Dashboard</string>
     <string name="title_activity_menu_ingreso">Menu Ingreso</string>
     <string name="title_activity_menu_gasto">Menu Gasto</string>
     <string name="title_activity_menu_metas">Menu Metas</string>
     <string name="title_activity_menu_tarjetas">Menu Tarjetas</string>
-    <string name="title_activity_agregar_ingreso">AgregarIngreso</string>
-    <string name="title_activity_agregar_gasto">AgregarGasto</string>
-    <string name="title_activity_agregar_meta">AgregarMeta</string>
-    <string name="title_activity_agregar_tarjeta">AgregarTarjeta</string>
-    <string name="title_activity_informe_ingreso">InformeIngreso</string>
-    <string name="title_activity_informe_gasto">InformeGasto</string>
-    <string name="title_activity_informe_meta">InformeMeta</string>
-    <string name="title_activity_informe_tarjeta">InformeTarjeta</string>
+    <string name="title_activity_agregar_ingreso">Ingresos</string>
+    <string name="title_activity_agregar_gasto">Gastos</string>
+    <string name="title_activity_agregar_meta">Metas</string>
+    <string name="title_activity_agregar_tarjeta">Tarjetas</string>
+    <string name="title_activity_informe_ingreso">Informe Ingresos</string>
+    <string name="title_activity_informe_gasto">Informe Gastos</string>
+    <string name="title_activity_informe_meta">Informe Metas</string>
+    <string name="title_activity_informe_tarjeta">Informe Tarjetas</string>
 </resources>
