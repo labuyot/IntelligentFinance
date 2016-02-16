@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#FF656565"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.earllarry.intelligentfinance.AgregarGasto"
+    tools:showIn="@layout/activity_agregar_gasto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Monto"
+        android:id="@+id/textViewMonto"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Concepto"
+        android:id="@+id/textViewConcepto"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textViewMonto"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tipo"
+        android:id="@+id/textViewTipo"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textViewConcepto"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fecha"
+        android:id="@+id/textViewFecha"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/checkBoxGasto"
+        android:layout_alignStart="@+id/textViewTipo"
+        android:textSize="25dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editTextMontoGasto"
+        android:layout_alignTop="@+id/textViewMonto"
+        android:layout_toEndOf="@+id/textViewConcepto"
+        android:background="#FFFFFF"
+        android:layout_above="@+id/textViewConcepto" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextConceptoGasto"
+        android:background="#FFFFFF"
+        android:inputType="textCapSentences"
+        android:layout_alignTop="@+id/textViewConcepto"
+        android:layout_toEndOf="@+id/textViewConcepto"
+        android:layout_alignBottom="@+id/textViewConcepto"
+        android:layout_marginLeft="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextTipoGasto"
+        android:background="#FFFFFF"
+        android:layout_toEndOf="@+id/textViewMonto"
+        android:layout_alignTop="@+id/textViewTipo"
+        android:layout_above="@+id/checkBoxGasto" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextFechaGasto"
+        android:background="#FFFFFF"
+        android:layout_alignStart="@+id/editTextMontoGasto"
+        android:maxLength="8"
+        android:layout_alignTop="@+id/textViewFecha"
+        android:layout_alignBottom="@+id/textViewFecha" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Automatizar"
+        android:id="@+id/checkBoxGasto"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewTipo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:buttonTint="#FFFFFF"
+        android:checked="false" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:id="@+id/buttonCancelarGasto"
+        android:layout_marginLeft="10dp"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:background="#006735"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/textViewFecha"
+        android:layout_alignStart="@+id/checkBoxGasto" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:id="@+id/buttonGuardarGasto"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:background="#006735"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/buttonCancelarGasto"
+        android:layout_toEndOf="@+id/checkBoxGasto" />
+</RelativeLayout>

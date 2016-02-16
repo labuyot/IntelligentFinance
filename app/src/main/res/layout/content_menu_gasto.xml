@@ -15,21 +15,21 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageViewAgregarMeta"
-        android:layout_marginTop="114dp"
+        android:id="@+id/imageViewAgregarGasto"
         android:src="@drawable/agregar"
-        android:layout_marginStart="46dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="114dp"
+        android:layout_marginLeft="30dp" />
 
     <ImageView
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:id="@+id/imageViewInformeMeta"
+        android:id="@+id/imageViewInformeGasto"
         android:src="@drawable/registro"
-        android:layout_alignTop="@+id/imageViewAgregarMeta"
-        android:layout_toEndOf="@+id/imageViewAgregarMeta"
-        android:layout_marginStart="39dp" />
+        android:layout_marginRight="20dp"
+        android:layout_alignTop="@+id/imageViewAgregarGasto"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,11 +37,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Agregar"
         android:id="@+id/textViewAgregarGasto"
-        android:layout_below="@+id/imageViewAgregarMeta"
-        android:layout_alignStart="@+id/imageViewAgregarMeta"
-        android:layout_alignEnd="@+id/imageViewAgregarMeta"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/imageViewAgregarGasto"
+        android:layout_alignStart="@+id/imageViewAgregarGasto"
+        android:layout_alignEnd="@+id/imageViewAgregarGasto"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,10 +51,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Informe"
         android:id="@+id/textViewInformeGasto"
-        android:layout_below="@+id/imageViewInformeMeta"
-        android:layout_alignStart="@+id/imageViewInformeMeta"
-        android:layout_alignEnd="@+id/imageViewInformeMeta"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_alignTop="@+id/textViewAgregarGasto"
+        android:layout_alignStart="@+id/imageViewInformeGasto"
+        android:layout_alignEnd="@+id/imageViewInformeGasto"
+        android:textSize="25dp" />
 
 </RelativeLayout>

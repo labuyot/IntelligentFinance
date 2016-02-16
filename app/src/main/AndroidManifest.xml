@@ -35,6 +35,38 @@
         <activity
             android:name=".MenuTarjetas"
             android:label="@string/title_activity_menu_tarjetas"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AgregarIngreso"
+            android:label="@string/title_activity_agregar_ingreso"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AgregarGasto"
+            android:label="@string/title_activity_agregar_gasto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AgregarMeta"
+            android:label="@string/title_activity_agregar_meta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AgregarTarjeta"
+            android:label="@string/title_activity_agregar_tarjeta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InformeIngreso"
+            android:label="@string/title_activity_informe_ingreso"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InformeGasto"
+            android:label="@string/title_activity_informe_gasto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InformeMeta"
+            android:label="@string/title_activity_informe_meta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InformeTarjeta"
+            android:label="@string/title_activity_informe_tarjeta"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

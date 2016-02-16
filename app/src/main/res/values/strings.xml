@@ -15,4 +15,12 @@
     <string name="title_activity_menu_gasto">Menu Gasto</string>
     <string name="title_activity_menu_metas">Menu Metas</string>
     <string name="title_activity_menu_tarjetas">Menu Tarjetas</string>
+    <string name="title_activity_agregar_ingreso">AgregarIngreso</string>
+    <string name="title_activity_agregar_gasto">AgregarGasto</string>
+    <string name="title_activity_agregar_meta">AgregarMeta</string>
+    <string name="title_activity_agregar_tarjeta">AgregarTarjeta</string>
+    <string name="title_activity_informe_ingreso">InformeIngreso</string>
+    <string name="title_activity_informe_gasto">InformeGasto</string>
+    <string name="title_activity_informe_meta">InformeMeta</string>
+    <string name="title_activity_informe_tarjeta">InformeTarjeta</string>
 </resources>

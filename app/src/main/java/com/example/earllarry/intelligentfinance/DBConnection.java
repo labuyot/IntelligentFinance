@@ -14,10 +14,12 @@ import java.util.List;
  */
 public class DBConnection extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "IntelligentFinance.db";
+    private static final int DATABASE_VERSION = 1;
+    private SQLiteDatabase db;
 
     private static final String USUARIO_TABLE_NAME = "Usuario";
+    private static final String USUARIO_COLUMN_ID = "id";
     private static final String USUARIO_COLUMN_NAME = "nombre";
 
     private static final String INGRESO_TABLE_NAME = "Ingreso";
@@ -55,6 +57,7 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public static final String[] ALL_COLUMNS_USUARIO = new String[] {
             USUARIO_COLUMN_NAME,
+            USUARIO_COLUMN_ID,
     };
 
     public static final String[] ALL_COLUMNS_INGRESO = new String[] {
@@ -98,6 +101,7 @@ public class DBConnection extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     USUARIO_TABLE_NAME +
                     "( " +
+                    USUARIO_COLUMN_ID + " integer primary key autoincrement, " +
                     USUARIO_COLUMN_NAME + " text, " +
                     ")";
 
@@ -105,7 +109,7 @@ public class DBConnection extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     INGRESO_TABLE_NAME +
                     "( " +
-                    INGRESO_COLUMN_ID + " integer primary key, " +
+                    INGRESO_COLUMN_ID + " integer primary key autoincrement, " +
                     INGRESO_COLUMN_CONCEPTO + " text, " +
                     INGRESO_COLUMN_TIPO + " text " +
                     INGRESO_COLUMN_MONTO + " real, " +
@@ -117,7 +121,7 @@ public class DBConnection extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     GASTO_TABLE_NAME +
                     "( " +
-                    GASTO_COLUMN_ID + " integer primary key, " +
+                    GASTO_COLUMN_ID + " integer primary key autoincrement, " +
                     GASTO_COLUMN_CONCEPTO + " text, " +
                     GASTO_COLUMN_TIPO + " text " +
                     GASTO_COLUMN_MONTO + " real, " +
@@ -129,7 +133,7 @@ public class DBConnection extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     META_TABLE_NAME +
                     "( " +
-                    META_COLUMN_ID + " integer primary key, " +
+                    META_COLUMN_ID + " integer primary key autoincrement, " +
                     META_COLUMN_CONCEPTO + " text, " +
                     META_COLUMN_TIPO + " text " +
                     META_COLUMN_MONTO + " real, " +
@@ -141,7 +145,7 @@ public class DBConnection extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     TARJETA_TABLE_NAME +
                     "( " +
-                    TARJETA_COLUMN_ID + " integer primary key, " +
+                    TARJETA_COLUMN_ID + " integer primary key autoincrement, " +
                     TARJETA_COLUMN_BANCO + " text, " +
                     TARJETA_COLUMN_VENCIMIENTO + " text " +
                     TARJETA_COLUMN_MONTO + " real, " +
@@ -152,11 +156,12 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public DBConnection(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_INGRESO_TABLE);
+        db.execSQL(Ingreso.CREATE_INGRESO_TABLE);
         db.execSQL(CREATE_GASTO_TABLE);
         db.execSQL(CREATE_META_TABLE);
         db.execSQL(CREATE_TARJETA_TABLE);

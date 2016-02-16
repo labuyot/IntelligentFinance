@@ -18,9 +18,9 @@
         android:id="@+id/imageViewAgregarTarjeta"
         android:layout_marginTop="114dp"
         android:src="@drawable/agregar"
-        android:layout_marginStart="46dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp" />
 
     <ImageView
         android:layout_width="128dp"
@@ -28,8 +28,8 @@
         android:id="@+id/imageViewInformeTarjeta"
         android:src="@drawable/registro"
         android:layout_alignTop="@+id/imageViewAgregarTarjeta"
-        android:layout_toEndOf="@+id/imageViewAgregarTarjeta"
-        android:layout_marginStart="39dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +41,9 @@
         android:layout_alignStart="@+id/imageViewAgregarTarjeta"
         android:layout_alignEnd="@+id/imageViewAgregarTarjeta"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,6 +55,8 @@
         android:layout_alignStart="@+id/imageViewInformeTarjeta"
         android:layout_alignEnd="@+id/imageViewInformeTarjeta"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp" />
 
 </RelativeLayout>
