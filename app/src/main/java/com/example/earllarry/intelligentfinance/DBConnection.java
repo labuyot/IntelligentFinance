@@ -143,9 +143,9 @@ public class DBConnection extends SQLiteOpenHelper {
                     TARJETA_COLUMN_BANCO + " text, " +
                     TARJETA_COLUMN_MONTO + " real, " +
                     TARJETA_COLUMN_FOURDIGITS + " integer, " +
-                    TARJETA_COLUMN_INTERES + " real " +
+                    TARJETA_COLUMN_INTERES + " real, " +
                     TARJETA_COLUMN_CORTE + " text, " +
-                    TARJETA_COLUMN_VENCIMIENTO + " text, " +
+                    TARJETA_COLUMN_VENCIMIENTO + " text " +
                     ")";
 
     public DBConnection(Context context) {
