@@ -3,7 +3,7 @@ package com.example.earllarry.intelligentfinance;
 /**
  * Created by EarlLarry on 15-Feb-16.
  */
-public class Ingreso {
+public class Gasto {
 
     private String Ingreso;
     private double monto;
@@ -12,11 +12,11 @@ public class Ingreso {
     private int automatizar;
     private String fecha;
 
-    public Ingreso() {
+    public Gasto() {
 
     }
 
-    public Ingreso(String ingreso, double monto, String concepto, String tipo, int automatizar, String fecha) {
+    public Gasto(String ingreso, double monto, String concepto, String tipo, int automatizar, String fecha) {
         Ingreso = ingreso;
         this.monto = monto;
         this.concepto = concepto;

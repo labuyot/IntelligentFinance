@@ -51,7 +51,6 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String META_COLUMN_CONCEPTO = "concepto";
     private static final String META_COLUMN_MONTO = "monto";
     private static final String META_COLUMN_TIPO = "tipo";
-    private static final String META_COLUMN_AUTOMATIZAR = "automatizar";
     private static final String META_COLUMN_FECHA = "fecha";
 
     public static final String[] ALL_COLUMNS_USUARIO = new String[] {
@@ -91,7 +90,6 @@ public class DBConnection extends SQLiteOpenHelper {
             META_COLUMN_MONTO,
             META_COLUMN_TIPO,
             META_COLUMN_CONCEPTO,
-            META_COLUMN_AUTOMATIZAR,
             META_COLUMN_FECHA
     };
 
@@ -134,7 +132,6 @@ public class DBConnection extends SQLiteOpenHelper {
                     META_COLUMN_CONCEPTO + " text, " +
                     META_COLUMN_TIPO + " text, " +
                     META_COLUMN_MONTO + " real, " +
-                    META_COLUMN_AUTOMATIZAR + " integer, " +
                     META_COLUMN_FECHA + " text " +
                     ")";
 
@@ -232,13 +229,12 @@ public class DBConnection extends SQLiteOpenHelper {
         values.put(META_COLUMN_MONTO, monto);
         values.put(META_COLUMN_TIPO, tipo);
         values.put(META_COLUMN_CONCEPTO, concepto);
-        values.put(META_COLUMN_AUTOMATIZAR, automatizar);
         values.put(META_COLUMN_FECHA, fecha);
 
         db.insert(META_TABLE_NAME, null, values);
     }
 
-    public void insertTarjeta(int id, double monto, String tipo, String concepto, int fourdigits, String corte, double interes) {
+    public void insertTarjeta(int id, double monto, String tipo, String vencimiento, int fourdigits, String corte, double interes) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -246,7 +242,7 @@ public class DBConnection extends SQLiteOpenHelper {
         values.put(TARJETA_COLUMN_ID, id);
         values.put(TARJETA_COLUMN_MONTO, monto);
         values.put(TARJETA_COLUMN_BANCO, tipo);
-        values.put(TARJETA_COLUMN_VENCIMIENTO, concepto);
+        values.put(TARJETA_COLUMN_VENCIMIENTO, vencimiento);
         values.put(TARJETA_COLUMN_FOURDIGITS, fourdigits);
         values.put(TARJETA_COLUMN_CORTE, corte);
         values.put(TARJETA_COLUMN_INTERES, interes);
@@ -264,7 +260,7 @@ public class DBConnection extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()){
-            Usuario usuario = cursorToGames(cursor);
+            Usuario usuario = cursorToUsuarios(cursor);
             usuarios.add(usuario);
             cursor.moveToNext();
         }
@@ -273,7 +269,7 @@ public class DBConnection extends SQLiteOpenHelper {
         return usuarios;
     }
 
-    private Usuario cursorToGames(Cursor cursor){
+    private Usuario cursorToUsuarios(Cursor cursor){
         Usuario usuario = new Usuario();
 
         usuario.setNombre(cursor.getString(0));
@@ -281,104 +277,134 @@ public class DBConnection extends SQLiteOpenHelper {
         return usuario;
     }
 
+    public List<Ingreso> getAllIngresos(){
+        List<Ingreso> ingresos = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(INGRESO_TABLE_NAME, ALL_COLUMNS_INGRESO, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Ingreso ingreso = cursorToIngresos(cursor);
+            ingresos.add(ingreso);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return ingresos;
+    }
+
+    private Ingreso cursorToIngresos(Cursor cursor){
+        Ingreso ingreso = new Ingreso();
+
+        ingreso.setIngreso(cursor.getString(0));
+        ingreso.setMonto(cursor.getDouble(1));
+        ingreso.setConcepto(cursor.getString(2));
+        ingreso.setTipo(cursor.getString(3));
+        ingreso.setAutomatizar(cursor.getInt(4));
+        ingreso.setFecha(cursor.getString(5));
+
+        return ingreso;
+    }
+
+    public List<Gasto> getAllGastos(){
+        List<Gasto> gastos = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(GASTO_TABLE_NAME, ALL_COLUMNS_GASTO, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Gasto gasto = cursorToGastos(cursor);
+            gastos.add(gasto);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return gastos;
+    }
+
+    private Gasto cursorToGastos(Cursor cursor){
+        Gasto gasto = new Gasto();
+
+        gasto.setIngreso(cursor.getString(0));
+        gasto.setMonto(cursor.getDouble(1));
+        gasto.setConcepto(cursor.getString(2));
+        gasto.setTipo(cursor.getString(3));
+        gasto.setAutomatizar(cursor.getInt(4));
+        gasto.setFecha(cursor.getString(5));
+
+        return gasto;
+    }
+
+    public List<Meta> getAllMetas(){
+        List<Meta> metas = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(META_TABLE_NAME, ALL_COLUMNS_META, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Meta meta = cursorToMetas(cursor);
+            metas.add(meta);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return metas;
+    }
+
+    private Meta cursorToMetas(Cursor cursor){
+        Meta meta = new Meta();
+
+        meta.setIngreso(cursor.getString(0));
+        meta.setMonto(cursor.getDouble(1));
+        meta.setConcepto(cursor.getString(2));
+        meta.setTipo(cursor.getString(3));
+        meta.setFecha(cursor.getString(5));
+
+        return meta;
+    }
+
+    public List<Tarjeta> getAllTarjetas(){
+        List<Tarjeta> tarjetas = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TARJETA_TABLE_NAME, ALL_COLUMNS_TARJETA, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Tarjeta tarjeta = cursorToTarjetas(cursor);
+            tarjetas.add(tarjeta);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return tarjetas;
+    }
+
+    private Tarjeta cursorToTarjetas(Cursor cursor){
+        Tarjeta tarjeta = new Tarjeta();
+
+        tarjeta.setMonto(cursor.getDouble(0));
+        tarjeta.setBanco(cursor.getString(1));
+        tarjeta.setVencimiento(cursor.getString(2));
+        tarjeta.setFourdigits(cursor.getInt(3));
+        tarjeta.setCorte(cursor.getString(4));
+        tarjeta.setInteres(cursor.getDouble(5));
+
+        return tarjeta;
+    }
+
     /*
-    public List<Juego> getAllGames(){
-        List<Juego> juegos = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(GAME_TABLE_NAME, ALL_COLUMNS_GAME, null, null, null, null, null);
-
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()){
-            Juego juego = cursorToGames(cursor);
-            juegos.add(juego);
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-        return juegos;
-    }
-
-    private Juego cursorToGames(Cursor cursor){
-        Juego juego = new Juego();
-
-        juego.setNombre(cursor.getString(1));
-        juego.setDescripcion(cursor.getString(2));
-
-        return juego;
-    }
-
-
-    public List<Equipo> getAllTeams(){
-        List<Equipo> equipos = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TEAM_TABLE_NAME, ALL_COLUMNS_TEAM, null, null, null, null, null);
-
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()){
-            Equipo equipo = cursorToEquipos(cursor);
-            equipos.add(equipo);
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-        return equipos;
-    }
-
-    private Equipo cursorToEquipos(Cursor cursor){
-        Equipo equipo = new Equipo();
-
-        equipo.setNombre(cursor.getString(1));
-        equipo.setDescripcion(cursor.getString(2));
-
-        return equipo;
-    }
-
-    public List<Partida> getAllPartidas(String juego){
-        List<Partida> partidas = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(
-                PARTIDA_TABLE_NAME,
-                ALL_COLUMNS_PARTIDA,
-                "juego = ?",
-                new String[] {juego},
-                null,
-                null,
-                null
-        );
-
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()){
-            Partida partida = cursorToPartidas(cursor);
-            partidas.add(partida);
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-        return partidas;
-    }
-
-    private Partida cursorToPartidas(Cursor cursor){
-        Partida partida = new Partida();
-
-        partida.setID(cursor.getInt(0));
-        partida.setJuego(cursor.getString(1));
-        partida.setEquipo_A(cursor.getString(2));
-        partida.setEquipo_B(cursor.getString(3));
-        partida.setPuntaje_equipo_A(cursor.getInt(4));
-        partida.setPuntaje_equipo_B(cursor.getInt(5));
-
-        return partida;
-    }
-
     public ArrayList<String> getDetalleDePartidaByID(String id){
         ArrayList<String> lista = new ArrayList<>();
 
