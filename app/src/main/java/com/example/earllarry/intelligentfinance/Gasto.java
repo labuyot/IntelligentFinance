@@ -5,9 +5,8 @@ package com.example.earllarry.intelligentfinance;
  */
 public class Gasto {
 
-    private String Ingreso;
-    private double monto;
     private String concepto;
+    private double monto;
     private String tipo;
     private int automatizar;
     private String fecha;
@@ -16,8 +15,7 @@ public class Gasto {
 
     }
 
-    public Gasto(String ingreso, double monto, String concepto, String tipo, int automatizar, String fecha) {
-        Ingreso = ingreso;
+    public Gasto(String concepto, double monto, String tipo, int automatizar, String fecha) {
         this.monto = monto;
         this.concepto = concepto;
         this.tipo = tipo;
@@ -25,21 +23,13 @@ public class Gasto {
         this.fecha = fecha;
     }
 
-    public String getIngreso() {
-        return Ingreso;
-    }
+    public String getConcepto() { return concepto; }
 
-    public void setIngreso(String ingreso) {
-        Ingreso = ingreso;
-    }
+    public void setConcepto(String concepto) { this.concepto = concepto; }
 
     public double getMonto() { return monto; }
 
     public void setMonto(double monto) { this.monto = monto; }
-
-    public String getConcepto() { return concepto; }
-
-    public void setConcepto(String concepto) { this.concepto = concepto; }
 
     public String getTipo() {
         return tipo;

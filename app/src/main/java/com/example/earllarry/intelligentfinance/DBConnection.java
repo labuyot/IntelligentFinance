@@ -48,9 +48,9 @@ public class DBConnection extends SQLiteOpenHelper {
 
     private static final String META_TABLE_NAME = "Meta";
     private static final String META_COLUMN_ID = "id";
-    private static final String META_COLUMN_CONCEPTO = "concepto";
     private static final String META_COLUMN_MONTO = "monto";
     private static final String META_COLUMN_TIPO = "tipo";
+    private static final String META_COLUMN_CONCEPTO = "concepto";
     private static final String META_COLUMN_FECHA = "fecha";
 
     public static final String[] ALL_COLUMNS_USUARIO = new String[] {
@@ -59,29 +59,29 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public static final String[] ALL_COLUMNS_INGRESO = new String[] {
             INGRESO_COLUMN_ID,
+            INGRESO_COLUMN_CONCEPTO,
             INGRESO_COLUMN_MONTO,
             INGRESO_COLUMN_TIPO,
-            INGRESO_COLUMN_CONCEPTO,
             INGRESO_COLUMN_AUTOMATIZAR,
             INGRESO_COLUMN_FECHA
     };
 
     public static final String[] ALL_COLUMNS_GASTO = new String[] {
             GASTO_COLUMN_ID,
+            GASTO_COLUMN_CONCEPTO,
             GASTO_COLUMN_MONTO,
             GASTO_COLUMN_TIPO,
-            GASTO_COLUMN_CONCEPTO,
             GASTO_COLUMN_AUTOMATIZAR,
             GASTO_COLUMN_FECHA
     };
 
     public static final String[] ALL_COLUMNS_TARJETA = new String[] {
             TARJETA_COLUMN_ID,
+            TARJETA_COLUMN_BANCO,
             TARJETA_COLUMN_MONTO,
             TARJETA_COLUMN_FOURDIGITS,
-            TARJETA_COLUMN_BANCO,
-            TARJETA_COLUMN_CORTE,
             TARJETA_COLUMN_INTERES,
+            TARJETA_COLUMN_CORTE,
             TARJETA_COLUMN_VENCIMIENTO
     };
 
@@ -106,8 +106,8 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     INGRESO_COLUMN_ID + " integer primary key autoincrement, " +
                     INGRESO_COLUMN_CONCEPTO + " text, " +
-                    INGRESO_COLUMN_TIPO + " text, " +
                     INGRESO_COLUMN_MONTO + " real, " +
+                    INGRESO_COLUMN_TIPO + " text, " +
                     INGRESO_COLUMN_AUTOMATIZAR + " integer, " +
                     INGRESO_COLUMN_FECHA + " text " +
                     ")";
@@ -118,8 +118,8 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     GASTO_COLUMN_ID + " integer primary key autoincrement, " +
                     GASTO_COLUMN_CONCEPTO + " text, " +
-                    GASTO_COLUMN_TIPO + " text, " +
                     GASTO_COLUMN_MONTO + " real, " +
+                    GASTO_COLUMN_TIPO + " text, " +
                     GASTO_COLUMN_AUTOMATIZAR + " integer, " +
                     GASTO_COLUMN_FECHA + " text " +
                     ")";
@@ -141,11 +141,11 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     TARJETA_COLUMN_ID + " integer primary key autoincrement, " +
                     TARJETA_COLUMN_BANCO + " text, " +
-                    TARJETA_COLUMN_VENCIMIENTO + " text, " +
                     TARJETA_COLUMN_MONTO + " real, " +
                     TARJETA_COLUMN_FOURDIGITS + " integer, " +
-                    TARJETA_COLUMN_CORTE + " text, " +
                     TARJETA_COLUMN_INTERES + " real " +
+                    TARJETA_COLUMN_CORTE + " text, " +
+                    TARJETA_COLUMN_VENCIMIENTO + " text, " +
                     ")";
 
     public DBConnection(Context context) {
@@ -196,9 +196,9 @@ public class DBConnection extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(INGRESO_COLUMN_ID, id);
+        values.put(INGRESO_COLUMN_CONCEPTO, concepto);
         values.put(INGRESO_COLUMN_MONTO, monto);
         values.put(INGRESO_COLUMN_TIPO, tipo);
-        values.put(INGRESO_COLUMN_CONCEPTO, concepto);
         values.put(INGRESO_COLUMN_AUTOMATIZAR, automatizar);
         values.put(INGRESO_COLUMN_FECHA, fecha);
 
@@ -211,9 +211,9 @@ public class DBConnection extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(GASTO_COLUMN_ID, id);
+        values.put(GASTO_COLUMN_CONCEPTO, concepto);
         values.put(GASTO_COLUMN_MONTO, monto);
         values.put(GASTO_COLUMN_TIPO, tipo);
-        values.put(GASTO_COLUMN_CONCEPTO, concepto);
         values.put(GASTO_COLUMN_AUTOMATIZAR, automatizar);
         values.put(GASTO_COLUMN_FECHA, fecha);
 
@@ -240,12 +240,12 @@ public class DBConnection extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(TARJETA_COLUMN_ID, id);
-        values.put(TARJETA_COLUMN_MONTO, monto);
         values.put(TARJETA_COLUMN_BANCO, tipo);
-        values.put(TARJETA_COLUMN_VENCIMIENTO, vencimiento);
+        values.put(TARJETA_COLUMN_MONTO, monto);
         values.put(TARJETA_COLUMN_FOURDIGITS, fourdigits);
-        values.put(TARJETA_COLUMN_CORTE, corte);
         values.put(TARJETA_COLUMN_INTERES, interes);
+        values.put(TARJETA_COLUMN_CORTE, corte);
+        values.put(TARJETA_COLUMN_VENCIMIENTO, vencimiento);
 
         db.insert(TARJETA_TABLE_NAME, null, values);
     }
@@ -299,12 +299,11 @@ public class DBConnection extends SQLiteOpenHelper {
     private Ingreso cursorToIngresos(Cursor cursor){
         Ingreso ingreso = new Ingreso();
 
-        ingreso.setIngreso(cursor.getString(1));
+        ingreso.setConcepto(cursor.getString(1));
         ingreso.setMonto(cursor.getDouble(2));
-        ingreso.setConcepto(cursor.getString(3));
-        ingreso.setTipo(cursor.getString(4));
-        ingreso.setAutomatizar(cursor.getInt(5));
-        ingreso.setFecha(cursor.getString(6));
+        ingreso.setTipo(cursor.getString(3));
+        ingreso.setAutomatizar(cursor.getInt(4));
+        ingreso.setFecha(cursor.getString(5));
 
         return ingreso;
     }
@@ -331,12 +330,11 @@ public class DBConnection extends SQLiteOpenHelper {
     private Gasto cursorToGastos(Cursor cursor){
         Gasto gasto = new Gasto();
 
-        gasto.setIngreso(cursor.getString(1));
+        gasto.setConcepto(cursor.getString(1));
         gasto.setMonto(cursor.getDouble(2));
-        gasto.setConcepto(cursor.getString(3));
-        gasto.setTipo(cursor.getString(4));
-        gasto.setAutomatizar(cursor.getInt(5));
-        gasto.setFecha(cursor.getString(6));
+        gasto.setTipo(cursor.getString(3));
+        gasto.setAutomatizar(cursor.getInt(4));
+        gasto.setFecha(cursor.getString(5));
 
         return gasto;
     }
@@ -363,11 +361,10 @@ public class DBConnection extends SQLiteOpenHelper {
     private Meta cursorToMetas(Cursor cursor){
         Meta meta = new Meta();
 
-        meta.setIngreso(cursor.getString(1));
-        meta.setMonto(cursor.getDouble(2));
+        meta.setMonto(cursor.getDouble(1));
+        meta.setTipo(cursor.getString(2));
         meta.setConcepto(cursor.getString(3));
-        meta.setTipo(cursor.getString(4));
-        meta.setFecha(cursor.getString(5));
+        meta.setFecha(cursor.getString(4));
 
         return meta;
     }
@@ -394,12 +391,12 @@ public class DBConnection extends SQLiteOpenHelper {
     private Tarjeta cursorToTarjetas(Cursor cursor){
         Tarjeta tarjeta = new Tarjeta();
 
-        tarjeta.setMonto(cursor.getDouble(1));
-        tarjeta.setBanco(cursor.getString(2));
-        tarjeta.setVencimiento(cursor.getString(3));
-        tarjeta.setFourdigits(cursor.getInt(4));
+        tarjeta.setBanco(cursor.getString(1));
+        tarjeta.setMonto(cursor.getDouble(2));
+        tarjeta.setFourdigits(cursor.getInt(3));
+        tarjeta.setInteres(cursor.getDouble(4));
         tarjeta.setCorte(cursor.getString(5));
-        tarjeta.setInteres(cursor.getDouble(6));
+        tarjeta.setVencimiento(cursor.getString(6));
 
         return tarjeta;
     }
