@@ -299,12 +299,12 @@ public class DBConnection extends SQLiteOpenHelper {
     private Ingreso cursorToIngresos(Cursor cursor){
         Ingreso ingreso = new Ingreso();
 
-        ingreso.setIngreso(cursor.getString(0));
-        ingreso.setMonto(cursor.getDouble(1));
-        ingreso.setConcepto(cursor.getString(2));
-        ingreso.setTipo(cursor.getString(3));
-        ingreso.setAutomatizar(cursor.getInt(4));
-        ingreso.setFecha(cursor.getString(5));
+        ingreso.setIngreso(cursor.getString(1));
+        ingreso.setMonto(cursor.getDouble(2));
+        ingreso.setConcepto(cursor.getString(3));
+        ingreso.setTipo(cursor.getString(4));
+        ingreso.setAutomatizar(cursor.getInt(5));
+        ingreso.setFecha(cursor.getString(6));
 
         return ingreso;
     }
@@ -331,12 +331,12 @@ public class DBConnection extends SQLiteOpenHelper {
     private Gasto cursorToGastos(Cursor cursor){
         Gasto gasto = new Gasto();
 
-        gasto.setIngreso(cursor.getString(0));
-        gasto.setMonto(cursor.getDouble(1));
-        gasto.setConcepto(cursor.getString(2));
-        gasto.setTipo(cursor.getString(3));
-        gasto.setAutomatizar(cursor.getInt(4));
-        gasto.setFecha(cursor.getString(5));
+        gasto.setIngreso(cursor.getString(1));
+        gasto.setMonto(cursor.getDouble(2));
+        gasto.setConcepto(cursor.getString(3));
+        gasto.setTipo(cursor.getString(4));
+        gasto.setAutomatizar(cursor.getInt(5));
+        gasto.setFecha(cursor.getString(6));
 
         return gasto;
     }
@@ -363,10 +363,10 @@ public class DBConnection extends SQLiteOpenHelper {
     private Meta cursorToMetas(Cursor cursor){
         Meta meta = new Meta();
 
-        meta.setIngreso(cursor.getString(0));
-        meta.setMonto(cursor.getDouble(1));
-        meta.setConcepto(cursor.getString(2));
-        meta.setTipo(cursor.getString(3));
+        meta.setIngreso(cursor.getString(1));
+        meta.setMonto(cursor.getDouble(2));
+        meta.setConcepto(cursor.getString(3));
+        meta.setTipo(cursor.getString(4));
         meta.setFecha(cursor.getString(5));
 
         return meta;
@@ -394,12 +394,12 @@ public class DBConnection extends SQLiteOpenHelper {
     private Tarjeta cursorToTarjetas(Cursor cursor){
         Tarjeta tarjeta = new Tarjeta();
 
-        tarjeta.setMonto(cursor.getDouble(0));
-        tarjeta.setBanco(cursor.getString(1));
-        tarjeta.setVencimiento(cursor.getString(2));
-        tarjeta.setFourdigits(cursor.getInt(3));
-        tarjeta.setCorte(cursor.getString(4));
-        tarjeta.setInteres(cursor.getDouble(5));
+        tarjeta.setMonto(cursor.getDouble(1));
+        tarjeta.setBanco(cursor.getString(2));
+        tarjeta.setVencimiento(cursor.getString(3));
+        tarjeta.setFourdigits(cursor.getInt(4));
+        tarjeta.setCorte(cursor.getString(5));
+        tarjeta.setInteres(cursor.getDouble(6));
 
         return tarjeta;
     }
