@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WelcomeScreen extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences mPrefs;
@@ -28,12 +31,16 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
         buttonWelcome.setOnClickListener(this);
         final EditText editTextNombre = (EditText)findViewById(R.id.editTextNombre);
 
+        final DBConnection connection = new DBConnection(WelcomeScreen.this);
+
         mPrefs = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
         if(mPrefs.getBoolean("activity_executed", false)){
             Intent intent = new Intent(this, DashboardDrawer.class);
             startActivity(intent);
             finish();
         } else {
+
+
 
             buttonWelcome.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,15 +52,13 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
                                 Toast.LENGTH_LONG).show();
                     } else {
 
-                        //DBConnection connection = new DBConnection(WelcomeScreen.this);
-
-                        //String helpName = String.valueOf(editTextNombre.getText());
+                        String helpName = String.valueOf(editTextNombre.getText());
 
                         SharedPreferences.Editor ed = mPrefs.edit();
                         ed.putBoolean("activity_executed", true);
                         ed.commit(); // Very important to save the preference
 
-                        //connection.insertUsuario(helpName);
+                        connection.insertUsuario(helpName);
 
                         //ir al Dashboard
                         startActivity(new Intent(WelcomeScreen.this, DashboardDrawer.class));

@@ -15,11 +15,10 @@ import java.util.List;
 public class DBConnection extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "IntelligentFinance.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private SQLiteDatabase db;
 
     private static final String USUARIO_TABLE_NAME = "Usuario";
-    private static final String USUARIO_COLUMN_ID = "id";
     private static final String USUARIO_COLUMN_NAME = "nombre";
 
     private static final String INGRESO_TABLE_NAME = "Ingreso";
@@ -42,7 +41,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String TARJETA_COLUMN_ID = "id";
     private static final String TARJETA_COLUMN_BANCO = "banco";
     private static final String TARJETA_COLUMN_MONTO = "monto";
-    private static final String TARJETA_COLUMN_FOURDIGITS = "4digitos";
+    private static final String TARJETA_COLUMN_FOURDIGITS = "cuatrodigitos";
     private static final String TARJETA_COLUMN_INTERES = "interes";
     private static final String TARJETA_COLUMN_CORTE = "corte";
     private static final String TARJETA_COLUMN_VENCIMIENTO = "vencimiento";
@@ -57,7 +56,6 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public static final String[] ALL_COLUMNS_USUARIO = new String[] {
             USUARIO_COLUMN_NAME,
-            USUARIO_COLUMN_ID,
     };
 
     public static final String[] ALL_COLUMNS_INGRESO = new String[] {
@@ -101,8 +99,7 @@ public class DBConnection extends SQLiteOpenHelper {
             "CREATE TABLE " +
                     USUARIO_TABLE_NAME +
                     "( " +
-                    USUARIO_COLUMN_ID + " integer primary key autoincrement, " +
-                    USUARIO_COLUMN_NAME + " text, " +
+                    USUARIO_COLUMN_NAME + " text " +
                     ")";
 
     public static final String CREATE_INGRESO_TABLE =
@@ -111,9 +108,9 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     INGRESO_COLUMN_ID + " integer primary key autoincrement, " +
                     INGRESO_COLUMN_CONCEPTO + " text, " +
-                    INGRESO_COLUMN_TIPO + " text " +
+                    INGRESO_COLUMN_TIPO + " text, " +
                     INGRESO_COLUMN_MONTO + " real, " +
-                    INGRESO_COLUMN_AUTOMATIZAR + " integer " +
+                    INGRESO_COLUMN_AUTOMATIZAR + " integer, " +
                     INGRESO_COLUMN_FECHA + " text " +
                     ")";
 
@@ -123,9 +120,9 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     GASTO_COLUMN_ID + " integer primary key autoincrement, " +
                     GASTO_COLUMN_CONCEPTO + " text, " +
-                    GASTO_COLUMN_TIPO + " text " +
+                    GASTO_COLUMN_TIPO + " text, " +
                     GASTO_COLUMN_MONTO + " real, " +
-                    GASTO_COLUMN_AUTOMATIZAR + " integer " +
+                    GASTO_COLUMN_AUTOMATIZAR + " integer, " +
                     GASTO_COLUMN_FECHA + " text " +
                     ")";
 
@@ -135,9 +132,9 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     META_COLUMN_ID + " integer primary key autoincrement, " +
                     META_COLUMN_CONCEPTO + " text, " +
-                    META_COLUMN_TIPO + " text " +
+                    META_COLUMN_TIPO + " text, " +
                     META_COLUMN_MONTO + " real, " +
-                    META_COLUMN_AUTOMATIZAR + " integer " +
+                    META_COLUMN_AUTOMATIZAR + " integer, " +
                     META_COLUMN_FECHA + " text " +
                     ")";
 
@@ -147,10 +144,10 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     TARJETA_COLUMN_ID + " integer primary key autoincrement, " +
                     TARJETA_COLUMN_BANCO + " text, " +
-                    TARJETA_COLUMN_VENCIMIENTO + " text " +
+                    TARJETA_COLUMN_VENCIMIENTO + " text, " +
                     TARJETA_COLUMN_MONTO + " real, " +
-                    TARJETA_COLUMN_FOURDIGITS + " integer " +
-                    TARJETA_COLUMN_CORTE + " text " +
+                    TARJETA_COLUMN_FOURDIGITS + " integer, " +
+                    TARJETA_COLUMN_CORTE + " text, " +
                     TARJETA_COLUMN_INTERES + " real " +
                     ")";
 
@@ -161,7 +158,7 @@ public class DBConnection extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(Ingreso.CREATE_INGRESO_TABLE);
+        db.execSQL(CREATE_INGRESO_TABLE);
         db.execSQL(CREATE_GASTO_TABLE);
         db.execSQL(CREATE_META_TABLE);
         db.execSQL(CREATE_TARJETA_TABLE);
@@ -257,17 +254,31 @@ public class DBConnection extends SQLiteOpenHelper {
         db.insert(TARJETA_TABLE_NAME, null, values);
     }
 
-    public String getUsuario() {
-        String countQuery = "SELECT nombre  FROM " + USUARIO_TABLE_NAME;
+    public List<Usuario> getAllUsuarios(){
+        List<Usuario> usuarios = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery(countQuery, null);
+        Cursor cursor = db.query(USUARIO_TABLE_NAME, ALL_COLUMNS_USUARIO, null, null, null, null, null);
 
-        int cnt = cursor.getCount();
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Usuario usuario = cursorToGames(cursor);
+            usuarios.add(usuario);
+            cursor.moveToNext();
+        }
         cursor.close();
 
-        return countQuery;
+        return usuarios;
+    }
+
+    private Usuario cursorToGames(Cursor cursor){
+        Usuario usuario = new Usuario();
+
+        usuario.setNombre(cursor.getString(0));
+
+        return usuario;
     }
 
     /*

@@ -61,9 +61,9 @@
         android:layout_marginLeft="10dp"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
-        android:layout_below="@+id/checkBoxMeta"
         android:layout_alignEnd="@+id/textViewMontoMeta"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textViewTipo" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -95,8 +95,7 @@
         android:id="@+id/editTextTipoMeta"
         android:background="#FFFFFF"
         android:layout_toEndOf="@+id/textViewFecha"
-        android:layout_alignTop="@+id/textViewTipo"
-        android:layout_above="@+id/checkBoxMeta" />
+        android:layout_alignTop="@+id/textViewTipo" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -108,20 +107,6 @@
         android:layout_alignBottom="@+id/textViewFecha"
         android:layout_toEndOf="@+id/textViewConcepto"
         android:layout_alignTop="@+id/textViewFecha" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Automatizar"
-        android:id="@+id/checkBoxMeta"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        android:layout_below="@+id/textViewTipo"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:buttonTint="#FFFFFF"
-        android:checked="false" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

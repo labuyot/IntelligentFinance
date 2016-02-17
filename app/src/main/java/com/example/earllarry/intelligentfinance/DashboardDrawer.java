@@ -12,6 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DashboardDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,14 +27,19 @@ public class DashboardDrawer extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         textViewBienvenida = (TextView) findViewById(R.id.textViewBienvenida);
+        final DBConnection connection = new DBConnection(DashboardDrawer.this);
 
-        //DBConnection connection = new DBConnection(DashboardDrawer.this);
+        String lista = "";
 
-        //String helpName = String.valueOf(connection.getUsuario());
+        List<Usuario> usuarios = connection.getAllUsuarios();
 
-        String nombre = "Larry";
+        //llena la lista con los nombres de los usuarios
+        for(int i = 0; i < usuarios.size(); i++){
+            Usuario usuario = usuarios.get(i);
+            lista += usuario.getNombre().toString();
+        }
 
-        textViewBienvenida.setText("Bienvenido, " + nombre);
+        textViewBienvenida.setText("Bienvenido, " + lista);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
