@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FF656565"
+    android:background="@color/colorBacground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.earllarry.intelligentfinance.AgregarTarjeta"
     tools:showIn="@layout/activity_agregar_tarjeta">
@@ -20,50 +20,62 @@
         android:text="Monto"
         android:id="@+id/textViewMontoTarjeta"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textViewTipo"
+        android:textColor="#000000"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewBancoTarjeta" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Banco"
-        android:id="@+id/textViewBanco"
+        android:id="@+id/textViewBancoTarjeta"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="4 Digitos"
+        android:id="@+id/textViewFourDigitsTarjeta"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
         android:layout_below="@+id/textViewMontoTarjeta"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:textSize="25dp" />
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Tipo"
-        android:id="@+id/textViewTipo"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/textViewConcepto"
-        android:layout_alignParentStart="true"
+        android:text="Vencimiento"
+        android:id="@+id/textViewVencimientoTarjeta"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:textColor="#000000"
+        android:layout_below="@+id/textViewCorteTarjeta"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Fecha"
-        android:id="@+id/textViewInteres"
+        android:text="Corte"
+        android:id="@+id/textViewCorteTarjeta"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textViewFourDigits"
+        android:textSize="25dp"
+        android:textColor="#000000"
+        android:layout_below="@+id/textViewInteresTarjeta"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:textSize="25dp" />
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -72,9 +84,9 @@
         android:ems="10"
         android:id="@+id/editTextMontoTarjeta"
         android:background="#FFFFFF"
-        android:layout_alignBottom="@+id/textViewMontoTarjeta"
-        android:layout_alignStart="@+id/editTextTipoTarjeta"
-        android:layout_alignTop="@+id/textViewMontoTarjeta" />
+        android:layout_alignStart="@+id/editTextBancoTarjeta"
+        android:layout_alignTop="@+id/textViewMontoTarjeta"
+        android:layout_alignBottom="@+id/textViewMontoTarjeta" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -83,81 +95,22 @@
         android:id="@+id/editTextBancoTarjeta"
         android:background="#FFFFFF"
         android:inputType="textCapSentences"
-        android:layout_above="@+id/textViewFourDigits"
-        android:layout_toEndOf="@+id/textViewFourDigits"
-        android:layout_alignTop="@+id/textViewBanco" />
+        android:layout_toEndOf="@+id/textViewFourDigitsTarjeta"
+        android:layout_alignTop="@+id/textViewBancoTarjeta"
+        android:layout_above="@+id/textViewMontoTarjeta" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/editTextTipoTarjeta"
-        android:background="#FFFFFF"
-        android:layout_above="@+id/textViewMontoTarjeta"
-        android:layout_toEndOf="@+id/textViewFourDigits"
-        android:layout_alignTop="@+id/textViewTipo" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/editTextFechaTarjeta"
-        android:background="#FFFFFF"
-        android:maxLength="8"
-        android:layout_above="@+id/textViewVencimiento"
-        android:layout_toEndOf="@+id/textViewFourDigits"
-        android:layout_alignTop="@+id/textViewInteres" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="4 Digitos"
-        android:id="@+id/textViewFourDigits"
-        android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textViewBanco"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:textSize="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Vencimiento"
-        android:id="@+id/textViewVencimiento"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@+id/textViewInteres"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:textSize="25dp"
-        android:textColor="#ffffff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Corte"
-        android:id="@+id/textViewCorte"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@+id/textViewVencimiento"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:textSize="25dp"
-        android:textColor="#ffffff" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/editTextFourDigits"
+        android:id="@+id/editTextFourDigitsTarjeta"
         android:background="#FFFFFF"
         android:maxLength="4"
-        android:layout_toEndOf="@+id/textViewVencimiento"
-        android:layout_alignTop="@+id/textViewFourDigits"
-        android:layout_above="@+id/textViewInteres"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_alignTop="@+id/textViewFourDigitsTarjeta"
+        android:layout_toEndOf="@+id/textViewFourDigitsTarjeta"
+        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/textViewInteresTarjeta" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -166,9 +119,9 @@
         android:id="@+id/editTextVencimientoTarjeta"
         android:background="#FFFFFF"
         android:maxLength="8"
-        android:layout_alignTop="@+id/textViewVencimiento"
-        android:layout_toEndOf="@+id/textViewVencimiento"
-        android:layout_alignBottom="@+id/textViewVencimiento"
+        android:layout_alignTop="@+id/textViewVencimientoTarjeta"
+        android:layout_toEndOf="@+id/textViewVencimientoTarjeta"
+        android:layout_alignBottom="@+id/textViewVencimientoTarjeta"
         android:layout_marginLeft="25dp" />
 
     <EditText
@@ -179,9 +132,9 @@
         android:background="#FFFFFF"
         android:maxLength="8"
         android:layout_marginLeft="25dp"
-        android:layout_alignTop="@+id/textViewCorte"
+        android:layout_alignTop="@+id/textViewCorteTarjeta"
         android:layout_toEndOf="@+id/textViewMontoTarjeta"
-        android:layout_alignBottom="@+id/textViewCorte" />
+        android:layout_alignBottom="@+id/textViewCorteTarjeta" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -189,14 +142,13 @@
         android:layout_height="wrap_content"
         android:text="Cancelar"
         android:id="@+id/buttonCancelarTarjeta"
-        android:layout_below="@+id/textViewCorte"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="44dp"
         android:layout_marginLeft="10dp"
         android:textSize="25dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
-        android:layout_toStartOf="@+id/editTextVencimientoTarjeta" />
+        android:layout_below="@+id/textViewVencimientoTarjeta"
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -211,5 +163,30 @@
         android:layout_alignTop="@+id/buttonCancelarTarjeta"
         android:layout_alignStart="@+id/editTextVencimientoTarjeta"
         android:layout_alignEnd="@+id/editTextCorteTarjeta" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Interes"
+        android:id="@+id/textViewInteresTarjeta"
+        android:layout_marginLeft="10dp"
+        android:textSize="25dp"
+        android:textColor="#000000"
+        android:layout_below="@+id/textViewFourDigitsTarjeta"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextInteresTarjeta"
+        android:background="#FFFFFF"
+        android:maxLength="8"
+        android:layout_marginLeft="25dp"
+        android:layout_alignTop="@+id/textViewInteresTarjeta"
+        android:layout_toEndOf="@+id/textViewInteresTarjeta"
+        android:layout_above="@+id/textViewCorteTarjeta" />
 
 </RelativeLayout>

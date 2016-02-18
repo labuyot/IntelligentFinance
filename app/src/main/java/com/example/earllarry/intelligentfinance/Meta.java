@@ -5,39 +5,37 @@ package com.example.earllarry.intelligentfinance;
  */
 public class Meta {
 
-    private double monto;
-    private String tipo;
     private String concepto;
-    private String fecha;
+    private double monto;
+    private String fechainicio;
+    private String fechafinal;
 
     public Meta() {
 
     }
 
-    public Meta(double monto, String tipo, String concepto, String fecha) {
-        this.monto = monto;
-        this.tipo = tipo;
+    public Meta(String concepto, double monto, String fechainicio, String fechafinal) {
         this.concepto = concepto;
-        this.fecha = fecha;
+        this.monto = monto;
+        this.fechainicio = fechainicio;
+        this.fechafinal = fechafinal;
     }
-
-    public double getMonto() { return monto; }
-
-    public void setMonto(double monto) { this.monto = monto; }
-
-    public String getTipo() { return tipo; }
-
-    public void setTipo(String tipo) { this.tipo = tipo; }
 
     public String getConcepto() { return concepto; }
 
     public void setConcepto(String concepto) { this.concepto = concepto; }
 
-    public String getFecha() {
-        return fecha;
+    public double getMonto() { return monto; }
+
+    public void setMonto(double monto) { this.monto = monto; }
+
+    public String getFechaInicio() { return fechainicio; }
+
+    public void setFechaInicio(String fechainicio) { this.fechainicio = fechainicio; }
+
+    public String getFechaFinal() {
+        return fechafinal;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
+    public void setFechaFinal(String fechafinal) { this.fechafinal = fechafinal; }
 }

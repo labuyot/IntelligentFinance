@@ -30,23 +30,13 @@ public class MenuTarjetas extends AppCompatActivity {
             }
         });
 
-        ImageView imageAgregar = (ImageView)findViewById(R.id.imageViewAgregarTarjeta);
-        ImageView imageInforme = (ImageView)findViewById(R.id.imageViewInformeTarjeta);
-
-        imageAgregar.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 startActivity(new Intent(MenuTarjetas.this, AgregarTarjeta.class));
             }
         });
-
-        imageInforme.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(MenuTarjetas.this, InformeTarjeta.class));
-            }
-        });
-
     }
 
 }

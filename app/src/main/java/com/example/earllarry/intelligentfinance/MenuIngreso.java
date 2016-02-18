@@ -30,20 +30,11 @@ public class MenuIngreso extends AppCompatActivity {
             }
         });
 
-        ImageView imageAgregar = (ImageView)findViewById(R.id.imageViewAgregarIngreso);
-        ImageView imageInforme = (ImageView)findViewById(R.id.imageViewInformeIngreso);
-
-        imageAgregar.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 startActivity(new Intent(MenuIngreso.this, AgregarIngreso.class));
-            }
-        });
-
-        imageInforme.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(MenuIngreso.this, InformeIngreso.class));
             }
         });
 

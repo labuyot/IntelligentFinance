@@ -8,55 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBacground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.earllarry.intelligentfinance.MenuTarjetas"
     tools:showIn="@layout/activity_menu_tarjetas">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewAgregarTarjeta"
-        android:layout_marginTop="114dp"
-        android:src="@drawable/agregar"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="30dp" />
-
-    <ImageView
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:id="@+id/imageViewInformeTarjeta"
-        android:src="@drawable/registro"
-        android:layout_alignTop="@+id/imageViewAgregarTarjeta"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Agregar"
-        android:id="@+id/textViewAgregarTarjeta"
-        android:layout_below="@+id/imageViewAgregarTarjeta"
-        android:layout_alignStart="@+id/imageViewAgregarTarjeta"
-        android:layout_alignEnd="@+id/imageViewAgregarTarjeta"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="10dp"
-        android:textSize="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Informe"
-        android:id="@+id/textViewInformeTarjeta"
-        android:layout_below="@+id/imageViewInformeTarjeta"
-        android:layout_alignStart="@+id/imageViewInformeTarjeta"
-        android:layout_alignEnd="@+id/imageViewInformeTarjeta"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="10dp"
-        android:textSize="25dp" />
 
 </RelativeLayout>

@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FF656565"
+    android:background="@color/colorBacground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.earllarry.intelligentfinance.AgregarMeta"
     tools:showIn="@layout/activity_agregar_meta">
@@ -19,51 +19,51 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Monto"
         android:id="@+id/textViewMontoMeta"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewConceptoMeta"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Concepto"
-        android:id="@+id/textViewConcepto"
+        android:id="@+id/textViewConceptoMeta"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textViewMontoMeta"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:textSize="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Tipo"
-        android:id="@+id/textViewTipo"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/textViewConcepto"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Fecha"
-        android:id="@+id/textViewFecha"
-        android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="25dp"
-        android:layout_alignEnd="@+id/textViewMontoMeta"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fecha Inicio"
+        android:id="@+id/textViewFechaInicioMeta"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/textViewTipo" />
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewMontoMeta"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fecha Final"
+        android:id="@+id/textViewFechaFinalMeta"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textViewFechaInicioMeta"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,9 +71,9 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/editTextMontoMeta"
-        android:layout_toEndOf="@+id/textViewConcepto"
         android:background="#FFFFFF"
-        android:layout_above="@+id/textViewConcepto"
+        android:layout_above="@+id/textViewFechaInicioMeta"
+        android:layout_toEndOf="@+id/textViewConceptoMeta"
         android:layout_alignTop="@+id/textViewMontoMeta" />
 
     <EditText
@@ -84,29 +84,32 @@
         android:background="#FFFFFF"
         android:inputType="textCapSentences"
         android:layout_marginLeft="20dp"
-        android:layout_alignTop="@+id/textViewConcepto"
-        android:layout_toEndOf="@+id/textViewConcepto"
-        android:layout_alignBottom="@+id/textViewConcepto" />
+        android:layout_alignBottom="@+id/textViewConceptoMeta"
+        android:layout_toEndOf="@+id/textViewFechaInicioMeta"
+        android:layout_alignTop="@+id/textViewConceptoMeta" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/editTextTipoMeta"
+        android:id="@+id/editTextFechaInicioMeta"
         android:background="#FFFFFF"
-        android:layout_toEndOf="@+id/textViewFecha"
-        android:layout_alignTop="@+id/textViewTipo" />
+        android:layout_marginLeft="15dp"
+        android:layout_alignTop="@+id/textViewFechaInicioMeta"
+        android:layout_toEndOf="@+id/textViewFechaInicioMeta"
+        android:layout_alignBottom="@+id/textViewFechaInicioMeta" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/editTextFechaMeta"
+        android:id="@+id/editTextFechaFinalMeta"
         android:background="#FFFFFF"
         android:maxLength="8"
-        android:layout_alignBottom="@+id/textViewFecha"
-        android:layout_toEndOf="@+id/textViewConcepto"
-        android:layout_alignTop="@+id/textViewFecha" />
+        android:layout_alignTop="@+id/textViewFechaFinalMeta"
+        android:layout_toEndOf="@+id/textViewFechaFinalMeta"
+        android:layout_above="@+id/buttonCancelarMeta"
+        android:layout_marginLeft="15dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -118,9 +121,9 @@
         android:textSize="25dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
-        android:layout_below="@+id/textViewFecha"
+        android:layout_below="@+id/textViewFechaFinalMeta"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="80dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

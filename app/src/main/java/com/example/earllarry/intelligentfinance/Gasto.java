@@ -10,17 +10,19 @@ public class Gasto {
     private String tipo;
     private int automatizar;
     private String fecha;
+    private String frecuencia;
 
     public Gasto() {
 
     }
 
-    public Gasto(String concepto, double monto, String tipo, int automatizar, String fecha) {
-        this.monto = monto;
+    public Gasto(String concepto, double monto, String tipo, int automatizar, String fecha, String frecuencia) {
         this.concepto = concepto;
+        this.monto = monto;
         this.tipo = tipo;
         this.automatizar = automatizar;
         this.fecha = fecha;
+        this.frecuencia = frecuencia;
     }
 
     public String getConcepto() { return concepto; }
@@ -31,13 +33,9 @@ public class Gasto {
 
     public void setMonto(double monto) { this.monto = monto; }
 
-    public String getTipo() {
-        return tipo;
-    }
+    public String getTipo() { return tipo; }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
     public int isAutomatizar() {
         return automatizar;
@@ -54,4 +52,8 @@ public class Gasto {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+    public String getFrecuencia() { return frecuencia; }
+
+    public void setFrecuencia(String frecuencia) { this.frecuencia = frecuencia; }
 }

@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#FF656565"
+    android:background="@color/colorBacground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.earllarry.intelligentfinance.AgregarGasto"
     tools:showIn="@layout/activity_agregar_gasto">
@@ -18,52 +18,52 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Monto"
-        android:id="@+id/textViewMonto"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
+        android:id="@+id/textViewMontoGasto"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewConceptoGasto"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Concepto"
-        android:id="@+id/textViewConcepto"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/textViewMonto"
-        android:layout_alignParentStart="true"
+        android:id="@+id/textViewConceptoGasto"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Tipo"
-        android:id="@+id/textViewTipo"
+        android:id="@+id/textViewTipoGasto"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/textViewConcepto"
-        android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewMontoGasto"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Fecha"
-        android:id="@+id/textViewFecha"
+        android:id="@+id/textViewFechaGasto"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:textSize="25dp"
         android:layout_below="@+id/checkBoxGasto"
-        android:layout_alignStart="@+id/textViewTipo"
-        android:textSize="25dp" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,10 +71,10 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/editTextMontoGasto"
-        android:layout_alignTop="@+id/textViewMonto"
-        android:layout_toEndOf="@+id/textViewConcepto"
+        android:layout_alignTop="@+id/textViewMontoGasto"
+        android:layout_toEndOf="@+id/textViewConceptoGasto"
         android:background="#FFFFFF"
-        android:layout_above="@+id/textViewConcepto" />
+        android:layout_above="@+id/textViewFechaInicioGasto" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -83,20 +83,10 @@
         android:id="@+id/editTextConceptoGasto"
         android:background="#FFFFFF"
         android:inputType="textCapSentences"
-        android:layout_alignTop="@+id/textViewConcepto"
-        android:layout_toEndOf="@+id/textViewConcepto"
-        android:layout_alignBottom="@+id/textViewConcepto"
+        android:layout_alignTop="@+id/textViewConceptoGasto"
+        android:layout_toEndOf="@+id/textViewConceptoGasto"
+        android:layout_alignBottom="@+id/textViewConceptoGasto"
         android:layout_marginLeft="20dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/editTextTipoGasto"
-        android:background="#FFFFFF"
-        android:layout_toEndOf="@+id/textViewMonto"
-        android:layout_alignTop="@+id/textViewTipo"
-        android:layout_above="@+id/checkBoxGasto" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -106,22 +96,22 @@
         android:background="#FFFFFF"
         android:layout_alignStart="@+id/editTextMontoGasto"
         android:maxLength="8"
-        android:layout_alignTop="@+id/textViewFecha"
-        android:layout_alignBottom="@+id/textViewFecha" />
+        android:layout_alignTop="@+id/textViewFechaGasto"
+        android:layout_alignBottom="@+id/textViewFechaGasto" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Automatizar"
         android:id="@+id/checkBoxGasto"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="25dp"
-        android:layout_below="@+id/textViewTipo"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
-        android:buttonTint="#FFFFFF"
-        android:checked="false" />
+        android:buttonTint="#000000"
+        android:checked="false"
+        android:layout_below="@+id/textViewTipoGasto"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -134,7 +124,7 @@
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/textViewFecha"
+        android:layout_below="@+id/textViewFechaGasto"
         android:layout_alignStart="@+id/checkBoxGasto" />
 
     <Button
@@ -149,4 +139,15 @@
         android:layout_marginLeft="10dp"
         android:layout_alignTop="@+id/buttonCancelarGasto"
         android:layout_toEndOf="@+id/checkBoxGasto" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerTipoGasto"
+        android:background="#ffffff"
+        android:layout_alignEnd="@+id/editTextTipoGasto"
+        android:layout_toEndOf="@+id/textViewTipoGasto"
+        android:layout_alignTop="@+id/textViewTipoGasto"
+        android:layout_above="@+id/checkBoxGasto"
+        android:layout_alignStart="@+id/editTextMontoGasto" />
 </RelativeLayout>

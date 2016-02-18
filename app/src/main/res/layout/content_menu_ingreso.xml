@@ -8,56 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBacground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.earllarry.intelligentfinance.MenuIngreso"
     tools:showIn="@layout/activity_menu_ingreso">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewAgregarIngreso"
-        android:layout_marginTop="114dp"
-        android:src="@drawable/agregar"
-        android:layout_marginStart="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:clickable="true"
-        android:onClick="onClick" />
-
-    <ImageView
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:id="@+id/imageViewInformeIngreso"
-        android:src="@drawable/registro"
-        android:layout_alignTop="@+id/imageViewAgregarIngreso"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Agregar"
-        android:id="@+id/textViewAgregarIngreso"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/imageViewAgregarIngreso"
-        android:textSize="25dp"
-        android:layout_alignEnd="@+id/imageViewAgregarIngreso"
-        android:layout_alignStart="@+id/imageViewAgregarIngreso"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Informe"
-        android:id="@+id/textViewInformeIngreso"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        android:layout_below="@+id/imageViewInformeIngreso"
-        android:layout_alignStart="@+id/imageViewInformeIngreso"
-        android:layout_alignEnd="@+id/imageViewInformeIngreso"
-        android:layout_marginTop="10dp" />
 </RelativeLayout>

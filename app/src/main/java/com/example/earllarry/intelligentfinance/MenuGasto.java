@@ -30,20 +30,11 @@ public class MenuGasto extends AppCompatActivity {
             }
         });
 
-        ImageView imageAgregar = (ImageView)findViewById(R.id.imageViewAgregarGasto);
-        ImageView imageInforme = (ImageView)findViewById(R.id.imageViewInformeGasto);
-
-        imageAgregar.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 startActivity(new Intent(MenuGasto.this, AgregarGasto.class));
-            }
-        });
-
-        imageInforme.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(MenuGasto.this, InformeGasto.class));
             }
         });
 

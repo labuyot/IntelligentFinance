@@ -23,4 +23,5 @@
     <string name="title_activity_informe_gasto">Informe Gastos</string>
     <string name="title_activity_informe_meta">Informe Metas</string>
     <string name="title_activity_informe_tarjeta">Informe Tarjetas</string>
+    <string name="title_activity_test">test</string>
 </resources>

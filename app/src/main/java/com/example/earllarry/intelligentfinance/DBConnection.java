@@ -22,36 +22,37 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String USUARIO_COLUMN_NAME = "nombre";
 
     private static final String INGRESO_TABLE_NAME = "Ingreso";
-    private static final String INGRESO_COLUMN_ID = "id";
-    private static final String INGRESO_COLUMN_CONCEPTO = "concepto";
-    private static final String INGRESO_COLUMN_MONTO = "monto";
-    private static final String INGRESO_COLUMN_TIPO = "tipo";
-    private static final String INGRESO_COLUMN_AUTOMATIZAR = "automatizar";
-    private static final String INGRESO_COLUMN_FECHA = "fecha";
+    private static final String INGRESO_COLUMN_ID = "Id";
+    private static final String INGRESO_COLUMN_CONCEPTO = "Concepto";
+    private static final String INGRESO_COLUMN_MONTO = "Monto";
+    private static final String INGRESO_COLUMN_AUTOMATIZAR = "Automatizar";
+    private static final String INGRESO_COLUMN_FECHA = "Fecha";
+    private static final String INGRESO_COLUMN_FRECUENCIA = "Frecuencia";
 
     private static final String GASTO_TABLE_NAME = "Gasto";
-    private static final String GASTO_COLUMN_ID = "id";
-    private static final String GASTO_COLUMN_CONCEPTO = "concepto";
-    private static final String GASTO_COLUMN_MONTO = "monto";
-    private static final String GASTO_COLUMN_TIPO = "tipo";
-    private static final String GASTO_COLUMN_AUTOMATIZAR = "automatizar";
-    private static final String GASTO_COLUMN_FECHA = "fecha";
+    private static final String GASTO_COLUMN_ID = "Id";
+    private static final String GASTO_COLUMN_CONCEPTO = "Concepto";
+    private static final String GASTO_COLUMN_MONTO = "Monto";
+    private static final String GASTO_COLUMN_TIPO = "Tipo";
+    private static final String GASTO_COLUMN_AUTOMATIZAR = "Automatizar";
+    private static final String GASTO_COLUMN_FECHA = "Fecha";
+    private static final String GASTO_COLUMN_FRECUENCIA = "Frecuencia";
 
     private static final String TARJETA_TABLE_NAME = "Tarjeta";
-    private static final String TARJETA_COLUMN_ID = "id";
-    private static final String TARJETA_COLUMN_BANCO = "banco";
-    private static final String TARJETA_COLUMN_MONTO = "monto";
-    private static final String TARJETA_COLUMN_FOURDIGITS = "cuatrodigitos";
-    private static final String TARJETA_COLUMN_INTERES = "interes";
-    private static final String TARJETA_COLUMN_CORTE = "corte";
-    private static final String TARJETA_COLUMN_VENCIMIENTO = "vencimiento";
+    private static final String TARJETA_COLUMN_ID = "Id";
+    private static final String TARJETA_COLUMN_BANCO = "Banco";
+    private static final String TARJETA_COLUMN_MONTO = "Monto";
+    private static final String TARJETA_COLUMN_FOURDIGITS = "Cuatrodigitos";
+    private static final String TARJETA_COLUMN_INTERES = "Interes";
+    private static final String TARJETA_COLUMN_CORTE = "Corte";
+    private static final String TARJETA_COLUMN_VENCIMIENTO = "Vencimiento";
 
     private static final String META_TABLE_NAME = "Meta";
-    private static final String META_COLUMN_ID = "id";
-    private static final String META_COLUMN_MONTO = "monto";
-    private static final String META_COLUMN_TIPO = "tipo";
-    private static final String META_COLUMN_CONCEPTO = "concepto";
-    private static final String META_COLUMN_FECHA = "fecha";
+    private static final String META_COLUMN_ID = "Id";
+    private static final String META_COLUMN_CONCEPTO = "Concepto";
+    private static final String META_COLUMN_MONTO = "Monto";
+    private static final String META_COLUMN_FECHAINICIO = "Fechainicio";
+    private static final String META_COLUMN_FECHAFINAL = "Fechafinal";
 
     public static final String[] ALL_COLUMNS_USUARIO = new String[] {
             USUARIO_COLUMN_NAME,
@@ -61,9 +62,9 @@ public class DBConnection extends SQLiteOpenHelper {
             INGRESO_COLUMN_ID,
             INGRESO_COLUMN_CONCEPTO,
             INGRESO_COLUMN_MONTO,
-            INGRESO_COLUMN_TIPO,
             INGRESO_COLUMN_AUTOMATIZAR,
-            INGRESO_COLUMN_FECHA
+            INGRESO_COLUMN_FECHA,
+            INGRESO_COLUMN_FRECUENCIA
     };
 
     public static final String[] ALL_COLUMNS_GASTO = new String[] {
@@ -72,7 +73,8 @@ public class DBConnection extends SQLiteOpenHelper {
             GASTO_COLUMN_MONTO,
             GASTO_COLUMN_TIPO,
             GASTO_COLUMN_AUTOMATIZAR,
-            GASTO_COLUMN_FECHA
+            GASTO_COLUMN_FECHA,
+            GASTO_COLUMN_FRECUENCIA
     };
 
     public static final String[] ALL_COLUMNS_TARJETA = new String[] {
@@ -87,10 +89,10 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public static final String[] ALL_COLUMNS_META = new String[] {
             META_COLUMN_ID,
-            META_COLUMN_MONTO,
-            META_COLUMN_TIPO,
             META_COLUMN_CONCEPTO,
-            META_COLUMN_FECHA
+            META_COLUMN_MONTO,
+            META_COLUMN_FECHAINICIO,
+            META_COLUMN_FECHAFINAL
     };
 
     public static final String CREATE_USUARIO_TABLE =
@@ -107,9 +109,9 @@ public class DBConnection extends SQLiteOpenHelper {
                     INGRESO_COLUMN_ID + " integer primary key autoincrement, " +
                     INGRESO_COLUMN_CONCEPTO + " text, " +
                     INGRESO_COLUMN_MONTO + " real, " +
-                    INGRESO_COLUMN_TIPO + " text, " +
                     INGRESO_COLUMN_AUTOMATIZAR + " integer, " +
-                    INGRESO_COLUMN_FECHA + " text " +
+                    INGRESO_COLUMN_FECHA + " text, " +
+                    INGRESO_COLUMN_FRECUENCIA + " text " +
                     ")";
 
     public static final String CREATE_GASTO_TABLE =
@@ -121,7 +123,8 @@ public class DBConnection extends SQLiteOpenHelper {
                     GASTO_COLUMN_MONTO + " real, " +
                     GASTO_COLUMN_TIPO + " text, " +
                     GASTO_COLUMN_AUTOMATIZAR + " integer, " +
-                    GASTO_COLUMN_FECHA + " text " +
+                    GASTO_COLUMN_FECHA + " text, " +
+                    GASTO_COLUMN_FRECUENCIA + " text " +
                     ")";
 
     public static final String CREATE_META_TABLE =
@@ -130,9 +133,9 @@ public class DBConnection extends SQLiteOpenHelper {
                     "( " +
                     META_COLUMN_ID + " integer primary key autoincrement, " +
                     META_COLUMN_CONCEPTO + " text, " +
-                    META_COLUMN_TIPO + " text, " +
                     META_COLUMN_MONTO + " real, " +
-                    META_COLUMN_FECHA + " text " +
+                    META_COLUMN_FECHAINICIO + " text, " +
+                    META_COLUMN_FECHAFINAL + " text " +
                     ")";
 
     public static final String CREATE_TARJETA_TABLE =
@@ -190,57 +193,54 @@ public class DBConnection extends SQLiteOpenHelper {
         db.insert(USUARIO_TABLE_NAME, null, values);
     }
 
-    public void insertIngreso(int id, double monto, String tipo, String concepto, boolean automatizar, String fecha) {
+    public void insertIngreso(String concepto, double monto, boolean automatizar, String fecha, String frecuencia) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(INGRESO_COLUMN_ID, id);
         values.put(INGRESO_COLUMN_CONCEPTO, concepto);
         values.put(INGRESO_COLUMN_MONTO, monto);
-        values.put(INGRESO_COLUMN_TIPO, tipo);
         values.put(INGRESO_COLUMN_AUTOMATIZAR, automatizar);
         values.put(INGRESO_COLUMN_FECHA, fecha);
+        values.put(INGRESO_COLUMN_FRECUENCIA, frecuencia);
 
         db.insert(INGRESO_TABLE_NAME, null, values);
     }
 
-    public void insertGasto(int id, double monto, String tipo, String concepto, boolean automatizar, String fecha) {
+    public void insertGasto(String concepto, double monto, String tipo, boolean automatizar, String fecha, String frecuencia) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(GASTO_COLUMN_ID, id);
         values.put(GASTO_COLUMN_CONCEPTO, concepto);
         values.put(GASTO_COLUMN_MONTO, monto);
         values.put(GASTO_COLUMN_TIPO, tipo);
         values.put(GASTO_COLUMN_AUTOMATIZAR, automatizar);
         values.put(GASTO_COLUMN_FECHA, fecha);
+        values.put(GASTO_COLUMN_FRECUENCIA, frecuencia);
 
         db.insert(GASTO_TABLE_NAME, null, values);
     }
 
-    public void insertMeta(int id, double monto, String tipo, String concepto, boolean automatizar, String fecha) {
+    public void insertMeta(String concepto, double monto, String fechainicio, String fechafinal) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(META_COLUMN_ID, id);
-        values.put(META_COLUMN_MONTO, monto);
-        values.put(META_COLUMN_TIPO, tipo);
         values.put(META_COLUMN_CONCEPTO, concepto);
-        values.put(META_COLUMN_FECHA, fecha);
+        values.put(META_COLUMN_MONTO, monto);
+        values.put(META_COLUMN_FECHAINICIO, fechainicio);
+        values.put(META_COLUMN_FECHAFINAL, fechafinal);
 
         db.insert(META_TABLE_NAME, null, values);
     }
 
-    public void insertTarjeta(int id, double monto, String tipo, String vencimiento, int fourdigits, String corte, double interes) {
+    public void insertTarjeta(String banco, double monto, int fourdigits, double interes, String corte, String vencimiento) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
-        values.put(TARJETA_COLUMN_ID, id);
-        values.put(TARJETA_COLUMN_BANCO, tipo);
+        values.put(TARJETA_COLUMN_BANCO, banco);
         values.put(TARJETA_COLUMN_MONTO, monto);
         values.put(TARJETA_COLUMN_FOURDIGITS, fourdigits);
         values.put(TARJETA_COLUMN_INTERES, interes);
@@ -301,9 +301,9 @@ public class DBConnection extends SQLiteOpenHelper {
 
         ingreso.setConcepto(cursor.getString(1));
         ingreso.setMonto(cursor.getDouble(2));
-        ingreso.setTipo(cursor.getString(3));
-        ingreso.setAutomatizar(cursor.getInt(4));
-        ingreso.setFecha(cursor.getString(5));
+        ingreso.setAutomatizar(cursor.getInt(3));
+        ingreso.setFecha(cursor.getString(4));
+        ingreso.setFrecuencia(cursor.getString(5));
 
         return ingreso;
     }
@@ -335,6 +335,7 @@ public class DBConnection extends SQLiteOpenHelper {
         gasto.setTipo(cursor.getString(3));
         gasto.setAutomatizar(cursor.getInt(4));
         gasto.setFecha(cursor.getString(5));
+        gasto.setFrecuencia(cursor.getString(6));
 
         return gasto;
     }
@@ -361,10 +362,10 @@ public class DBConnection extends SQLiteOpenHelper {
     private Meta cursorToMetas(Cursor cursor){
         Meta meta = new Meta();
 
-        meta.setMonto(cursor.getDouble(1));
-        meta.setTipo(cursor.getString(2));
-        meta.setConcepto(cursor.getString(3));
-        meta.setFecha(cursor.getString(4));
+        meta.setConcepto(cursor.getString(1));
+        meta.setMonto(cursor.getDouble(2));
+        meta.setFechaInicio(cursor.getString(3));
+        meta.setFechaFinal(cursor.getString(4));
 
         return meta;
     }

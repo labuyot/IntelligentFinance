@@ -30,23 +30,13 @@ public class MenuMetas extends AppCompatActivity {
             }
         });
 
-        ImageView imageAgregar = (ImageView)findViewById(R.id.imageViewAgregarMeta);
-        ImageView imageInforme = (ImageView)findViewById(R.id.imageViewInformeMeta);
-
-        imageAgregar.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 startActivity(new Intent(MenuMetas.this, AgregarMeta.class));
             }
         });
-
-        imageInforme.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                startActivity(new Intent(MenuMetas.this, InformeMeta.class));
-            }
-        });
-
     }
 
 }
