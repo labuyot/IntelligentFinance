@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +21,10 @@ public class DashboardDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView textViewBienvenida;
+    private TextView textViewBalance;
+    private TextView textViewIngresos;
+    private TextView textViewGastos;
+    private TextView textViewTarjetas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +33,23 @@ public class DashboardDrawer extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         textViewBienvenida = (TextView) findViewById(R.id.textViewBienvenida);
+        textViewBalance = (TextView) findViewById(R.id.textViewBalanceDashboard);
+        textViewIngresos = (TextView) findViewById(R.id.textViewIngresoDashboard);
+        textViewGastos = (TextView) findViewById(R.id.textViewGastoDashboard);
+        textViewTarjetas = (TextView) findViewById(R.id.textViewTarjetDashboard);
+        final FrameLayout frameIngreso = (FrameLayout) findViewById(R.id.frameLayoutIngreso);
+        final FrameLayout frameGasto = (FrameLayout) findViewById(R.id.frameLayoutGasto);
+        final FrameLayout frameTarjeta = (FrameLayout) findViewById(R.id.frameLayoutTarjeta);
         final DBConnection connection = new DBConnection(DashboardDrawer.this);
 
+
+
         String lista = "";
+
+        int helpIngreso = 0;
+        int helpBalance = 0;
+        int helpGasto = 0;
+        int helpTarjeta = 0;
 
         List<Usuario> usuarios = connection.getAllUsuarios();
 
@@ -40,6 +60,71 @@ public class DashboardDrawer extends AppCompatActivity
         }
 
         textViewBienvenida.setText("Bienvenido, " + lista);
+
+        helpIngreso = connection.getTotal("Monto","Ingreso");
+        helpGasto = connection.getTotal("Monto","Gasto");
+        helpTarjeta = connection.getTotal("Monto","Tarjeta");
+        helpBalance = helpIngreso - helpGasto;
+
+        if(helpBalance < 0){
+            textViewBalance.setTextColor(getResources().getColor(R.color.BalanceRed));
+        }else{
+            textViewBalance.setTextColor(getResources().getColor(R.color.BalanceBlue));
+
+        }
+        textViewBalance.setText("$ " + helpBalance);
+        textViewIngresos.setText("$ " + helpIngreso);
+        textViewGastos.setText("$ " + helpGasto);
+        textViewTarjetas.setText("$ " + helpTarjeta);
+
+        //cliqueables
+        frameIngreso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuIngreso.class));
+                finish();
+            }
+        });
+
+        frameGasto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
+                finish();
+            }
+        });
+
+        frameTarjeta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));
+                finish();
+            }
+        });
+
+        textViewIngresos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuIngreso.class));
+                finish();
+            }
+        });
+
+        textViewGastos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
+                finish();
+            }
+        });
+
+        textViewTarjetas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));
+                finish();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

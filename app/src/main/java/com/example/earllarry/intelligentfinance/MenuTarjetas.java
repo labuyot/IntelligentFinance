@@ -27,6 +27,7 @@ public class MenuTarjetas extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("cek", "home selected");
                 startActivity(new Intent(MenuTarjetas.this, DashboardDrawer.class));
+                finish();
             }
         });
 
@@ -35,6 +36,7 @@ public class MenuTarjetas extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MenuTarjetas.this, AgregarTarjeta.class));
+                finish();
             }
         });
     }

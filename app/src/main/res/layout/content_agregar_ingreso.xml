@@ -55,6 +55,17 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextConceptoIngreso"
+        android:background="#FFFFFF"
+        android:inputType="textCapSentences"
+        android:layout_alignTop="@+id/textViewConceptoIngreso"
+        android:layout_toEndOf="@+id/buttonCancelarIngreso"
+        android:layout_alignBottom="@+id/textViewConceptoIngreso" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/editTextMontoIngreso"
@@ -67,23 +78,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/editTextConceptoIngreso"
-        android:background="#FFFFFF"
-        android:inputType="textCapSentences"
-        android:layout_alignTop="@+id/textViewConceptoIngreso"
-        android:layout_toEndOf="@+id/buttonCancelarIngreso"
-        android:layout_alignBottom="@+id/textViewConceptoIngreso" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
         android:id="@+id/editTextFechaIngreso"
         android:background="#FFFFFF"
         android:maxLength="8"
         android:layout_alignTop="@+id/textViewFechaIngreso"
         android:layout_alignStart="@+id/editTextMontoIngreso"
-        android:layout_above="@+id/buttonCancelarIngreso" />
+        android:layout_above="@+id/buttonCancelarIngreso"
+        android:inputType="date" />
 
     <CheckBox
         android:layout_width="wrap_content"

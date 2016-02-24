@@ -72,6 +72,7 @@ public class WelcomeScreen extends AppCompatActivity implements View.OnClickList
     public void onClickButton(){
 
         startActivity(new Intent(WelcomeScreen.this, DashboardDrawer.class));
+        finish();
 
     }
 

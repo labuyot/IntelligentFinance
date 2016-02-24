@@ -74,7 +74,7 @@
         android:layout_alignTop="@+id/textViewMontoGasto"
         android:layout_toEndOf="@+id/textViewConceptoGasto"
         android:background="#FFFFFF"
-        android:layout_above="@+id/textViewFechaInicioGasto" />
+        android:layout_above="@+id/textViewTipoGasto" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -97,7 +97,8 @@
         android:layout_alignStart="@+id/editTextMontoGasto"
         android:maxLength="8"
         android:layout_alignTop="@+id/textViewFechaGasto"
-        android:layout_alignBottom="@+id/textViewFechaGasto" />
+        android:layout_alignBottom="@+id/textViewFechaGasto"
+        android:inputType="date" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -149,5 +150,6 @@
         android:layout_toEndOf="@+id/textViewTipoGasto"
         android:layout_alignTop="@+id/textViewTipoGasto"
         android:layout_above="@+id/checkBoxGasto"
-        android:layout_alignStart="@+id/editTextMontoGasto" />
+        android:layout_alignStart="@+id/editTextMontoGasto"
+        android:visibility="visible" />
 </RelativeLayout>

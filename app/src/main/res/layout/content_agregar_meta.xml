@@ -97,7 +97,8 @@
         android:layout_marginLeft="15dp"
         android:layout_alignTop="@+id/textViewFechaInicioMeta"
         android:layout_toEndOf="@+id/textViewFechaInicioMeta"
-        android:layout_alignBottom="@+id/textViewFechaInicioMeta" />
+        android:layout_alignBottom="@+id/textViewFechaInicioMeta"
+        android:inputType="date" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -109,7 +110,8 @@
         android:layout_alignTop="@+id/textViewFechaFinalMeta"
         android:layout_toEndOf="@+id/textViewFechaFinalMeta"
         android:layout_above="@+id/buttonCancelarMeta"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginLeft="15dp"
+        android:inputType="date" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

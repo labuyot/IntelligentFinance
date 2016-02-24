@@ -27,6 +27,7 @@ public class MenuIngreso extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("cek", "home selected");
                 startActivity(new Intent(MenuIngreso.this, DashboardDrawer.class));
+                finish();
             }
         });
 
@@ -35,6 +36,7 @@ public class MenuIngreso extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MenuIngreso.this, AgregarIngreso.class));
+                finish();
             }
         });
 

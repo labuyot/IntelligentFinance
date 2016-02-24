@@ -122,7 +122,8 @@
         android:layout_alignTop="@+id/textViewVencimientoTarjeta"
         android:layout_toEndOf="@+id/textViewVencimientoTarjeta"
         android:layout_alignBottom="@+id/textViewVencimientoTarjeta"
-        android:layout_marginLeft="25dp" />
+        android:layout_marginLeft="25dp"
+        android:inputType="date" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -134,7 +135,8 @@
         android:layout_marginLeft="25dp"
         android:layout_alignTop="@+id/textViewCorteTarjeta"
         android:layout_toEndOf="@+id/textViewMontoTarjeta"
-        android:layout_alignBottom="@+id/textViewCorteTarjeta" />
+        android:layout_alignBottom="@+id/textViewCorteTarjeta"
+        android:inputType="date" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -187,6 +189,7 @@
         android:layout_marginLeft="25dp"
         android:layout_alignTop="@+id/textViewInteresTarjeta"
         android:layout_toEndOf="@+id/textViewInteresTarjeta"
-        android:layout_above="@+id/textViewCorteTarjeta" />
+        android:layout_above="@+id/textViewCorteTarjeta"
+        android:inputType="number" />
 
 </RelativeLayout>

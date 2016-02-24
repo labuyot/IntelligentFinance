@@ -13,4 +13,26 @@
     tools:context="com.example.earllarry.intelligentfinance.MenuIngreso"
     tools:showIn="@layout/activity_menu_ingreso">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical|horizontal"
+        android:layout_weight="1">
+
+        <TableLayout
+            android:id="@+id/tableLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dip"
+            android:isScrollContainer="true">
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
 </RelativeLayout>

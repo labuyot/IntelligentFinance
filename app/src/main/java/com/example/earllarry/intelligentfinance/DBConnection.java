@@ -402,6 +402,35 @@ public class DBConnection extends SQLiteOpenHelper {
         return tarjeta;
     }
 
+    public int getTotal(String columnName, String tableName) {
+
+        int total =0;
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT SUM(" + columnName +  ") FROM " + tableName, null);
+        if(cursor.moveToFirst()) {
+            total = cursor.getInt(0);
+        }
+
+        return total;
+    }
+
+    public void deleteData(String columnName, String tableName) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "DELETE FROM " + tableName + " WHERE Concepo = " + columnName, null);
+    }
+/*
+    public void updateData(String columnName, String tableName) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "UPDATE " + tableName + " WHERE Concepo = " + columnName, null);
+    } */
+
+
     /*
     public ArrayList<String> getDetalleDePartidaByID(String id){
         ArrayList<String> lista = new ArrayList<>();
