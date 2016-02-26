@@ -422,6 +422,19 @@ public class DBConnection extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(
                 "DELETE FROM " + tableName + " WHERE Concepo = " + columnName, null);
     }
+
+    public int getCantidadDeFilas(String tabla) {
+        String countQuery = "SELECT  * FROM " + tabla;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int cnt = cursor.getCount();
+        cursor.close();
+
+        return cnt;
+    }
 /*
     public void updateData(String columnName, String tableName) {
         SQLiteDatabase db = getReadableDatabase();

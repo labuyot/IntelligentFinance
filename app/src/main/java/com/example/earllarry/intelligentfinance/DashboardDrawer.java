@@ -64,9 +64,9 @@ public class DashboardDrawer extends AppCompatActivity
         helpIngreso = connection.getTotal("Monto","Ingreso");
         helpGasto = connection.getTotal("Monto","Gasto");
         helpTarjeta = connection.getTotal("Monto","Tarjeta");
-        helpBalance = helpIngreso - helpGasto;
+        helpBalance = (helpIngreso + helpTarjeta) - helpGasto;
 
-        if(helpBalance < 0){
+        if(helpBalance <= 0){
             textViewBalance.setTextColor(getResources().getColor(R.color.BalanceRed));
         }else{
             textViewBalance.setTextColor(getResources().getColor(R.color.BalanceBlue));

@@ -73,7 +73,7 @@
         android:id="@+id/editTextMontoGasto"
         android:layout_alignTop="@+id/textViewMontoGasto"
         android:layout_toEndOf="@+id/textViewConceptoGasto"
-        android:background="#FFFFFF"
+        android:background="@drawable/layout_border"
         android:layout_above="@+id/textViewTipoGasto" />
 
     <EditText
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextConceptoGasto"
-        android:background="#FFFFFF"
+        android:background="@drawable/layout_border"
         android:inputType="textCapSentences"
         android:layout_alignTop="@+id/textViewConceptoGasto"
         android:layout_toEndOf="@+id/textViewConceptoGasto"
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextFechaGasto"
-        android:background="#FFFFFF"
+        android:background="@drawable/layout_border"
         android:layout_alignStart="@+id/editTextMontoGasto"
         android:maxLength="8"
         android:layout_alignTop="@+id/textViewFechaGasto"
@@ -145,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerTipoGasto"
-        android:background="#ffffff"
+        android:background="@drawable/layout_border"
         android:layout_alignEnd="@+id/editTextTipoGasto"
         android:layout_toEndOf="@+id/textViewTipoGasto"
         android:layout_alignTop="@+id/textViewTipoGasto"

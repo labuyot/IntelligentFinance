@@ -31,7 +31,7 @@ public class Ingreso {
 
     public void setMonto(double monto) { this.monto = monto; }
 
-    public int isAutomatizar() { return automatizar; }
+    public int getAutomatizar() { return automatizar; }
 
     public void setAutomatizar(int automatizar) { this.automatizar = automatizar; }
 

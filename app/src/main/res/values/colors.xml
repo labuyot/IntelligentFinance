@@ -3,7 +3,7 @@
     <color name="colorPrimary">#006735</color>
     <color name="colorPrimaryDark">#FF008545</color>
     <color name="colorAccent">#006735</color>
-    <color name="colorBacground">#FFD8D8D8</color>
+    <color name="colorBacground">#FFEBCD</color>
     <color name="BalanceRed">#ff0000</color>
     <color name="BalanceBlue">#1747e6</color>
 </resources>

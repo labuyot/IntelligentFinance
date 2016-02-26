@@ -9,30 +9,38 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorBacground"
+    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.earllarry.intelligentfinance.MenuIngreso"
     tools:showIn="@layout/activity_menu_ingreso">
 
     <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scrollbars="vertical|horizontal"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:background="#3d455b"
+        android:layout_alignParentLeft="true">
 
-        <TableLayout
-            android:id="@+id/tableLayout1"
+        <HorizontalScrollView
+            android:id="@+id/hscrll1"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="10dip"
-            android:isScrollContainer="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
 
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
 
-            </TableRow>
-        </TableLayout>
+                <TableLayout
+                    android:id="@+id/table_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" >
+                </TableLayout>
+            </RelativeLayout>
+        </HorizontalScrollView>
     </ScrollView>
 
 </RelativeLayout>
