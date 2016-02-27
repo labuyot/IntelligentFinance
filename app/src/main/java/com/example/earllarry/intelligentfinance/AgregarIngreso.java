@@ -13,6 +13,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AgregarIngreso extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonCancelar;
@@ -49,25 +55,44 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
 
+                String helpFecha = String.valueOf(editTextFecha.getText());
+
                 if (editTextConcepto.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
-                        editTextFecha.getText().toString().isEmpty()) {
+                        editTextFecha.getText().toString().isEmpty()){
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
-                } else {
+                } else if(validate(helpFecha) == 0){
+
+                    Toast.makeText(getApplicationContext(), "Fecha incorrecta",
+                            Toast.LENGTH_LONG).show();
+
+                } else if(validate(helpFecha) == 1){
+
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    Date myDate;
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
                     double helpMonto = Double.valueOf(editTextMonto.getText().toString());
-                    String helpFecha = String.valueOf(editTextFecha.getText());
+                    //String helpFecha = String.valueOf(editTextFecha.getText());
+
+                    String myText = "";
+
+                    try {
+                        myDate = df.parse(editTextFecha.getText().toString());
+                        myText = myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + (1900 + myDate.getYear());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
                     //Si automatizar esta activado inserta ingreso automatico
                     if(checkBox.isChecked()){
 
-                        connection.insertIngreso(helpConcepto, helpMonto, true, helpFecha, "");
+                        connection.insertIngreso(helpConcepto, helpMonto, true, myText, "");
 
                     }//Si automatizar esta desactivado inserta ingreso
                     else{
-                        connection.insertIngreso(helpConcepto, helpMonto, false, helpFecha, "");
+                        connection.insertIngreso(helpConcepto, helpMonto, false, myText, "");
                     }
 
                     Toast.makeText(getApplicationContext(), "Ingreso Agregado",
@@ -80,6 +105,21 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+    }
+
+    private int  validate(String registerdate) {
+
+        String regEx ="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d{2}$";
+
+        Matcher matcherObj = Pattern.compile(regEx).matcher(registerdate);
+        if (matcherObj.matches())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     @Override

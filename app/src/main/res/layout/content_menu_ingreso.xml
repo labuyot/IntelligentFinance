@@ -19,12 +19,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#3d455b"
-        android:layout_alignParentLeft="true">
+        android:scrollbars="none"
+        android:layout_alignParentLeft="true"
+        android:nestedScrollingEnabled="false">
 
         <HorizontalScrollView
             android:id="@+id/hscrll1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
             android:layout_alignParentRight="true">
 
             <RelativeLayout

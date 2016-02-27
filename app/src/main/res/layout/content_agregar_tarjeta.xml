@@ -83,60 +83,67 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/editTextMontoTarjeta"
-        android:background="@drawable/layout_border"
+        android:background="@drawable/edit_text_style"
         android:layout_alignStart="@+id/editTextBancoTarjeta"
         android:layout_alignTop="@+id/textViewMontoTarjeta"
-        android:layout_alignBottom="@+id/textViewMontoTarjeta" />
+        android:layout_alignBottom="@+id/textViewMontoTarjeta"
+        android:gravity="center"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextBancoTarjeta"
-        android:background="@drawable/layout_border"
+        android:background="@drawable/edit_text_style"
         android:inputType="textCapSentences"
         android:layout_toEndOf="@+id/textViewFourDigitsTarjeta"
         android:layout_alignTop="@+id/textViewBancoTarjeta"
-        android:layout_above="@+id/textViewMontoTarjeta" />
+        android:layout_above="@+id/textViewMontoTarjeta"
+        android:gravity="center" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextFourDigitsTarjeta"
-        android:background="@drawable/layout_border"
+        android:background="@drawable/edit_text_style"
         android:maxLength="4"
         android:inputType="number"
         android:layout_alignTop="@+id/textViewFourDigitsTarjeta"
         android:layout_toEndOf="@+id/textViewFourDigitsTarjeta"
         android:layout_marginLeft="20dp"
-        android:layout_above="@+id/textViewInteresTarjeta" />
+        android:layout_above="@+id/textViewInteresTarjeta"
+        android:gravity="center"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextVencimientoTarjeta"
-        android:background="@drawable/layout_border"
-        android:maxLength="8"
+        android:background="@drawable/edit_text_style"
+        android:maxLength="10"
         android:layout_alignTop="@+id/textViewVencimientoTarjeta"
         android:layout_toEndOf="@+id/textViewVencimientoTarjeta"
         android:layout_alignBottom="@+id/textViewVencimientoTarjeta"
         android:layout_marginLeft="25dp"
-        android:inputType="date" />
+        android:hint="dd-mm-yyyy"
+        android:inputType="date"
+        android:gravity="center"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextCorteTarjeta"
-        android:background="@drawable/layout_border"
-        android:maxLength="8"
+        android:background="@drawable/edit_text_style"
+        android:maxLength="10"
         android:layout_marginLeft="25dp"
         android:layout_alignTop="@+id/textViewCorteTarjeta"
         android:layout_toEndOf="@+id/textViewMontoTarjeta"
         android:layout_alignBottom="@+id/textViewCorteTarjeta"
-        android:inputType="date" />
+        android:hint="dd-mm-yyyy"
+        android:inputType="date"
+        android:gravity="center"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -184,12 +191,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextInteresTarjeta"
-        android:background="@drawable/layout_border"
+        android:background="@drawable/edit_text_style"
         android:maxLength="8"
         android:layout_marginLeft="25dp"
         android:layout_alignTop="@+id/textViewInteresTarjeta"
         android:layout_toEndOf="@+id/textViewInteresTarjeta"
         android:layout_above="@+id/textViewCorteTarjeta"
-        android:inputType="number" />
+        android:inputType="number"
+        android:gravity="center"/>
 
 </RelativeLayout>

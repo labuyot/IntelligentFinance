@@ -30,7 +30,7 @@
             android:id="@+id/textViewBalance"
             android:layout_gravity="left|top"
             android:inputType="textCapSentences"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:textColor="#1747e6"
             android:textStyle="bold"
@@ -44,7 +44,7 @@
             android:id="@+id/textViewBalanceDashboard"
             android:layout_gravity="right|top"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:textColor="#1747e6"
             android:textAlignment="textEnd" />
 
@@ -98,7 +98,9 @@
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="15dp"
             android:textColor="#2aad28"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
     </FrameLayout>
 
     <FrameLayout
@@ -119,7 +121,7 @@
             android:layout_gravity="left|bottom"
             android:inputType="textCapSentences"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:textColor="#ff0000"
             android:textStyle="bold"
             android:typeface="serif"
@@ -133,7 +135,7 @@
             android:id="@+id/textViewGastoDashboard"
             android:layout_gravity="right|bottom"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:textColor="#ff0000"
             android:textAlignment="textEnd" />
     </FrameLayout>
@@ -148,20 +150,6 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Tarjeta"
-            android:id="@+id/textViewTarjeta"
-            android:layout_gravity="left|bottom"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="15dp"
-            android:textColor="#ff6200"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:clickable="true" />
-
-        <TextView
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -169,9 +157,23 @@
             android:id="@+id/textViewTarjetDashboard"
             android:layout_gravity="right|bottom"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:textColor="#ff6200"
             android:textAlignment="textEnd" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Tarjeta"
+            android:id="@+id/textViewTarjeta"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#ff6200"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:clickable="true" />
     </FrameLayout>
 
 </RelativeLayout>

@@ -68,23 +68,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/editTextMontoMeta"
-        android:background="@drawable/layout_border"
-        android:layout_above="@+id/textViewFechaInicioMeta"
-        android:layout_toEndOf="@+id/textViewConceptoMeta"
-        android:layout_alignTop="@+id/textViewMontoMeta" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/editTextConceptoMeta"
-        android:background="@drawable/layout_border"
-        android:inputType="textCapSentences"
-        android:layout_marginLeft="20dp"
-        android:layout_alignBottom="@+id/textViewConceptoMeta"
+        android:background="@drawable/edit_text_style"
+        android:gravity="center"
+        android:layout_above="@+id/textViewMontoMeta"
         android:layout_toEndOf="@+id/textViewFechaInicioMeta"
         android:layout_alignTop="@+id/textViewConceptoMeta" />
 
@@ -92,26 +81,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:id="@+id/editTextMontoMeta"
+        android:background="@drawable/edit_text_style"
+        android:inputType="numberDecimal"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:layout_alignTop="@+id/textViewMontoMeta"
+        android:layout_toEndOf="@+id/textViewConceptoMeta"
+        android:layout_above="@+id/textViewFechaInicioMeta" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
         android:id="@+id/editTextFechaInicioMeta"
-        android:background="@drawable/layout_border"
+        android:background="@drawable/edit_text_style"
         android:layout_marginLeft="15dp"
+        android:maxLength="10"
         android:layout_alignTop="@+id/textViewFechaInicioMeta"
         android:layout_toEndOf="@+id/textViewFechaInicioMeta"
         android:layout_alignBottom="@+id/textViewFechaInicioMeta"
-        android:inputType="date" />
+        android:inputType="date"
+        android:hint="dd-mm-yyyy"
+        android:gravity="center" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editTextFechaFinalMeta"
-        android:background="@drawable/layout_border"
-        android:maxLength="8"
+        android:background="@drawable/edit_text_style"
+        android:maxLength="10"
         android:layout_alignTop="@+id/textViewFechaFinalMeta"
         android:layout_toEndOf="@+id/textViewFechaFinalMeta"
         android:layout_above="@+id/buttonCancelarMeta"
         android:layout_marginLeft="15dp"
-        android:inputType="date" />
+        android:inputType="date"
+        android:hint="dd-mm-yyyy"
+        android:gravity="center" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
