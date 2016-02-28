@@ -25,6 +25,9 @@ public class DashboardDrawer extends AppCompatActivity
     private TextView textViewIngresos;
     private TextView textViewGastos;
     private TextView textViewTarjetas;
+    private TextView textViewIngresoFijoDashboard;
+    private TextView textViewGastoFijoDashboard;
+    private TextView textViewTarjetaFijoDashboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class DashboardDrawer extends AppCompatActivity
         final FrameLayout frameGasto = (FrameLayout) findViewById(R.id.frameLayoutGasto);
         final FrameLayout frameTarjeta = (FrameLayout) findViewById(R.id.frameLayoutTarjeta);
         final DBConnection connection = new DBConnection(DashboardDrawer.this);
+        textViewIngresoFijoDashboard = (TextView) findViewById(R.id.textViewIngresoFijoDashboard);
+        textViewGastoFijoDashboard = (TextView) findViewById(R.id.textViewGastoFijoDashboard);
+        textViewTarjetaFijoDashboard = (TextView) findViewById(R.id.textViewTarjetaFijoDashboard);
 
 
 
@@ -114,6 +120,27 @@ public class DashboardDrawer extends AppCompatActivity
         });
 
         textViewTarjetas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));
+            }
+        });
+
+        textViewIngresoFijoDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuIngreso.class));
+            }
+        });
+
+        textViewGastoFijoDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
+            }
+        });
+
+        textViewTarjetaFijoDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));

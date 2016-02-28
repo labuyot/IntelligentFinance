@@ -37,9 +37,7 @@ public class Gasto {
 
     public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public int getAutomatizar() {
-        return automatizar;
-    }
+    public int getAutomatizar() { return automatizar; }
 
     public void setAutomatizar(int automatizar) {
         this.automatizar = automatizar;
