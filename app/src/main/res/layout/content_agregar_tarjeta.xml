@@ -127,7 +127,6 @@
         android:layout_alignBottom="@+id/textViewVencimientoTarjeta"
         android:layout_marginLeft="25dp"
         android:hint="dd-mm-yyyy"
-        android:inputType="date"
         android:gravity="center"/>
 
     <EditText
@@ -142,7 +141,6 @@
         android:layout_toEndOf="@+id/textViewMontoTarjeta"
         android:layout_alignBottom="@+id/textViewCorteTarjeta"
         android:hint="dd-mm-yyyy"
-        android:inputType="date"
         android:gravity="center"/>
 
     <Button

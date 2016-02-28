@@ -82,7 +82,6 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuIngreso.class));
-                finish();
             }
         });
 
@@ -90,7 +89,6 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
-                finish();
             }
         });
 
@@ -98,7 +96,6 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));
-                finish();
             }
         });
 
@@ -106,7 +103,6 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuIngreso.class));
-                finish();
             }
         });
 
@@ -114,7 +110,6 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
-                finish();
             }
         });
 
@@ -122,7 +117,6 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));
-                finish();
             }
         });
 

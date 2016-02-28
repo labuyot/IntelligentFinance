@@ -24,6 +24,11 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
     Button buttonCancelar;
     Button buttonGuardar;
 
+    private Pattern pattern;
+    private Matcher matcher;
+
+    private static final String DATE_PATTERN = "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]([0-9]{4})?$";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,26 +60,25 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
 
-                String helpFecha = String.valueOf(editTextFecha.getText());
+                String helpFecha = editTextFecha.getText().toString();
 
                 if (editTextConcepto.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
                         editTextFecha.getText().toString().isEmpty()){
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
-                } else if(validate(helpFecha) == 0){
+                } else if(!validate(helpFecha)){
 
                     Toast.makeText(getApplicationContext(), "Fecha incorrecta",
                             Toast.LENGTH_LONG).show();
 
-                } else if(validate(helpFecha) == 1){
+                } else if(validate(helpFecha)){
 
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     Date myDate;
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
                     double helpMonto = Double.valueOf(editTextMonto.getText().toString());
-                    //String helpFecha = String.valueOf(editTextFecha.getText());
 
                     String myText = "";
 
@@ -107,18 +111,60 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private int  validate(String registerdate) {
+    public boolean validate(String date){
 
-        String regEx ="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d{2}$";
+        matcher = pattern.compile(DATE_PATTERN).matcher(date);
 
-        Matcher matcherObj = Pattern.compile(regEx).matcher(registerdate);
-        if (matcherObj.matches())
-        {
-            return 1;
+        if(matcher.matches()){
+            matcher.reset();
+
+            if(matcher.find()){
+                String day = matcher.group(1);
+                String month = matcher.group(2);
+                int year = Integer.parseInt(matcher.group(3));
+
+                System.out.print(day);
+                System.out.print(month);
+                System.out.print(year);
+
+                if (day.equals("31") &&
+                        (month.equals("4") || month .equals("6") || month.equals("9") ||
+                                month.equals("11") || month.equals("04") || month .equals("06") ||
+                                month.equals("09"))) {
+                    return false; // only 1,3,5,7,8,10,12 has 31 days
+                }
+
+                else if (month.equals("2") || month.equals("02")) {
+                    //leap year
+                    if(year % 4==0){
+                        if(day.equals("30") || day.equals("31")){
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+                    }
+                    else{
+                        if(day.equals("29")||day.equals("30")||day.equals("31")){
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+                    }
+                }
+
+                else{
+                    return true;
+                }
+            }
+
+            else{
+                return false;
+            }
         }
-        else
-        {
-            return 0;
+        else{
+            return false;
         }
     }
 

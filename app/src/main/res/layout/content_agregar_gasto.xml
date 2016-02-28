@@ -101,7 +101,6 @@
         android:layout_alignTop="@+id/textViewFechaGasto"
         android:layout_alignBottom="@+id/textViewFechaGasto"
         android:hint="dd-mm-yyyy"
-        android:inputType="date"
         android:gravity="center"/>
 
     <CheckBox

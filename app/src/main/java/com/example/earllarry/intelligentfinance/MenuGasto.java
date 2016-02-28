@@ -223,7 +223,7 @@ public class MenuGasto extends AppCompatActivity {
             tbrowBot.setBackgroundColor(Color.parseColor("#FFFFE0"));
 
             TextView tv5 = new TextView(this);
-            tv5.setHeight(100);
+            tv5.setHeight(200);
             tv5.setTextSize(20);
             tv5.setText(" ");
             tv5.setTextColor(Color.BLACK);

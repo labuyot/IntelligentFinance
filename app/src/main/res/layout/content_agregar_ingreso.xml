@@ -87,7 +87,6 @@
         android:layout_alignStart="@+id/editTextMontoIngreso"
         android:layout_above="@+id/buttonCancelarIngreso"
         android:hint="dd-mm-yyyy"
-        android:inputType="date"
         android:gravity="center"/>
 
     <CheckBox
