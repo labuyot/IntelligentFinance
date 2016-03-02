@@ -75,7 +75,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
 
                 } else if(validate(helpFecha1) && validate(helpFecha2)) {
 
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy");
                     Date myDate1;
                     Date myDate2;
 

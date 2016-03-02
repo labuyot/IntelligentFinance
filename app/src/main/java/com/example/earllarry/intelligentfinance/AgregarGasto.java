@@ -76,7 +76,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
                 }else  if(validate(helpFecha)){
 
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy");
                     Date myDate;
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
