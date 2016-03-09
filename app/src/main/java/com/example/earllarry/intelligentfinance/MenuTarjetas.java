@@ -219,19 +219,37 @@ public class MenuTarjetas extends AppCompatActivity {
 
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    /*
+
                     v.setBackgroundColor(Color.GRAY);
-                    System.out.println("Row clicked: " + v.getId());
 
                     //get the data you need
-                    TableRow tablerow = (TableRow) v.getParent();
-                    TextView sample = (TextView) tablerow.getChildAt(2);
-                    String result = sample.getText().toString();
+                    TableRow tablerow = (TableRow) v;
+                    TextView sampleBanco = (TextView) tablerow.getChildAt(0);
+                    TextView sampleMonto = (TextView) tablerow.getChildAt(1);
+                    TextView samplefourDigits = (TextView) tablerow.getChildAt(2);
+                    TextView sampleInteres = (TextView) tablerow.getChildAt(3);
+                    TextView sampleFechaCorte = (TextView) tablerow.getChildAt(4);
+                    TextView sampleFechaVencimiento = (TextView) tablerow.getChildAt(5);
 
-                    */
+                    String intentBanco = sampleBanco.getText().toString().replaceAll("\\s+","");
+                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    int intentfourDigits = Integer.parseInt(samplefourDigits.getText().toString().replaceAll("\\s+", ""));
+                    String intentInteres = sampleInteres.getText().toString().replaceAll("\\s+", "");
+                    String intentFechaCorte = sampleFechaCorte.getText().toString().replaceAll("\\s+", "");
+                    String intentFechaVencimiento = sampleFechaVencimiento.getText().toString().replaceAll("\\s+","");
 
-                    startActivity(new Intent(MenuTarjetas.this, DashboardDrawer.class));
-                    finish();
+                    Intent i = new Intent(getApplicationContext(), ModificarTarjeta.class);
+                    i.putExtra("banco", intentBanco);
+                    i.putExtra("monto", intentMonto);
+                    i.putExtra("fourDigits", intentfourDigits);
+                    i.putExtra("interes", intentInteres);
+                    i.putExtra("fechaCorte", intentFechaCorte);
+                    i.putExtra("fechaVencimiento", intentFechaVencimiento);
+
+                    startActivity(i);
+
+                    //startActivity(new Intent(MenuTarjetas.this, DashboardDrawer.class));
+                    //finish();
                 }
             });
 

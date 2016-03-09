@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBacground"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.earllarry.intelligentfinance.ModificarMeta"
+    tools:showIn="@layout/activity_modificar_meta">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Monto"
+        android:id="@+id/textViewMontoMeta"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewConceptoMeta"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Concepto"
+        android:id="@+id/textViewConceptoMeta"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fecha Inicio"
+        android:id="@+id/textViewFechaInicioMeta"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_below="@+id/textViewMontoMeta"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fecha Final"
+        android:id="@+id/textViewFechaFinalMeta"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000000"
+        android:textSize="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textViewFechaInicioMeta"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:ems="10"
+        android:id="@+id/editTextConceptoMeta"
+        android:background="@drawable/edit_text_style"
+        android:gravity="center"
+        android:layout_above="@+id/textViewMontoMeta"
+        android:layout_toEndOf="@+id/textViewFechaInicioMeta"
+        android:layout_alignTop="@+id/textViewConceptoMeta"
+        android:layout_alignStart="@+id/buttonGuardarMeta" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextMontoMeta"
+        android:background="@drawable/edit_text_style"
+        android:inputType="numberDecimal"
+        android:gravity="center"
+        android:layout_alignTop="@+id/textViewMontoMeta"
+        android:layout_above="@+id/textViewFechaInicioMeta"
+        android:layout_alignEnd="@+id/editTextFechaInicioMeta"
+        android:layout_toEndOf="@+id/textViewFechaInicioMeta"
+        android:layout_alignStart="@+id/editTextConceptoMeta" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextFechaInicioMeta"
+        android:background="@drawable/edit_text_style"
+        android:maxLength="10"
+        android:layout_alignTop="@+id/textViewFechaInicioMeta"
+        android:layout_toEndOf="@+id/textViewFechaInicioMeta"
+        android:layout_alignBottom="@+id/textViewFechaInicioMeta"
+        android:hint="dd-mm-yyyy"
+        android:gravity="center"
+        android:layout_alignStart="@+id/editTextConceptoMeta" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/editTextFechaFinalMeta"
+        android:background="@drawable/edit_text_style"
+        android:maxLength="10"
+        android:layout_alignTop="@+id/textViewFechaFinalMeta"
+        android:layout_toEndOf="@+id/textViewFechaFinalMeta"
+        android:layout_above="@+id/buttonCancelarMeta"
+        android:hint="dd-mm-yyyy"
+        android:gravity="center"
+        android:layout_alignStart="@+id/editTextFechaInicioMeta" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:id="@+id/buttonCancelarMeta"
+        android:layout_marginLeft="10dp"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:background="#006735"
+        android:layout_below="@+id/textViewFechaFinalMeta"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:id="@+id/buttonGuardarMeta"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:background="#006735"
+        android:layout_marginLeft="50dp"
+        android:layout_alignTop="@+id/buttonCancelarMeta"
+        android:layout_toEndOf="@+id/buttonCancelarMeta" />
+
+</RelativeLayout>

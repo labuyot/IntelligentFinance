@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuIngreso extends AppCompatActivity {
 
@@ -182,15 +183,22 @@ public class MenuIngreso extends AppCompatActivity {
                     TableRow tablerow = (TableRow) v;
                     TextView sampleConcepto = (TextView) tablerow.getChildAt(0);
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
+                    TextView sampleAutomatizar = (TextView) tablerow.getChildAt(2);
                     TextView sampleFecha = (TextView) tablerow.getChildAt(3);
                     String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
                     String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
                     String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+","");
 
                     Intent i = new Intent(getApplicationContext(), ModificarIngreso.class);
                     i.putExtra("concepto", intentConcepto);
                     i.putExtra("monto", intentMonto);
                     i.putExtra("fecha", intentFecha);
+                    if (Objects.equals("Si", intentAutomatizar)) {
+                        i.putExtra("automatizar", true);
+                    }else if(Objects.equals("No", intentAutomatizar)) {
+                        i.putExtra("automatizar", false);
+                    }
                     startActivity(i);
 
                    // startActivity(new Intent(MenuIngreso.this, ModificarIngreso.class));

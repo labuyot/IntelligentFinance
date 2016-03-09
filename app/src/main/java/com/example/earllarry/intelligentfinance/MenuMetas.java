@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuMetas extends AppCompatActivity {
 
@@ -173,19 +174,30 @@ public class MenuMetas extends AppCompatActivity {
 
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    /*
+
                     v.setBackgroundColor(Color.GRAY);
-                    System.out.println("Row clicked: " + v.getId());
 
                     //get the data you need
-                    TableRow tablerow = (TableRow) v.getParent();
-                    TextView sample = (TextView) tablerow.getChildAt(2);
-                    String result = sample.getText().toString();
+                    TableRow tablerow = (TableRow) v;
+                    TextView sampleConcepto = (TextView) tablerow.getChildAt(0);
+                    TextView sampleMonto = (TextView) tablerow.getChildAt(1);
+                    TextView sampleFechaInicio = (TextView) tablerow.getChildAt(2);
+                    TextView sampleFechaFinal = (TextView) tablerow.getChildAt(3);
+                    String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
+                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    String intentFechaInicio = sampleFechaInicio.getText().toString().replaceAll("\\s+", "");
+                    String intentFechaFinal = sampleFechaFinal.getText().toString().replaceAll("\\s+","");
 
-                    */
+                    Intent i = new Intent(getApplicationContext(), ModificarMeta.class);
+                    i.putExtra("concepto", intentConcepto);
+                    i.putExtra("monto", intentMonto);
+                    i.putExtra("fechaInicio", intentFechaInicio);
+                    i.putExtra("fechaFinal", intentFechaFinal);
 
-                    startActivity(new Intent(MenuMetas.this, DashboardDrawer.class));
-                    finish();
+                    startActivity(i);
+
+                    //startActivity(new Intent(MenuMetas.this, DashboardDrawer.class));
+                    //finish();
                 }
             });
 

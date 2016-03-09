@@ -484,6 +484,27 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
+    public void updateDataGasto(String concepto, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Gasto", data, "Concepto='" + concepto +"'", null);
+
+    }
+
+    public void updateDataMeta(String concepto, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Meta", data, "Concepto='" + concepto +"'", null);
+
+    }
+
+    public void updateDataTarjeta(int cuatroDigitos, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Tarjeta", data, "Cuatrodigitos=" + cuatroDigitos , null);
+
+    }
+
 
 
     /*

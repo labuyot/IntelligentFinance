@@ -68,6 +68,18 @@
         <activity
             android:name=".ModificarIngreso"
             android:label="@string/title_activity_modificar_ingreso"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ModificarGasto"
+            android:label="@string/title_activity_modificar_gasto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ModificarMeta"
+            android:label="@string/title_activity_modificar_meta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ModificarTarjeta"
+            android:label="@string/title_activity_modificar_tarjeta"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

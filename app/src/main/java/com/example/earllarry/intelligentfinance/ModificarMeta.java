@@ -1,7 +1,5 @@
 package com.example.earllarry.intelligentfinance;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,18 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModificarIngreso extends AppCompatActivity implements View.OnClickListener {
+public class ModificarMeta extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -38,49 +34,46 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modificar_ingreso);
+        setContentView(R.layout.activity_modificar_meta);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final DBConnection connection = new DBConnection(ModificarIngreso.this);
+        final DBConnection connection = new DBConnection(ModificarMeta.this);
 
-        final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoIngreso);
-        final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoIngreso);
-        final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxIngreso);
-        final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaIngreso);
+        final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoMeta);
+        final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoMeta);
+        final EditText editTextFechaInicio = (EditText)findViewById(R.id.editTextFechaInicioMeta);
+        final EditText editTextFechaFinal = (EditText)findViewById(R.id.editTextFechaFinalMeta);
 
-        buttonCancelar = (Button)findViewById(R.id.buttonCancelarIngreso);
+        buttonCancelar = (Button)findViewById(R.id.buttonCancelarMeta);
         buttonCancelar.setOnClickListener(this);
-        buttonGuardar = (Button)findViewById(R.id.buttonGuardarIngreso);
+        buttonGuardar = (Button)findViewById(R.id.buttonGuardarMeta);
         buttonGuardar.setOnClickListener(this);
 
         String ayudaConcepto = "";
         String ayudaMonto = "";
-        String ayudaFecha = "";
-        boolean ayudaAutomatizar = false;
+        String ayudaFechaInicio = "";
+        String ayudaFechaFinal = "";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             ayudaConcepto = extras.getString("concepto");
             ayudaMonto = extras.getString("monto");
-            ayudaAutomatizar = extras.getBoolean("automatizar");
-            ayudaFecha = extras.getString("fecha");
+            ayudaFechaInicio = extras.getString("fechaInicio");
+            ayudaFechaFinal = extras.getString("fechaFinal");
         }
 
         conceptoAModificar = ayudaConcepto.replaceAll("\\s+","");
 
         editTextConcepto.setText(ayudaConcepto.replaceAll("\\s+", ""));
         editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));
-        editTextFecha.setText(ayudaFecha.replaceAll("\\s+",""));
-
-        if(ayudaAutomatizar == true){
-            checkBox.setChecked(true);
-        }
+        editTextFechaInicio.setText(ayudaFechaInicio.replaceAll("\\s+",""));
+        editTextFechaFinal.setText(ayudaFechaFinal.replaceAll("\\s+", ""));
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModificarIngreso.this, MenuIngreso.class));
+                startActivity(new Intent(ModificarMeta.this, MenuMetas.class));
                 finish();
             }
         });
@@ -89,31 +82,42 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
 
-                String helpFecha = editTextFecha.getText().toString();
+                String helpFecha1 = editTextFechaInicio.getText().toString();
+                String helpFecha2 = editTextFechaFinal.getText().toString();
 
                 if (editTextConcepto.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
-                        editTextFecha.getText().toString().isEmpty()){
+                        editTextFechaInicio.getText().toString().isEmpty() || editTextFechaFinal.getText().toString().isEmpty()) {
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
-                } else if(!validate(helpFecha)){
+
+                }else if(!validate(helpFecha1) || !validate(helpFecha2)){
 
                     Toast.makeText(getApplicationContext(), "Fecha incorrecta",
                             Toast.LENGTH_LONG).show();
 
-                } else if(validate(helpFecha)){
+                } else if(validate(helpFecha1) && validate(helpFecha2)) {
 
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    Date myDate;
+                    Date myDate1;
+                    Date myDate2;
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
-                    double helpMonto = Double.valueOf(editTextMonto.getText().toString().replaceAll("\\s+",""));
+                    double helpMonto = Double.valueOf(editTextMonto.getText().toString());
 
-                    String myText = "";
+                    String myText1 = "";
+                    String myText2 = "";
 
                     try {
-                        myDate = df.parse(editTextFecha.getText().toString());
-                        myText = myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + (1900 + myDate.getYear());
+                        myDate1 = df.parse(editTextFechaInicio.getText().toString());
+                        myText1 = myDate1.getDate() + "-" + (myDate1.getMonth() + 1) + "-" + (1900 + myDate1.getYear());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        myDate2 = df.parse(editTextFechaFinal.getText().toString());
+                        myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1900 + myDate2.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -126,36 +130,23 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
                     ContentValues data=new ContentValues();
                     data.put("Concepto", helpConcepto1);
                     data.put("Monto", helpMonto);
-                    data.put("Fecha", myText);
+                    data.put("FechaInicio", myText1);
+                    data.put("FechaFinal", myText2);
 
-                    //if(connection.conceptoExist(helpConcepto1, "Ingreso", "Concepto")){
+                    //if(connection.conceptoExist(helpConcepto1, "Meta", "Concepto")){
 
                     //    Toast.makeText(getApplicationContext(), "Concepto ya existe",
                     //            Toast.LENGTH_LONG).show();
 
                     //}else {
 
-                        //Si automatizar esta activado inserta ingreso automatico
-                        if(checkBox.isChecked()){
+                    connection.updateDataMeta(conceptoAModificar, data);
 
-                            data.put("Automatizar", true);
-
-                            connection.updateDataIngreso(conceptoAModificar, data);
-
-                        }//Si automatizar esta desactivado inserta ingreso
-                        else{
-
-                            data.put("Automatizar", false);
-
-                            connection.updateDataIngreso(conceptoAModificar, data);
-
-                        }
-
-                        Toast.makeText(getApplicationContext(), "Ingreso modificado",
+                        Toast.makeText(getApplicationContext(), "Meta Modificada",
                                 Toast.LENGTH_LONG).show();
 
-                        //ir al Menu Ingreso
-                        startActivity(new Intent(ModificarIngreso.this, MenuIngreso.class));
+                        //ir al Menu Metas
+                        startActivity(new Intent(ModificarMeta.this, MenuMetas.class));
                         finish();
 
                     //}
@@ -226,4 +217,5 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
 
     }
+
 }

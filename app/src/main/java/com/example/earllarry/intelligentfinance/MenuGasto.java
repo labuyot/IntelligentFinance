@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuGasto extends AppCompatActivity {
 
@@ -198,19 +199,33 @@ public class MenuGasto extends AppCompatActivity {
 
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    /*
+
                     v.setBackgroundColor(Color.GRAY);
-                    System.out.println("Row clicked: " + v.getId());
 
                     //get the data you need
-                    TableRow tablerow = (TableRow) v.getParent();
-                    TextView sample = (TextView) tablerow.getChildAt(2);
-                    String result = sample.getText().toString();
+                    TableRow tablerow = (TableRow) v;
+                    TextView sampleConcepto = (TextView) tablerow.getChildAt(0);
+                    TextView sampleMonto = (TextView) tablerow.getChildAt(1);
+                    TextView sampleAutomatizar = (TextView) tablerow.getChildAt(3);
+                    TextView sampleFecha = (TextView) tablerow.getChildAt(4);
+                    String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+", "");
+                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
+                    String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+", "");
 
-                    */
+                    Intent i = new Intent(getApplicationContext(), ModificarGasto.class);
+                    i.putExtra("concepto", intentConcepto);
+                    i.putExtra("monto", intentMonto);
+                    i.putExtra("fecha", intentFecha);
+                    if (Objects.equals("Si", intentAutomatizar)) {
+                        i.putExtra("automatizar", true);
+                    }else if(Objects.equals("No", intentAutomatizar)) {
+                        i.putExtra("automatizar", false);
+                    }
+                    startActivity(i);
 
-                    startActivity(new Intent(MenuGasto.this, DashboardDrawer.class));
-                    finish();
+                    //startActivity(new Intent(MenuGasto.this, DashboardDrawer.class));
+                    //finish();
                 }
             });
 

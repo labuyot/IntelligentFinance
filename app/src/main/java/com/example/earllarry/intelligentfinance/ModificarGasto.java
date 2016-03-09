@@ -1,7 +1,5 @@
 package com.example.earllarry.intelligentfinance;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,18 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ModificarIngreso extends AppCompatActivity implements View.OnClickListener {
+public class ModificarGasto extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -38,20 +35,21 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modificar_ingreso);
+        setContentView(R.layout.activity_modificar_gasto);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final DBConnection connection = new DBConnection(ModificarIngreso.this);
+        final DBConnection connection = new DBConnection(ModificarGasto.this);
 
-        final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoIngreso);
-        final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoIngreso);
-        final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxIngreso);
-        final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaIngreso);
+        final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoGasto);
+        final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoGasto);
+        final Spinner spinnerTipo = (Spinner)findViewById(R.id.spinnerTipoGasto);
+        final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxGasto);
+        final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaGasto);
 
-        buttonCancelar = (Button)findViewById(R.id.buttonCancelarIngreso);
+        buttonCancelar = (Button)findViewById(R.id.buttonCancelarGasto);
         buttonCancelar.setOnClickListener(this);
-        buttonGuardar = (Button)findViewById(R.id.buttonGuardarIngreso);
+        buttonGuardar = (Button)findViewById(R.id.buttonGuardarGasto);
         buttonGuardar.setOnClickListener(this);
 
         String ayudaConcepto = "";
@@ -65,6 +63,7 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
             ayudaMonto = extras.getString("monto");
             ayudaAutomatizar = extras.getBoolean("automatizar");
             ayudaFecha = extras.getString("fecha");
+
         }
 
         conceptoAModificar = ayudaConcepto.replaceAll("\\s+","");
@@ -80,7 +79,7 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ModificarIngreso.this, MenuIngreso.class));
+                startActivity(new Intent(ModificarGasto.this, MenuGasto.class));
                 finish();
             }
         });
@@ -92,22 +91,23 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
                 String helpFecha = editTextFecha.getText().toString();
 
                 if (editTextConcepto.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
-                        editTextFecha.getText().toString().isEmpty()){
+                        editTextFecha.getText().toString().isEmpty()) {
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
-                } else if(!validate(helpFecha)){
+                }else if(!validate(helpFecha)) {
 
                     Toast.makeText(getApplicationContext(), "Fecha incorrecta",
                             Toast.LENGTH_LONG).show();
 
-                } else if(validate(helpFecha)){
+                }else  if(validate(helpFecha)){
 
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     Date myDate;
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
-                    double helpMonto = Double.valueOf(editTextMonto.getText().toString().replaceAll("\\s+",""));
+                    double helpMonto = Double.valueOf(editTextMonto.getText().toString());
+                    String helpFrecuencia = "Quincenal";
 
                     String myText = "";
 
@@ -128,7 +128,7 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
                     data.put("Monto", helpMonto);
                     data.put("Fecha", myText);
 
-                    //if(connection.conceptoExist(helpConcepto1, "Ingreso", "Concepto")){
+                    //if(connection.conceptoExist(helpConcepto1, "Gasto", "Concepto")){
 
                     //    Toast.makeText(getApplicationContext(), "Concepto ya existe",
                     //            Toast.LENGTH_LONG).show();
@@ -140,24 +140,22 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
 
                             data.put("Automatizar", true);
 
-                            connection.updateDataIngreso(conceptoAModificar, data);
+                            connection.updateDataGasto(conceptoAModificar, data);
 
                         }//Si automatizar esta desactivado inserta ingreso
                         else{
 
                             data.put("Automatizar", false);
 
-                            connection.updateDataIngreso(conceptoAModificar, data);
-
+                            connection.updateDataGasto(conceptoAModificar, data);
                         }
 
-                        Toast.makeText(getApplicationContext(), "Ingreso modificado",
+                        Toast.makeText(getApplicationContext(), "Gasto Modificado",
                                 Toast.LENGTH_LONG).show();
 
                         //ir al Menu Ingreso
-                        startActivity(new Intent(ModificarIngreso.this, MenuIngreso.class));
+                        startActivity(new Intent(ModificarGasto.this, MenuGasto.class));
                         finish();
-
                     //}
                 }
             }
@@ -226,4 +224,5 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
 
     }
+
 }

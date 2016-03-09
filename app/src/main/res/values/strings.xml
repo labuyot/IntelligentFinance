@@ -25,4 +25,7 @@
     <string name="title_activity_informe_tarjeta">Informe Tarjetas</string>
     <string name="title_activity_test">test</string>
     <string name="title_activity_modificar_ingreso">ModificarIngreso</string>
+    <string name="title_activity_modificar_gasto">ModificarGasto</string>
+    <string name="title_activity_modificar_meta">ModificarMeta</string>
+    <string name="title_activity_modificar_tarjeta">ModificarTarjeta</string>
 </resources>
