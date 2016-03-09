@@ -73,7 +73,7 @@ public class MenuGasto extends AppCompatActivity {
             TextView tv1 = new TextView(this);
             //tv1.setBackgroundResource(R.drawable.row_border);
             tv1.setTextSize(20);
-            tv1.setText(" Monto ");
+            tv1.setText("  Monto  ");
             tv1.setTextColor(Color.BLACK);
             tv1.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv1);
@@ -81,7 +81,7 @@ public class MenuGasto extends AppCompatActivity {
             TextView tv2 = new TextView(this);
             //tv2.setBackgroundResource(R.drawable.row_border);
             tv2.setTextSize(20);
-            tv2.setText(" Tipo ");
+            tv2.setText("  Tipo  ");
             tv2.setTextColor(Color.BLACK);
             tv2.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv2);
@@ -89,7 +89,7 @@ public class MenuGasto extends AppCompatActivity {
             TextView tv3 = new TextView(this);
             //tv3.setBackgroundResource(R.drawable.row_border);
             tv3.setTextSize(20);
-            tv3.setText(" Automatizar ");
+            tv3.setText("  Automatizar  ");
             tv3.setTextColor(Color.BLACK);
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
@@ -97,7 +97,7 @@ public class MenuGasto extends AppCompatActivity {
             TextView tv4 = new TextView(this);
             //tv4.setBackgroundResource(R.drawable.row_border);
             tv4.setTextSize(20);
-            tv4.setText(" Fecha ");
+            tv4.setText("  Fecha  ");
             tv4.setTextColor(Color.BLACK);
             tv4.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv4);
@@ -154,35 +154,35 @@ public class MenuGasto extends AppCompatActivity {
 
             TextView concepto = new TextView(this);
             //concepto.setBackgroundResource(R.drawable.row_border);
-            concepto.setTextSize(22);
-            concepto.setText("" + listaConceptos.get(i));
+            concepto.setTextSize(18);
+            concepto.setText(" " + listaConceptos.get(i) + " ");
             concepto.setTextColor(Color.BLACK);
             concepto.setGravity(Gravity.CENTER);
             tbrow.addView(concepto);
 
             TextView monto = new TextView(this);
             //monto.setBackgroundResource(R.drawable.row_border);
-            monto.setTextSize(22);
-            monto.setText("" + listaMontos.get(i));
+            monto.setTextSize(18);
+            monto.setText(" " + listaMontos.get(i) + " ");
             monto.setTextColor(Color.BLACK);
             monto.setGravity(Gravity.CENTER);
             tbrow.addView(monto);
 
             TextView tipo = new TextView(this);
             //tipo.setBackgroundResource(R.drawable.row_border);
-            tipo.setTextSize(22);
-            tipo.setText("" + listaTipos.get(i));
+            tipo.setTextSize(18);
+            tipo.setText(" " + listaTipos.get(i) + " ");
             tipo.setTextColor(Color.BLACK);
             tipo.setGravity(Gravity.CENTER);
             tbrow.addView(tipo);
 
             TextView automatizar = new TextView(this);
             //automatizar.setBackgroundResource(R.drawable.row_border);
-            automatizar.setTextSize(22);
+            automatizar.setTextSize(18);
             if(listaAutomatizar.get(i) == 0){
-                automatizar.setText("No");
+                automatizar.setText(" No ");
             }else {
-                automatizar.setText("Si");
+                automatizar.setText(" Si ");
             }
             automatizar.setTextColor(Color.BLACK);
             automatizar.setGravity(Gravity.CENTER);
@@ -190,8 +190,8 @@ public class MenuGasto extends AppCompatActivity {
 
             TextView fecha = new TextView(this);
             //fecha.setBackgroundResource(R.drawable.row_border);
-            fecha.setTextSize(22);
-            fecha.setText("" + listaFecha.get(i));
+            fecha.setTextSize(18);
+            fecha.setText(" " + listaFecha.get(i) + " ");
             fecha.setTextColor(Color.BLACK);
             fecha.setGravity(Gravity.CENTER);
             tbrow.addView(fecha);
@@ -223,7 +223,7 @@ public class MenuGasto extends AppCompatActivity {
             tbrowBot.setBackgroundColor(Color.parseColor("#FFFFE0"));
 
             TextView tv5 = new TextView(this);
-            tv5.setHeight(200);
+            tv5.setHeight(150);
             tv5.setTextSize(20);
             tv5.setText(" ");
             tv5.setTextColor(Color.BLACK);

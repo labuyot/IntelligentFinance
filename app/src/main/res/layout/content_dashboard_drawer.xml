@@ -19,8 +19,8 @@
         android:background="@drawable/layout_border"
         android:id="@+id/frameLayout"
         android:layout_below="@+id/textViewBienvenida"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:layout_width="wrap_content"

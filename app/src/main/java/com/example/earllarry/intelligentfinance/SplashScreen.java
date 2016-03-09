@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 
 public class SplashScreen extends AppCompatActivity {
 
-    protected  static final int seconds = 8;
+    protected  static final int seconds = 2;
     protected static final int TIMER_RUNTIME = seconds * 1000;
     protected static final int delay = 2;
     protected ProgressBar mProgressBar;

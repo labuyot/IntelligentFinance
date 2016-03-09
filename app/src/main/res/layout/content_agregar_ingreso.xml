@@ -72,9 +72,10 @@
         android:id="@+id/editTextMontoIngreso"
         android:background="@drawable/edit_text_style"
         android:layout_alignTop="@+id/textViewMontoIngreso"
-        android:layout_alignEnd="@+id/buttonGuardarIngreso"
         android:layout_above="@+id/checkBoxIngreso"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/editTextConceptoIngreso" />
 
     <EditText
         android:layout_width="wrap_content"

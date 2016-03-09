@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class MenuIngreso extends AppCompatActivity {
             TextView tv0 = new TextView(this);
             //tv0.setBackgroundResource(R.drawable.row_border);
             tv0.setTextSize(20);
-            tv0.setText(" Concepto ");
+            tv0.setText("  Concepto  ");
             tv0.setTextColor(Color.BLACK);
             tv0.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv0);
@@ -73,7 +74,7 @@ public class MenuIngreso extends AppCompatActivity {
             TextView tv1 = new TextView(this);
             //tv1.setBackgroundResource(R.drawable.row_border);
             tv1.setTextSize(20);
-            tv1.setText(" Monto ");
+            tv1.setText("  Monto  ");
             tv1.setTextColor(Color.BLACK);
             tv1.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv1);
@@ -81,7 +82,7 @@ public class MenuIngreso extends AppCompatActivity {
             TextView tv2 = new TextView(this);
             //tv2.setBackgroundResource(R.drawable.row_border);
             tv2.setTextSize(20);
-            tv2.setText(" Automatizar ");
+            tv2.setText("  Automatizar  ");
             tv2.setTextColor(Color.BLACK);
             tv2.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv2);
@@ -89,7 +90,7 @@ public class MenuIngreso extends AppCompatActivity {
             TextView tv3 = new TextView(this);
             //tv3.setBackgroundResource(R.drawable.row_border);
             tv3.setTextSize(20);
-            tv3.setText(" Fecha ");
+            tv3.setText("  Fecha  ");
             tv3.setTextColor(Color.BLACK);
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
@@ -138,27 +139,27 @@ public class MenuIngreso extends AppCompatActivity {
 
             TextView concepto = new TextView(this);
             //concepto.setBackgroundResource(R.drawable.row_border);
-            concepto.setTextSize(22);
-            concepto.setText("" + listaConceptos.get(i));
+            concepto.setTextSize(18);
+            concepto.setText(" " + listaConceptos.get(i) + " ");
             concepto.setTextColor(Color.BLACK);
             concepto.setGravity(Gravity.CENTER);
             tbrow.addView(concepto);
 
             TextView monto = new TextView(this);
             //monto.setBackgroundResource(R.drawable.row_border);
-            monto.setTextSize(22);
-            monto.setText("" + listaMontos.get(i));
+            monto.setTextSize(18);
+            monto.setText(" " + listaMontos.get(i) + " ");
             monto.setTextColor(Color.BLACK);
             monto.setGravity(Gravity.CENTER);
             tbrow.addView(monto);
 
             TextView automatizar = new TextView(this);
             //automatizar.setBackgroundResource(R.drawable.row_border);
-            automatizar.setTextSize(22);
+            automatizar.setTextSize(18);
             if(listaAutomatizar.get(i) == 0){
-                automatizar.setText("No");
+                automatizar.setText(" No ");
             }else {
-                automatizar.setText("Si");
+                automatizar.setText(" Si ");
             }
             automatizar.setTextColor(Color.BLACK);
             automatizar.setGravity(Gravity.CENTER);
@@ -166,27 +167,34 @@ public class MenuIngreso extends AppCompatActivity {
 
             TextView fecha = new TextView(this);
             //fecha.setBackgroundResource(R.drawable.row_border);
-            fecha.setTextSize(22);
-            fecha.setText("" + listaFecha.get(i));
+            fecha.setTextSize(18);
+            fecha.setText(" " + listaFecha.get(i) + " ");
             fecha.setTextColor(Color.BLACK);
             fecha.setGravity(Gravity.CENTER);
             tbrow.addView(fecha);
 
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    /*
+
                     v.setBackgroundColor(Color.GRAY);
-                    System.out.println("Row clicked: " + v.getId());
 
                     //get the data you need
-                    TableRow tablerow = (TableRow) v.getParent();
-                    TextView sample = (TextView) tablerow.getChildAt(2);
-                    String result = sample.getText().toString();
+                    TableRow tablerow = (TableRow) v;
+                    TextView sampleConcepto = (TextView) tablerow.getChildAt(0);
+                    TextView sampleMonto = (TextView) tablerow.getChildAt(1);
+                    TextView sampleFecha = (TextView) tablerow.getChildAt(3);
+                    String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
+                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+","");
 
-                    */
+                    Intent i = new Intent(getApplicationContext(), ModificarIngreso.class);
+                    i.putExtra("concepto", intentConcepto);
+                    i.putExtra("monto", intentMonto);
+                    i.putExtra("fecha", intentFecha);
+                    startActivity(i);
 
-                    startActivity(new Intent(MenuIngreso.this, DashboardDrawer.class));
-                    finish();
+                   // startActivity(new Intent(MenuIngreso.this, ModificarIngreso.class));
+                   // finish();
                 }
             });
 
@@ -199,7 +207,7 @@ public class MenuIngreso extends AppCompatActivity {
             tbrowBot.setBackgroundColor(Color.parseColor("#FFFFE0"));
 
             TextView tv5 = new TextView(this);
-            tv5.setHeight(200);
+            tv5.setHeight(150);
             tv5.setTextSize(20);
             tv5.setText(" ");
             tv5.setTextColor(Color.BLACK);

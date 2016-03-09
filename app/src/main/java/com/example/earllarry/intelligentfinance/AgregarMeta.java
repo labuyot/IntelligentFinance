@@ -26,7 +26,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String DATE_PATTERN = "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]([0-9]{4})?$";
+    private static final String DATE_PATTERN = "^([1-9]|0[1-9]|[12][0-9]|3[01])[- /.]([1-9]|0[1-9]|1[012])[- /.]([0-9]{4})?$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,11 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
                     double helpMonto = Double.valueOf(editTextMonto.getText().toString());
 
+                    helpConcepto.replaceAll("\\s+", "");
+                    String helpConceptoLower = helpConcepto.toLowerCase();
+
+                    String helpConcepto1 = helpConceptoLower.substring(0, 1).toUpperCase() + helpConceptoLower.substring(1);
+
                     String myText1 = "";
                     String myText2 = "";
 
@@ -99,14 +104,23 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
                         e.printStackTrace();
                     }
 
-                    connection.insertMeta(helpConcepto, helpMonto, myText1, myText2);
+                    if(connection.conceptoExist(helpConcepto1, "Meta", "Concepto")){
 
-                    Toast.makeText(getApplicationContext(), "Meta Agregada",
-                            Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Concepto ya existe",
+                                Toast.LENGTH_LONG).show();
 
-                    //ir al Menu Metas
-                    startActivity(new Intent(AgregarMeta.this, MenuMetas.class));
-                    finish();
+                    }else {
+
+                        connection.insertMeta(helpConcepto1, helpMonto, myText1, myText2);
+
+                        Toast.makeText(getApplicationContext(), "Meta Agregada",
+                                Toast.LENGTH_LONG).show();
+
+                        //ir al Menu Metas
+                        startActivity(new Intent(AgregarMeta.this, MenuMetas.class));
+                        finish();
+
+                    }
                 }
             }
         });

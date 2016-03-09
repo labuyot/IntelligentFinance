@@ -28,7 +28,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String DATE_PATTERN = "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]([0-9]{4})?$";
+    private static final String DATE_PATTERN = "^([1-9]|0[1-9]|[12][0-9]|3[01])[- /.]([1-9]|0[1-9]|1[012])[- /.]([0-9]{4})?$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,11 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                     double helpMonto = Double.valueOf(editTextMonto.getText().toString());
                     String helpFrecuencia = "Quincenal";
 
+                    helpConcepto.replaceAll("\\s+", "");
+                    String helpConceptoLower = helpConcepto.toLowerCase();
+
+                    String helpConcepto1 = helpConceptoLower.substring(0, 1).toUpperCase() + helpConceptoLower.substring(1);
+
                     String myText = "";
 
                     try {
@@ -92,21 +97,29 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
 
-                    //Si automatizar esta activado inserta ingreso automatico
-                    if(checkBox.isChecked()){
+                    if(connection.conceptoExist(helpConcepto1, "Gasto", "Concepto")){
 
-                        connection.insertGasto(helpConcepto, helpMonto, "", true, myText, helpFrecuencia);
-                    }//Si automatizar esta desactivado inserta ingreso
-                    else{
-                        connection.insertGasto(helpConcepto, helpMonto, "", false, myText, helpFrecuencia);
+                        Toast.makeText(getApplicationContext(), "Concepto ya existe",
+                                Toast.LENGTH_LONG).show();
+
+                    }else {
+
+                        //Si automatizar esta activado inserta ingreso automatico
+                        if(checkBox.isChecked()){
+
+                            connection.insertGasto(helpConcepto1, helpMonto, "", true, myText, helpFrecuencia);
+                        }//Si automatizar esta desactivado inserta ingreso
+                        else{
+                            connection.insertGasto(helpConcepto1, helpMonto, "", false, myText, helpFrecuencia);
+                        }
+
+                        Toast.makeText(getApplicationContext(), "Gasto Agregado",
+                                Toast.LENGTH_LONG).show();
+
+                        //ir al Menu Ingreso
+                        startActivity(new Intent(AgregarGasto.this, MenuGasto.class));
+                        finish();
                     }
-
-                    Toast.makeText(getApplicationContext(), "Gasto Agregado",
-                            Toast.LENGTH_LONG).show();
-
-                    //ir al Menu Ingreso
-                    startActivity(new Intent(AgregarGasto.this, MenuGasto.class));
-                    finish();
                 }
             }
         });

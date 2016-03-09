@@ -15,7 +15,7 @@ import java.util.List;
 public class DBConnection extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "IntelligentFinance.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private SQLiteDatabase db;
 
     private static final String USUARIO_TABLE_NAME = "Usuario";
@@ -435,13 +435,55 @@ public class DBConnection extends SQLiteOpenHelper {
 
         return cnt;
     }
-/*
-    public void updateData(String columnName, String tableName) {
+
+    public Boolean fourDigitsExist(int digitos, String tabla, String columna){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT CuatroDigitos FROM " +
+                        tabla + " WHERE " +
+                        columna + " = " + digitos, null
+        );
+
+        if (cursor.getCount() <= 0){
+            //este concepto no esta registrado
+            return false;
+        }
+        else{
+            //este concepto si esta registrado
+            return true;
+        }
+
+    }
+
+    public Boolean conceptoExist(String concepto, String tabla, String columna){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT Concepto FROM " +
+                        tabla + " WHERE " +
+                        columna + " = ?",
+                new String[]{concepto}
+        );
+
+        if (cursor.getCount() <= 0){
+            //este concepto no esta registrado
+            return false;
+        }
+        else{
+            //este concepto si esta registrado
+            return true;
+        }
+
+    }
+
+    public void updateDataIngreso(String concepto, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery(
-                "UPDATE " + tableName + " WHERE Concepo = " + columnName, null);
-    } */
+        db.update("Ingreso", data, "Concepto='" + concepto +"'", null);
+
+    }
+
 
 
     /*

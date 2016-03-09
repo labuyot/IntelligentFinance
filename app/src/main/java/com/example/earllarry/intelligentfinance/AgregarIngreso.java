@@ -27,7 +27,7 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String DATE_PATTERN = "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.]([0-9]{4})?$";
+    private static final String DATE_PATTERN = "^([1-9]|0[1-9]|[12][0-9]|3[01])[- /.]([1-9]|0[1-9]|1[012])[- /.]([0-9]{4})?$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,11 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
                     double helpMonto = Double.valueOf(editTextMonto.getText().toString());
 
+                    helpConcepto.replaceAll("\\s+", "");
+                    String helpConceptoLower = helpConcepto.toLowerCase();
+
+                    String helpConcepto1 = helpConceptoLower.substring(0, 1).toUpperCase() + helpConceptoLower.substring(1);
+
                     String myText = "";
 
                     try {
@@ -89,22 +94,31 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
                         e.printStackTrace();
                     }
 
-                    //Si automatizar esta activado inserta ingreso automatico
-                    if(checkBox.isChecked()){
+                    if(connection.conceptoExist(helpConcepto1, "Ingreso", "Concepto")){
 
-                        connection.insertIngreso(helpConcepto, helpMonto, true, myText, "");
+                        Toast.makeText(getApplicationContext(), "Concepto ya existe",
+                                Toast.LENGTH_LONG).show();
 
-                    }//Si automatizar esta desactivado inserta ingreso
-                    else{
-                        connection.insertIngreso(helpConcepto, helpMonto, false, myText, "");
+                    }else {
+
+                        //Si automatizar esta activado inserta ingreso automatico
+                        if(checkBox.isChecked()){
+
+                            connection.insertIngreso(helpConcepto1, helpMonto, true, myText, "");
+
+                        }//Si automatizar esta desactivado inserta ingreso
+                        else{
+                            connection.insertIngreso(helpConcepto1, helpMonto, false, myText, "");
+                        }
+
+                        Toast.makeText(getApplicationContext(), "Ingreso Agregado",
+                                Toast.LENGTH_LONG).show();
+
+                        //ir al Menu Ingreso
+                        startActivity(new Intent(AgregarIngreso.this, MenuIngreso.class));
+                        finish();
+
                     }
-
-                    Toast.makeText(getApplicationContext(), "Ingreso Agregado",
-                            Toast.LENGTH_LONG).show();
-
-                    //ir al Menu Ingreso
-                    startActivity(new Intent(AgregarIngreso.this, MenuIngreso.class));
-                    finish();
                 }
             }
         });

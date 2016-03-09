@@ -24,4 +24,5 @@
     <string name="title_activity_informe_meta">Informe Metas</string>
     <string name="title_activity_informe_tarjeta">Informe Tarjetas</string>
     <string name="title_activity_test">test</string>
+    <string name="title_activity_modificar_ingreso">ModificarIngreso</string>
 </resources>

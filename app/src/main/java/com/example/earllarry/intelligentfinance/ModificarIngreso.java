@@ -1,5 +1,8 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,19 +12,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AgregarTarjeta extends AppCompatActivity implements View.OnClickListener {
+public class ModificarIngreso extends AppCompatActivity implements View.OnClickListener {
 
     Button buttonCancelar;
     Button buttonGuardar;
+
+    String conceptoAModificar = "";
 
     private Pattern pattern;
     private Matcher matcher;
@@ -31,28 +38,43 @@ public class AgregarTarjeta extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agregar_tarjeta);
+        setContentView(R.layout.activity_modificar_ingreso);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final DBConnection connection = new DBConnection(AgregarTarjeta.this);
+        final DBConnection connection = new DBConnection(ModificarIngreso.this);
 
-        final EditText editTextBanco = (EditText)findViewById(R.id.editTextBancoTarjeta);
-        final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoTarjeta);
-        final EditText editTextfourDigits = (EditText)findViewById(R.id.editTextFourDigitsTarjeta);
-        final EditText editTextInteres = (EditText)findViewById(R.id.editTextInteresTarjeta);
-        final EditText editTextCorte = (EditText)findViewById(R.id.editTextCorteTarjeta);
-        final EditText editTextVencimiento = (EditText)findViewById(R.id.editTextVencimientoTarjeta);
+        final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoIngreso);
+        final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoIngreso);
+        final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxIngreso);
+        final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaIngreso);
 
-        buttonCancelar = (Button)findViewById(R.id.buttonCancelarTarjeta);
+        buttonCancelar = (Button)findViewById(R.id.buttonCancelarIngreso);
         buttonCancelar.setOnClickListener(this);
-        buttonGuardar = (Button)findViewById(R.id.buttonGuardarTarjeta);
+        buttonGuardar = (Button)findViewById(R.id.buttonGuardarIngreso);
         buttonGuardar.setOnClickListener(this);
+
+        String ayudaConcepto = "";
+        String ayudaMonto = "";
+        String ayudaFecha = "";
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            ayudaConcepto = extras.getString("concepto");
+            ayudaMonto = extras.getString("monto");
+            ayudaFecha = extras.getString("fecha");
+        }
+
+        conceptoAModificar = ayudaConcepto.replaceAll("\\s+","");
+
+        editTextConcepto.setText(ayudaConcepto.replaceAll("\\s+", ""));
+        editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));
+        editTextFecha.setText(ayudaFecha.replaceAll("\\s+",""));
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AgregarTarjeta.this, MenuTarjetas.class));
+                startActivity(new Intent(ModificarIngreso.this, MenuIngreso.class));
                 finish();
             }
         });
@@ -61,67 +83,73 @@ public class AgregarTarjeta extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
 
-                String helpCorte = String.valueOf(editTextCorte.getText());
-                String helpVenciciemto = String.valueOf(editTextVencimiento.getText());
+                String helpFecha = editTextFecha.getText().toString();
 
-                if (editTextBanco.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
-                        editTextfourDigits.getText().toString().isEmpty() || editTextInteres.getText().toString().isEmpty() ||
-                        editTextCorte.getText().toString().isEmpty() || editTextVencimiento.getText().toString().isEmpty()) {
+                if (editTextConcepto.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
+                        editTextFecha.getText().toString().isEmpty()){
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
-                } else if(!validate(helpCorte) || !validate(helpVenciciemto)){
+                } else if(!validate(helpFecha)){
 
                     Toast.makeText(getApplicationContext(), "Fecha incorrecta",
                             Toast.LENGTH_LONG).show();
 
-                } else if(validate(helpCorte) && validate(helpVenciciemto)){
+                } else if(validate(helpFecha)){
 
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    Date myDate1;
-                    Date myDate2;
+                    Date myDate;
 
-                    String helpBanco = String.valueOf(editTextBanco.getText());
-                    double helpMonto = Double.valueOf(editTextMonto.getText().toString());
-                    int helpFourDigits = Integer.valueOf(editTextfourDigits.getText().toString());
-                    double helpInteres = Double.valueOf(editTextInteres.getText().toString());
+                    String helpConcepto = String.valueOf(editTextConcepto.getText());
+                    double helpMonto = Double.valueOf(editTextMonto.getText().toString().replaceAll("\\s+",""));
 
-                    helpBanco.replaceAll("\\s+","");
-                    helpBanco.toLowerCase();
-
-                    String helpBanco1 = helpBanco.substring(0, 1).toUpperCase() + helpBanco.substring(1);
-
-                    String myText1 = "";
-                    String myText2 = "";
+                    String myText = "";
 
                     try {
-                        myDate1 = df.parse(editTextCorte.getText().toString());
-                        myText1 = myDate1.getDate() + "-" + (myDate1.getMonth() + 1) + "-" + (1900 + myDate1.getYear());
+                        myDate = df.parse(editTextFecha.getText().toString());
+                        myText = myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + (1900 + myDate.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
-                    try {
-                        myDate2 = df.parse(editTextVencimiento.getText().toString());
-                        myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1900 + myDate2.getYear());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    helpConcepto.replaceAll("\\s+", "");
+                    String helpConceptoLower = helpConcepto.toLowerCase();
 
-                    if(connection.fourDigitsExist(helpFourDigits, "Tarjeta", "Cuatrodigitos")){
+                    String helpConcepto1 = helpConceptoLower.substring(0, 1).toUpperCase() + helpConceptoLower.substring(1);
 
-                        Toast.makeText(getApplicationContext(), "Tarjeta ya existe",
+                    ContentValues data=new ContentValues();
+                    data.put("Concepto", helpConcepto1);
+                    data.put("Monto", helpMonto);
+                    data.put("Fecha", myText);
+
+                    if(connection.conceptoExist(helpConcepto1, "Ingreso", "Concepto")){
+
+                        Toast.makeText(getApplicationContext(), "Concepto ya existe",
                                 Toast.LENGTH_LONG).show();
 
                     }else {
 
-                        connection.insertTarjeta(helpBanco1, helpMonto, helpFourDigits, helpInteres, myText1, myText2);
+                        //Si automatizar esta activado inserta ingreso automatico
+                        if(checkBox.isChecked()){
 
-                        Toast.makeText(getApplicationContext(), "Tarjeta Agregada",
+                            data.put("Automatizar", "Si");
+
+                            connection.updateDataIngreso(conceptoAModificar, data);
+
+                        }//Si automatizar esta desactivado inserta ingreso
+                        else{
+
+                            data.put("Automatizar", "No");
+
+                            connection.updateDataIngreso(conceptoAModificar, data);
+
+                        }
+
+                        Toast.makeText(getApplicationContext(), "Ingreso modificado",
                                 Toast.LENGTH_LONG).show();
 
                         //ir al Menu Ingreso
-                        startActivity(new Intent(AgregarTarjeta.this, MenuTarjetas.class));
+                        startActivity(new Intent(ModificarIngreso.this, MenuIngreso.class));
                         finish();
 
                     }
