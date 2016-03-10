@@ -362,6 +362,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private Meta cursorToMetas(Cursor cursor){
         Meta meta = new Meta();
 
+        meta.setId(cursor.getInt(0));
         meta.setConcepto(cursor.getString(1));
         meta.setMonto(cursor.getDouble(2));
         meta.setFechaInicio(cursor.getString(3));
@@ -491,10 +492,10 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
-    public void updateDataMeta(String concepto, ContentValues data) {
+    public void updateDataMeta(int id, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
-        db.update("Meta", data, "Concepto='" + concepto +"'", null);
+        db.update("Meta", data, "Id=" + id, null);
 
     }
 

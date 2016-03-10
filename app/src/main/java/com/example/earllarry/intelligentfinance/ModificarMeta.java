@@ -24,7 +24,7 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
     Button buttonCancelar;
     Button buttonGuardar;
 
-    String conceptoAModificar = "";
+    int conceptoAModificar = 0;
 
     private Pattern pattern;
     private Matcher matcher;
@@ -54,6 +54,7 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
         String ayudaMonto = "";
         String ayudaFechaInicio = "";
         String ayudaFechaFinal = "";
+        String ayudaId = "";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -61,9 +62,10 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
             ayudaMonto = extras.getString("monto");
             ayudaFechaInicio = extras.getString("fechaInicio");
             ayudaFechaFinal = extras.getString("fechaFinal");
+            ayudaId = extras.getString("id");
         }
 
-        conceptoAModificar = ayudaConcepto.replaceAll("\\s+","");
+        conceptoAModificar = Integer.parseInt(ayudaId);
 
         editTextConcepto.setText(ayudaConcepto.replaceAll("\\s+", ""));
         editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));

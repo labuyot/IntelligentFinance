@@ -5,6 +5,7 @@ package com.example.earllarry.intelligentfinance;
  */
 public class Meta {
 
+    private int id;
     private String concepto;
     private double monto;
     private String fechainicio;
@@ -14,12 +15,17 @@ public class Meta {
 
     }
 
-    public Meta(String concepto, double monto, String fechainicio, String fechafinal) {
+    public Meta(int id, String concepto, double monto, String fechainicio, String fechafinal) {
+        this.id = id;
         this.concepto = concepto;
         this.monto = monto;
         this.fechainicio = fechainicio;
         this.fechafinal = fechafinal;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getConcepto() { return concepto; }
 

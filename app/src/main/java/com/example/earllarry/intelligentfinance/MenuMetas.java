@@ -97,6 +97,15 @@ public class MenuMetas extends AppCompatActivity {
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
 
+            TextView tv4 = new TextView(this);
+            //tv3.setBackgroundResource(R.drawable.row_border);
+            tv4.setTextSize(20);
+            tv4.setText("  Id  ");
+            tv4.setTextColor(Color.BLACK);
+            tv4.setGravity(Gravity.CENTER);
+            tv4.setVisibility(View.GONE);
+            tbrowHead.addView(tv4);
+
             stk.addView(tbrowHead);
 
         }
@@ -104,30 +113,37 @@ public class MenuMetas extends AppCompatActivity {
         //Carga todos los gastos de la base de datos
         List<Meta> metas = connection.getAllMetas();
 
+        ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<String> listaConceptos = new ArrayList<>();
         ArrayList<Double> listaMontos = new ArrayList<>();
         ArrayList<String> listaFechaInicio = new ArrayList<>();
         ArrayList<String> listaFechaFinal = new ArrayList<>();
 
-        //llena la lista con los conceptos de los juegos
+        //llena la lista con los ids de las metas
+        for(int i = 0; i < metas.size(); i++){
+            Meta meta = metas.get(i);
+            listaIds.add(meta.getId());
+        }
+
+        //llena la lista con los conceptos de las metas
         for(int i = 0; i < metas.size(); i++){
             Meta meta = metas.get(i);
             listaConceptos.add(meta.getConcepto());
         }
 
-        //llena la lista con los montos de los juegos
+        //llena la lista con los montos de las metas
         for(int i = 0; i < metas.size(); i++){
             Meta meta = metas.get(i);
             listaMontos.add(meta.getMonto());
         }
 
-        //llena la lista con los automatizar de los juegos
+        //llena la lista con los automatizar de las metas
         for(int i = 0; i < metas.size(); i++){
             Meta meta = metas.get(i);
             listaFechaInicio.add(meta.getFechaInicio());
         }
 
-        //llena la lista con las fechas de los juegos
+        //llena la lista con las fechas de las metas
         for(int i = 0; i < metas.size(); i++){
             Meta meta = metas.get(i);
             listaFechaFinal.add(meta.getFechaFinal());
@@ -138,7 +154,6 @@ public class MenuMetas extends AppCompatActivity {
             TableRow tbrow = new TableRow(this);
             tbrow.setClickable(true);
             tbrow.setBackgroundColor(Color.WHITE);
-
 
             TextView concepto = new TextView(this);
             //concepto.setBackgroundResource(R.drawable.row_border);
@@ -172,6 +187,15 @@ public class MenuMetas extends AppCompatActivity {
             fechaFinal.setGravity(Gravity.CENTER);
             tbrow.addView(fechaFinal);
 
+            TextView id = new TextView(this);
+            //concepto.setBackgroundResource(R.drawable.row_border);
+            id.setTextSize(18);
+            id.setText(" " + listaIds.get(i) + " ");
+            id.setTextColor(Color.BLACK);
+            id.setGravity(Gravity.CENTER);
+            id.setVisibility(View.GONE);
+            tbrow.addView(id);
+
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -183,16 +207,19 @@ public class MenuMetas extends AppCompatActivity {
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
                     TextView sampleFechaInicio = (TextView) tablerow.getChildAt(2);
                     TextView sampleFechaFinal = (TextView) tablerow.getChildAt(3);
+                    TextView sampleIds = (TextView) tablerow.getChildAt(4);
                     String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
                     String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
                     String intentFechaInicio = sampleFechaInicio.getText().toString().replaceAll("\\s+", "");
                     String intentFechaFinal = sampleFechaFinal.getText().toString().replaceAll("\\s+","");
+                    String intentIds = sampleIds.getText().toString().replaceAll("\\s+","");
 
                     Intent i = new Intent(getApplicationContext(), ModificarMeta.class);
                     i.putExtra("concepto", intentConcepto);
                     i.putExtra("monto", intentMonto);
                     i.putExtra("fechaInicio", intentFechaInicio);
                     i.putExtra("fechaFinal", intentFechaFinal);
+                    i.putExtra("id", intentIds);
 
                     startActivity(i);
 
