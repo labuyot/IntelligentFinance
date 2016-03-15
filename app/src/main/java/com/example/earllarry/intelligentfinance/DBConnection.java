@@ -299,6 +299,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private Ingreso cursorToIngresos(Cursor cursor){
         Ingreso ingreso = new Ingreso();
 
+        ingreso.setId(cursor.getInt(0));
         ingreso.setConcepto(cursor.getString(1));
         ingreso.setMonto(cursor.getDouble(2));
         ingreso.setAutomatizar(cursor.getInt(3));
@@ -330,6 +331,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private Gasto cursorToGastos(Cursor cursor){
         Gasto gasto = new Gasto();
 
+        gasto.setId(cursor.getInt(0));
         gasto.setConcepto(cursor.getString(1));
         gasto.setMonto(cursor.getDouble(2));
         gasto.setTipo(cursor.getString(3));
@@ -393,6 +395,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private Tarjeta cursorToTarjetas(Cursor cursor){
         Tarjeta tarjeta = new Tarjeta();
 
+        tarjeta.setId(cursor.getInt(0));
         tarjeta.setBanco(cursor.getString(1));
         tarjeta.setMonto(cursor.getDouble(2));
         tarjeta.setFourdigits(cursor.getInt(3));
@@ -417,11 +420,11 @@ public class DBConnection extends SQLiteOpenHelper {
         return total;
     }
 
-    public void deleteData(String columnName, String tableName) {
+    public void deleteData(String tableName, int id) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.rawQuery(
-                "DELETE FROM " + tableName + " WHERE Concepo = " + columnName, null);
+        db.delete(tableName, "Id=" + id, null);
+
     }
 
     public int getCantidadDeFilas(String tabla) {
@@ -478,17 +481,17 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
-    public void updateDataIngreso(String concepto, ContentValues data) {
+    public void updateDataIngreso(int id, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
-        db.update("Ingreso", data, "Concepto='" + concepto +"'", null);
+        db.update("Ingreso", data, "Id=" + id, null);
 
     }
 
-    public void updateDataGasto(String concepto, ContentValues data) {
+    public void updateDataGasto(int id, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
-        db.update("Gasto", data, "Concepto='" + concepto +"'", null);
+        db.update("Gasto", data, "Id=" + id, null);
 
     }
 
@@ -499,10 +502,10 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
-    public void updateDataTarjeta(int cuatroDigitos, ContentValues data) {
+    public void updateDataTarjeta(int id, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
-        db.update("Tarjeta", data, "Cuatrodigitos=" + cuatroDigitos , null);
+        db.update("Tarjeta", data, "Id=" + id , null);
 
     }
 

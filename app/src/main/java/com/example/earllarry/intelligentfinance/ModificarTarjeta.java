@@ -57,6 +57,7 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
         String ayudaInteres = "";
         String ayudaCorte = "";
         String ayudaVencimiento = "";
+        String ayudaId = "";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -66,9 +67,10 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
             ayudaInteres = extras.getString("interes");
             ayudaCorte = extras.getString("fechaCorte");
             ayudaVencimiento = extras.getString("fechaVencimiento");
+            ayudaId = extras.getString("id");
         }
 
-        tarjetaAModificar = ayudafourDigits;
+        tarjetaAModificar = Integer.parseInt(ayudaId);
 
         editTextBanco.setText(ayudaBanco.replaceAll("\\s+", ""));
         editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));

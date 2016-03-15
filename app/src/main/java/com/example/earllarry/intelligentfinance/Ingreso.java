@@ -5,6 +5,7 @@ package com.example.earllarry.intelligentfinance;
  */
 public class Ingreso {
 
+    private int id;
     private String concepto;
     private double monto;
     private int automatizar;
@@ -15,13 +16,18 @@ public class Ingreso {
 
     }
 
-    public Ingreso(String concepto, double monto, int automatizar, String fecha, String frecuencia) {
+    public Ingreso(int id, String concepto, double monto, int automatizar, String fecha, String frecuencia) {
+        this.id = id;
         this.concepto = concepto;
         this.monto = monto;
         this.automatizar = automatizar;
         this.fecha = fecha;
         this.frecuencia = frecuencia;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getConcepto() { return concepto; }
 

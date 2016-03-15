@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -42,6 +43,9 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoIngreso);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxIngreso);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaIngreso);
+        final Spinner spinnerRecurrencia = (Spinner)findViewById(R.id.spinner);
+
+        spinnerRecurrencia.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarIngreso);
         buttonCancelar.setOnClickListener(this);
@@ -67,6 +71,10 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
+                } else if(checkBox.isChecked()) {
+
+                    spinnerRecurrencia.setVisibility(View.VISIBLE);
+
                 } else if(!validate(helpFecha)){
 
                     Toast.makeText(getApplicationContext(), "Fecha incorrecta",

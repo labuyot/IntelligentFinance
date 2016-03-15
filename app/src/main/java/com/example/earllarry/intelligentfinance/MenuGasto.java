@@ -1,5 +1,7 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -103,6 +105,15 @@ public class MenuGasto extends AppCompatActivity {
             tv4.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv4);
 
+            TextView tv5 = new TextView(this);
+            //tv3.setBackgroundResource(R.drawable.row_border);
+            tv5.setTextSize(20);
+            tv5.setText("  Id  ");
+            tv5.setTextColor(Color.BLACK);
+            tv5.setGravity(Gravity.CENTER);
+            tv5.setVisibility(View.GONE);
+            tbrowHead.addView(tv5);
+
             stk.addView(tbrowHead);
 
         }
@@ -110,37 +121,44 @@ public class MenuGasto extends AppCompatActivity {
         //Carga todos los gastos de la base de datos
         List<Gasto> gastos = connection.getAllGastos();
 
+        ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<String> listaConceptos = new ArrayList<>();
         ArrayList<Double> listaMontos = new ArrayList<>();
         ArrayList<String> listaTipos = new ArrayList<>();
         ArrayList<Integer> listaAutomatizar = new ArrayList<>();
         ArrayList<String> listaFecha = new ArrayList<>();
 
-        //llena la lista con los conceptos de los juegos
+        //llena la lista con los ids de los gastos
+        for(int i = 0; i < gastos.size(); i++){
+            Gasto gasto = gastos.get(i);
+            listaIds.add(gasto.getId());
+        }
+
+        //llena la lista con los conceptos de los gastos
         for(int i = 0; i < gastos.size(); i++){
             Gasto gasto = gastos.get(i);
             listaConceptos.add(gasto.getConcepto());
         }
 
-        //llena la lista con los montos de los juegos
+        //llena la lista con los montos de los gastos
         for(int i = 0; i < gastos.size(); i++){
             Gasto gasto = gastos.get(i);
             listaMontos.add(gasto.getMonto());
         }
 
-        //llena la lista con los tipos de los juegos
+        //llena la lista con los tipos de los gastos
         for(int i = 0; i < gastos.size(); i++){
             Gasto gasto = gastos.get(i);
             listaTipos.add(gasto.getTipo());
         }
 
-        //llena la lista con los automatizar de los juegos
+        //llena la lista con los automatizar de los gastos
         for(int i = 0; i < gastos.size(); i++){
             Gasto gasto = gastos.get(i);
             listaAutomatizar.add(gasto.getAutomatizar());
         }
 
-        //llena la lista con las fechas de los juegos
+        //llena la lista con las fechas de los gastos
         for(int i = 0; i < gastos.size(); i++){
             Gasto gasto = gastos.get(i);
             listaFecha.add(gasto.getFecha());
@@ -197,6 +215,15 @@ public class MenuGasto extends AppCompatActivity {
             fecha.setGravity(Gravity.CENTER);
             tbrow.addView(fecha);
 
+            TextView id = new TextView(this);
+            //concepto.setBackgroundResource(R.drawable.row_border);
+            id.setTextSize(18);
+            id.setText(" " + listaIds.get(i) + " ");
+            id.setTextColor(Color.BLACK);
+            id.setGravity(Gravity.CENTER);
+            id.setVisibility(View.GONE);
+            tbrow.addView(id);
+
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -208,21 +235,46 @@ public class MenuGasto extends AppCompatActivity {
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
                     TextView sampleAutomatizar = (TextView) tablerow.getChildAt(3);
                     TextView sampleFecha = (TextView) tablerow.getChildAt(4);
-                    String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+", "");
-                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
-                    String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
-                    String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+", "");
+                    TextView sampleId = (TextView) tablerow.getChildAt(5);
+                    final String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+", "");
+                    final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    final String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
+                    final String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+", "");
+                    final String intentId = sampleId.getText().toString().replaceAll("\\s+", "");
 
-                    Intent i = new Intent(getApplicationContext(), ModificarGasto.class);
-                    i.putExtra("concepto", intentConcepto);
-                    i.putExtra("monto", intentMonto);
-                    i.putExtra("fecha", intentFecha);
-                    if (Objects.equals("Si", intentAutomatizar)) {
-                        i.putExtra("automatizar", true);
-                    }else if(Objects.equals("No", intentAutomatizar)) {
-                        i.putExtra("automatizar", false);
-                    }
-                    startActivity(i);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MenuGasto.this);
+                    builder.setMessage("Que desea hacer?")
+                            .setCancelable(false)
+                            .setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    Intent i = new Intent(getApplicationContext(), ModificarGasto.class);
+                                    i.putExtra("concepto", intentConcepto);
+                                    i.putExtra("monto", intentMonto);
+                                    i.putExtra("fecha", intentFecha);
+                                    i.putExtra("id", intentId);
+                                    if (Objects.equals("Si", intentAutomatizar)) {
+                                        i.putExtra("automatizar", true);
+                                    }else if(Objects.equals("No", intentAutomatizar)) {
+                                        i.putExtra("automatizar", false);
+                                    }
+                                    startActivity(i);
+                                }
+                            })
+                            .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    int dataId = Integer.parseInt(intentId);
+                                    connection.deleteData("Ingreso", dataId);
+
+                                    Intent i = new Intent(MenuGasto.this, MenuGasto.class);
+                                    startActivity(i);
+                                    finish();
+                                    //dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
 
                     //startActivity(new Intent(MenuGasto.this, DashboardDrawer.class));
                     //finish();

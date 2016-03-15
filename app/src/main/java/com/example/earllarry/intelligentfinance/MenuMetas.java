@@ -1,5 +1,7 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -207,21 +209,43 @@ public class MenuMetas extends AppCompatActivity {
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
                     TextView sampleFechaInicio = (TextView) tablerow.getChildAt(2);
                     TextView sampleFechaFinal = (TextView) tablerow.getChildAt(3);
-                    TextView sampleIds = (TextView) tablerow.getChildAt(4);
-                    String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
-                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
-                    String intentFechaInicio = sampleFechaInicio.getText().toString().replaceAll("\\s+", "");
-                    String intentFechaFinal = sampleFechaFinal.getText().toString().replaceAll("\\s+","");
-                    String intentIds = sampleIds.getText().toString().replaceAll("\\s+","");
+                    TextView sampleId = (TextView) tablerow.getChildAt(4);
+                    final String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
+                    final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    final String intentFechaInicio = sampleFechaInicio.getText().toString().replaceAll("\\s+", "");
+                    final String intentFechaFinal = sampleFechaFinal.getText().toString().replaceAll("\\s+","");
+                    final String intentId = sampleId.getText().toString().replaceAll("\\s+","");
 
-                    Intent i = new Intent(getApplicationContext(), ModificarMeta.class);
-                    i.putExtra("concepto", intentConcepto);
-                    i.putExtra("monto", intentMonto);
-                    i.putExtra("fechaInicio", intentFechaInicio);
-                    i.putExtra("fechaFinal", intentFechaFinal);
-                    i.putExtra("id", intentIds);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MenuMetas.this);
+                    builder.setMessage("Que desea hacer?")
+                            .setCancelable(false)
+                            .setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                    startActivity(i);
+                                    Intent i = new Intent(getApplicationContext(), ModificarMeta.class);
+                                    i.putExtra("concepto", intentConcepto);
+                                    i.putExtra("monto", intentMonto);
+                                    i.putExtra("fechaInicio", intentFechaInicio);
+                                    i.putExtra("fechaFinal", intentFechaFinal);
+                                    i.putExtra("id", intentId);
+
+                                    startActivity(i);
+                                }
+                            })
+                            .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    int dataId = Integer.parseInt(intentId);
+                                    connection.deleteData("Ingreso", dataId);
+
+                                    Intent i = new Intent(MenuMetas.this, MenuMetas.class);
+                                    startActivity(i);
+                                    finish();
+                                    //dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
 
                     //startActivity(new Intent(MenuMetas.this, DashboardDrawer.class));
                     //finish();

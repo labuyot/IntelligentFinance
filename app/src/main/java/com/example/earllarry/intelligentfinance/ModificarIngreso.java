@@ -28,7 +28,7 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
     Button buttonCancelar;
     Button buttonGuardar;
 
-    String conceptoAModificar = "";
+    int conceptoAModificar = 0;
 
     private Pattern pattern;
     private Matcher matcher;
@@ -58,6 +58,7 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
         String ayudaMonto = "";
         String ayudaFecha = "";
         boolean ayudaAutomatizar = false;
+        String ayudaId = "";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -65,9 +66,10 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
             ayudaMonto = extras.getString("monto");
             ayudaAutomatizar = extras.getBoolean("automatizar");
             ayudaFecha = extras.getString("fecha");
+            ayudaId = extras.getString("id");
         }
 
-        conceptoAModificar = ayudaConcepto.replaceAll("\\s+","");
+        conceptoAModificar = Integer.parseInt(ayudaId);
 
         editTextConcepto.setText(ayudaConcepto.replaceAll("\\s+", ""));
         editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));

@@ -5,6 +5,7 @@ package com.example.earllarry.intelligentfinance;
  */
 public class Tarjeta {
 
+    private int id;
     private String banco;
     private double monto;
     private int fourdigits;
@@ -16,7 +17,8 @@ public class Tarjeta {
 
     }
 
-    public Tarjeta(String banco, double monto, int fourdigits, double interes, String corte, String vencimiento) {
+    public Tarjeta(int id, String banco, double monto, int fourdigits, double interes, String corte, String vencimiento) {
+        this.id = id;
         this.banco = banco;
         this.monto = monto;
         this.fourdigits = fourdigits;
@@ -24,6 +26,10 @@ public class Tarjeta {
         this.corte = corte;
         this.vencimiento = vencimiento;
     }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getBanco() { return banco; }
 

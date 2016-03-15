@@ -1,5 +1,7 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -112,6 +114,15 @@ public class MenuTarjetas extends AppCompatActivity {
             tv5.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv5);
 
+            TextView tv6 = new TextView(this);
+            //tv3.setBackgroundResource(R.drawable.row_border);
+            tv6.setTextSize(20);
+            tv6.setText("  Id  ");
+            tv6.setTextColor(Color.BLACK);
+            tv6.setGravity(Gravity.CENTER);
+            tv6.setVisibility(View.GONE);
+            tbrowHead.addView(tv6);
+
             stk.addView(tbrowHead);
 
         }
@@ -119,12 +130,19 @@ public class MenuTarjetas extends AppCompatActivity {
         //Carga todos los gastos de la base de datos
         List<Tarjeta> tarjetas = connection.getAllTarjetas();
 
+        ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<String> listaBancos = new ArrayList<>();
         ArrayList<Double> listaMontos = new ArrayList<>();
         ArrayList<Integer> listaFourDigits = new ArrayList<>();
         ArrayList<Double> listaIntereses = new ArrayList<>();
         ArrayList<String> listaFechaCorte = new ArrayList<>();
         ArrayList<String> listaFechaVencimiento = new ArrayList<>();
+
+        //llena la lista con los Ids de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaIds.add(tarjeta.getId());
+        }
 
         //llena la lista con los Bancos de las tarjetas
         for(int i = 0; i < tarjetas.size(); i++){
@@ -217,8 +235,17 @@ public class MenuTarjetas extends AppCompatActivity {
             fechaVencimiento.setGravity(Gravity.CENTER);
             tbrow.addView(fechaVencimiento);
 
+            TextView id = new TextView(this);
+            //concepto.setBackgroundResource(R.drawable.row_border);
+            id.setTextSize(18);
+            id.setText(" " + listaIds.get(i) + " ");
+            id.setTextColor(Color.BLACK);
+            id.setGravity(Gravity.CENTER);
+            id.setVisibility(View.GONE);
+            tbrow.addView(id);
+
             tbrow.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                public void onClick(final View v) {
 
                     v.setBackgroundColor(Color.GRAY);
 
@@ -230,23 +257,48 @@ public class MenuTarjetas extends AppCompatActivity {
                     TextView sampleInteres = (TextView) tablerow.getChildAt(3);
                     TextView sampleFechaCorte = (TextView) tablerow.getChildAt(4);
                     TextView sampleFechaVencimiento = (TextView) tablerow.getChildAt(5);
+                    TextView sampleId = (TextView) tablerow.getChildAt(6);
 
-                    String intentBanco = sampleBanco.getText().toString().replaceAll("\\s+","");
-                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
-                    int intentfourDigits = Integer.parseInt(samplefourDigits.getText().toString().replaceAll("\\s+", ""));
-                    String intentInteres = sampleInteres.getText().toString().replaceAll("\\s+", "");
-                    String intentFechaCorte = sampleFechaCorte.getText().toString().replaceAll("\\s+", "");
-                    String intentFechaVencimiento = sampleFechaVencimiento.getText().toString().replaceAll("\\s+","");
+                    final String intentBanco = sampleBanco.getText().toString().replaceAll("\\s+","");
+                    final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    final int intentfourDigits = Integer.parseInt(samplefourDigits.getText().toString().replaceAll("\\s+", ""));
+                    final String intentInteres = sampleInteres.getText().toString().replaceAll("\\s+", "");
+                    final String intentFechaCorte = sampleFechaCorte.getText().toString().replaceAll("\\s+", "");
+                    final String intentFechaVencimiento = sampleFechaVencimiento.getText().toString().replaceAll("\\s+","");
+                    final String intentId = sampleId.getText().toString().replaceAll("\\s+","");
 
-                    Intent i = new Intent(getApplicationContext(), ModificarTarjeta.class);
-                    i.putExtra("banco", intentBanco);
-                    i.putExtra("monto", intentMonto);
-                    i.putExtra("fourDigits", intentfourDigits);
-                    i.putExtra("interes", intentInteres);
-                    i.putExtra("fechaCorte", intentFechaCorte);
-                    i.putExtra("fechaVencimiento", intentFechaVencimiento);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MenuTarjetas.this);
+                    builder.setMessage("Que desea hacer?")
+                            .setCancelable(false)
+                            .setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                    startActivity(i);
+                                    Intent i = new Intent(getApplicationContext(), ModificarTarjeta.class);
+                                    i.putExtra("banco", intentBanco);
+                                    i.putExtra("monto", intentMonto);
+                                    i.putExtra("fourDigits", intentfourDigits);
+                                    i.putExtra("interes", intentInteres);
+                                    i.putExtra("fechaCorte", intentFechaCorte);
+                                    i.putExtra("fechaVencimiento", intentFechaVencimiento);
+                                    i.putExtra("id", intentId);
+
+                                    startActivity(i);
+                                }
+                            })
+                            .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    int dataId = Integer.parseInt(intentId);
+                                    connection.deleteData("Tarjeta", dataId);
+
+                                    Intent i = new Intent(MenuTarjetas.this, MenuTarjetas.class);
+                                    startActivity(i);
+                                    finish();
+                                    //dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
 
                     //startActivity(new Intent(MenuTarjetas.this, DashboardDrawer.class));
                     //finish();

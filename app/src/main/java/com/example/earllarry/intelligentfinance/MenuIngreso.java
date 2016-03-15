@@ -1,5 +1,7 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -96,6 +98,15 @@ public class MenuIngreso extends AppCompatActivity {
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
 
+            TextView tv4 = new TextView(this);
+            //tv3.setBackgroundResource(R.drawable.row_border);
+            tv4.setTextSize(20);
+            tv4.setText("  Id  ");
+            tv4.setTextColor(Color.BLACK);
+            tv4.setGravity(Gravity.CENTER);
+            tv4.setVisibility(View.GONE);
+            tbrowHead.addView(tv4);
+
             stk.addView(tbrowHead);
 
         }
@@ -103,30 +114,37 @@ public class MenuIngreso extends AppCompatActivity {
         //Carga todos los ingresos de la base de datos
         List<Ingreso> ingresos = connection.getAllIngresos();
 
+        ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<String> listaConceptos = new ArrayList<>();
         ArrayList<Double> listaMontos = new ArrayList<>();
         ArrayList<Integer> listaAutomatizar = new ArrayList<>();
         ArrayList<String> listaFecha = new ArrayList<>();
 
-        //llena la lista con los conceptos de los juegos
+        //llena la lista con los ids de los ingresos
+        for(int i = 0; i < ingresos.size(); i++){
+            Ingreso ingreso = ingresos.get(i);
+            listaIds.add(ingreso.getId());
+        }
+
+        //llena la lista con los conceptos de los ingresos
         for(int i = 0; i < ingresos.size(); i++){
             Ingreso ingreso = ingresos.get(i);
             listaConceptos.add(ingreso.getConcepto());
         }
 
-        //llena la lista con los conceptos de los juegos
+        //llena la lista con los montos de los ingresos
         for(int i = 0; i < ingresos.size(); i++){
             Ingreso ingreso = ingresos.get(i);
             listaMontos.add(ingreso.getMonto());
         }
 
-        //llena la lista con los conceptos de los juegos
+        //llena la lista con las recurrencias de los ingresos
         for(int i = 0; i < ingresos.size(); i++){
             Ingreso ingreso = ingresos.get(i);
             listaAutomatizar.add(ingreso.getAutomatizar());
         }
 
-        //llena la lista con los conceptos de los juegos
+        //llena la lista con las fechas de los ingresos
         for(int i = 0; i < ingresos.size(); i++){
             Ingreso ingreso = ingresos.get(i);
             listaFecha.add(ingreso.getFecha());
@@ -174,6 +192,15 @@ public class MenuIngreso extends AppCompatActivity {
             fecha.setGravity(Gravity.CENTER);
             tbrow.addView(fecha);
 
+            TextView id = new TextView(this);
+            //concepto.setBackgroundResource(R.drawable.row_border);
+            id.setTextSize(18);
+            id.setText(" " + listaIds.get(i) + " ");
+            id.setTextColor(Color.BLACK);
+            id.setGravity(Gravity.CENTER);
+            id.setVisibility(View.GONE);
+            tbrow.addView(id);
+
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -185,24 +212,49 @@ public class MenuIngreso extends AppCompatActivity {
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
                     TextView sampleAutomatizar = (TextView) tablerow.getChildAt(2);
                     TextView sampleFecha = (TextView) tablerow.getChildAt(3);
-                    String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
-                    String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
-                    String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
-                    String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+","");
+                    TextView sampleIds = (TextView) tablerow.getChildAt(4);
+                    final String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+", "");
+                    final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    final String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
+                    final String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+", "");
+                    final String intentId = sampleIds.getText().toString().replaceAll("\\s+", "");
 
-                    Intent i = new Intent(getApplicationContext(), ModificarIngreso.class);
-                    i.putExtra("concepto", intentConcepto);
-                    i.putExtra("monto", intentMonto);
-                    i.putExtra("fecha", intentFecha);
-                    if (Objects.equals("Si", intentAutomatizar)) {
-                        i.putExtra("automatizar", true);
-                    }else if(Objects.equals("No", intentAutomatizar)) {
-                        i.putExtra("automatizar", false);
-                    }
-                    startActivity(i);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MenuIngreso.this);
+                    builder.setMessage("Que desea hacer?")
+                            .setCancelable(false)
+                            .setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                   // startActivity(new Intent(MenuIngreso.this, ModificarIngreso.class));
-                   // finish();
+                                    Intent i = new Intent(getApplicationContext(), ModificarIngreso.class);
+                                    i.putExtra("concepto", intentConcepto);
+                                    i.putExtra("monto", intentMonto);
+                                    i.putExtra("fecha", intentFecha);
+                                    i.putExtra("id", intentId);
+                                    if (Objects.equals("Si", intentAutomatizar)) {
+                                        i.putExtra("automatizar", true);
+                                    } else if (Objects.equals("No", intentAutomatizar)) {
+                                        i.putExtra("automatizar", false);
+                                    }
+                                    startActivity(i);
+                                }
+                            })
+                            .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    int dataId = Integer.parseInt(intentId);
+                                    connection.deleteData("Ingreso", dataId);
+
+                                    Intent i = new Intent(MenuIngreso.this, MenuIngreso.class);
+                                    startActivity(i);
+                                    finish();
+                                    //dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                    // startActivity(new Intent(MenuIngreso.this, ModificarIngreso.class));
+                    // finish();
                 }
             });
 
