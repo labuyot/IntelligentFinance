@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,13 +43,27 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
         final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoGasto);
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoGasto);
         final Spinner spinnerTipo = (Spinner)findViewById(R.id.spinnerTipoGasto);
+        final Spinner spinnerRecurrencia = (Spinner)findViewById(R.id.spinner2);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxGasto);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaGasto);
+
+        spinnerRecurrencia.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarGasto);
         buttonCancelar.setOnClickListener(this);
         buttonGuardar = (Button)findViewById(R.id.buttonGuardarGasto);
         buttonGuardar.setOnClickListener(this);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    spinnerRecurrencia.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerRecurrencia.setVisibility(View.GONE);
+                }
+            }
+        });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +96,6 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
                     double helpMonto = Double.valueOf(editTextMonto.getText().toString());
-                    String helpFrecuencia = "Quincenal";
 
                     helpConcepto.replaceAll("\\s+", "");
                     String helpConceptoLower = helpConcepto.toLowerCase();
@@ -107,10 +121,12 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                         //Si automatizar esta activado inserta ingreso automatico
                         if(checkBox.isChecked()){
 
-                            connection.insertGasto(helpConcepto1, helpMonto, "", true, myText, helpFrecuencia);
+                            String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
+
+                            connection.insertGasto(helpConcepto1, helpMonto, "", true, myText, textRecurrencia);
                         }//Si automatizar esta desactivado inserta ingreso
                         else{
-                            connection.insertGasto(helpConcepto1, helpMonto, "", false, myText, helpFrecuencia);
+                            connection.insertGasto(helpConcepto1, helpMonto, "", false, myText, "");
                         }
 
                         Toast.makeText(getApplicationContext(), "Gasto Agregado",

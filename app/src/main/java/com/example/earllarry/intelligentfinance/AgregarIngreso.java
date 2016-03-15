@@ -8,8 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -52,6 +54,18 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
         buttonGuardar = (Button)findViewById(R.id.buttonGuardarIngreso);
         buttonGuardar.setOnClickListener(this);
 
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    spinnerRecurrencia.setVisibility(View.VISIBLE);
+                }
+                else{
+                    spinnerRecurrencia.setVisibility(View.GONE);
+                }
+                }
+            });
+
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,10 +85,6 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
 
                     Toast.makeText(getApplicationContext(), "Llenar campos",
                             Toast.LENGTH_LONG).show();
-                } else if(checkBox.isChecked()) {
-
-                    spinnerRecurrencia.setVisibility(View.VISIBLE);
-
                 } else if(!validate(helpFecha)){
 
                     Toast.makeText(getApplicationContext(), "Fecha incorrecta",
@@ -112,7 +122,9 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
                         //Si automatizar esta activado inserta ingreso automatico
                         if(checkBox.isChecked()){
 
-                            connection.insertIngreso(helpConcepto1, helpMonto, true, myText, "");
+                            String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
+
+                            connection.insertIngreso(helpConcepto1, helpMonto, true, myText, textRecurrencia);
 
                         }//Si automatizar esta desactivado inserta ingreso
                         else{
