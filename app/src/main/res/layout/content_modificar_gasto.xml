@@ -101,6 +101,7 @@
         android:layout_alignTop="@+id/textViewFechaGasto"
         android:layout_alignBottom="@+id/textViewFechaGasto"
         android:hint="dd-mm-yyyy"
+        android:focusable="false"
         android:gravity="center"/>
 
     <CheckBox
@@ -124,7 +125,7 @@
         android:text="Cancelar"
         android:id="@+id/buttonCancelarGasto"
         android:layout_marginLeft="10dp"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_marginTop="50dp"
@@ -137,7 +138,7 @@
         android:layout_height="wrap_content"
         android:text="Guardar"
         android:id="@+id/buttonGuardarGasto"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_marginLeft="10dp"

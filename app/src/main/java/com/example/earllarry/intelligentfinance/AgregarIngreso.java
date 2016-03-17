@@ -1,5 +1,6 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,17 +13,24 @@ import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AgregarIngreso extends AppCompatActivity implements View.OnClickListener {
+
+    int mDay, mMonth, mYear;
+
+    private SimpleDateFormat dateFormatter;
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -47,6 +55,8 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaIngreso);
         final Spinner spinnerRecurrencia = (Spinner)findViewById(R.id.spinner);
 
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
         spinnerRecurrencia.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarIngreso);
@@ -57,14 +67,38 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     spinnerRecurrencia.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     spinnerRecurrencia.setVisibility(View.GONE);
                 }
-                }
-            });
+            }
+        });
+
+        editTextFecha.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(AgregarIngreso.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFecha.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +140,7 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
                     String myText = "";
 
                     try {
-                        myDate = df.parse(editTextFecha.getText().toString());
+                        myDate = df.parse(helpFecha);
                         myText = myDate.getDate() + "-" + (myDate.getMonth() + 1) + "-" + (1900 + myDate.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -124,11 +158,11 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
 
                             String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
 
-                            connection.insertIngreso(helpConcepto1, helpMonto, true, myText, textRecurrencia);
+                            connection.insertIngreso(helpConcepto1, helpMonto, true, helpFecha, textRecurrencia);
 
                         }//Si automatizar esta desactivado inserta ingreso
                         else{
-                            connection.insertIngreso(helpConcepto1, helpMonto, false, myText, "");
+                            connection.insertIngreso(helpConcepto1, helpMonto, false, helpFecha, "");
                         }
 
                         Toast.makeText(getApplicationContext(), "Ingreso Agregado",

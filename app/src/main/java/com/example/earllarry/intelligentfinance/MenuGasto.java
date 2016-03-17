@@ -227,7 +227,7 @@ public class MenuGasto extends AppCompatActivity {
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                    v.setBackgroundColor(Color.GRAY);
+                    //v.setBackgroundColor(Color.GRAY);
 
                     //get the data you need
                     TableRow tablerow = (TableRow) v;
@@ -255,22 +255,27 @@ public class MenuGasto extends AppCompatActivity {
                                     i.putExtra("id", intentId);
                                     if (Objects.equals("Si", intentAutomatizar)) {
                                         i.putExtra("automatizar", true);
-                                    }else if(Objects.equals("No", intentAutomatizar)) {
+                                    } else if (Objects.equals("No", intentAutomatizar)) {
                                         i.putExtra("automatizar", false);
                                     }
                                     startActivity(i);
                                 }
                             })
-                            .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                            .setNeutralButton("Eliminar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
 
                                     int dataId = Integer.parseInt(intentId);
-                                    connection.deleteData("Ingreso", dataId);
+                                    connection.deleteData("Gasto", dataId);
 
                                     Intent i = new Intent(MenuGasto.this, MenuGasto.class);
                                     startActivity(i);
                                     finish();
                                     //dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
                                 }
                             });
                     AlertDialog alert = builder.create();

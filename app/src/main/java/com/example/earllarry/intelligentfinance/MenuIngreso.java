@@ -204,7 +204,7 @@ public class MenuIngreso extends AppCompatActivity {
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                    v.setBackgroundColor(Color.GRAY);
+                    //v.setBackgroundColor(Color.GRAY);
 
                     //get the data you need
                     TableRow tablerow = (TableRow) v;
@@ -238,7 +238,7 @@ public class MenuIngreso extends AppCompatActivity {
                                     startActivity(i);
                                 }
                             })
-                            .setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
+                            .setNeutralButton("Eliminar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
 
                                     int dataId = Integer.parseInt(intentId);
@@ -248,6 +248,11 @@ public class MenuIngreso extends AppCompatActivity {
                                     startActivity(i);
                                     finish();
                                     //dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
                                 }
                             });
                     AlertDialog alert = builder.create();

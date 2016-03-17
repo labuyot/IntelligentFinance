@@ -1,5 +1,6 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,16 +11,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ModificarMeta extends AppCompatActivity implements View.OnClickListener {
+
+    int mDay, mMonth, mYear;
+    int fDay, fMonth, fYear;
+
+    private SimpleDateFormat dateFormatter;
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -44,6 +53,8 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoMeta);
         final EditText editTextFechaInicio = (EditText)findViewById(R.id.editTextFechaInicioMeta);
         final EditText editTextFechaFinal = (EditText)findViewById(R.id.editTextFechaFinalMeta);
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarMeta);
         buttonCancelar.setOnClickListener(this);
@@ -71,6 +82,56 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
         editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));
         editTextFechaInicio.setText(ayudaFechaInicio.replaceAll("\\s+",""));
         editTextFechaFinal.setText(ayudaFechaFinal.replaceAll("\\s+", ""));
+
+        editTextFechaInicio.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(ModificarMeta.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFechaInicio.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
+
+        editTextFechaFinal.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                fYear = mcurrentDate.get(Calendar.YEAR);
+                fMonth = mcurrentDate.get(Calendar.MONTH);
+                fDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(ModificarMeta.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFechaFinal.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, fYear, fMonth, fDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +193,8 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
                     ContentValues data=new ContentValues();
                     data.put("Concepto", helpConcepto1);
                     data.put("Monto", helpMonto);
-                    data.put("FechaInicio", myText1);
-                    data.put("FechaFinal", myText2);
+                    data.put("FechaInicio", helpFecha1);
+                    data.put("FechaFinal", helpFecha2);
 
                     //if(connection.conceptoExist(helpConcepto1, "Meta", "Concepto")){
 

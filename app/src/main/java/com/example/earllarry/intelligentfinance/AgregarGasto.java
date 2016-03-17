@@ -1,5 +1,6 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,17 +12,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AgregarGasto extends AppCompatActivity implements View.OnClickListener {
+
+    int mDay, mMonth, mYear;
+
+    private SimpleDateFormat dateFormatter;
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -47,12 +55,39 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxGasto);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaGasto);
 
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
         spinnerRecurrencia.setVisibility(View.GONE);
+        spinnerTipo.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarGasto);
         buttonCancelar.setOnClickListener(this);
         buttonGuardar = (Button)findViewById(R.id.buttonGuardarGasto);
         buttonGuardar.setOnClickListener(this);
+
+        editTextFecha.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate=Calendar.getInstance();
+                mYear=mcurrentDate.get(Calendar.YEAR);
+                mMonth=mcurrentDate.get(Calendar.MONTH);
+                mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker=new DatePickerDialog(AgregarGasto.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFecha.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();  }
+        });
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -123,10 +158,10 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
                             String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
 
-                            connection.insertGasto(helpConcepto1, helpMonto, "", true, myText, textRecurrencia);
+                            connection.insertGasto(helpConcepto1, helpMonto, "", true, helpFecha, textRecurrencia);
                         }//Si automatizar esta desactivado inserta ingreso
                         else{
-                            connection.insertGasto(helpConcepto1, helpMonto, "", false, myText, "");
+                            connection.insertGasto(helpConcepto1, helpMonto, "", false, helpFecha, "");
                         }
 
                         Toast.makeText(getApplicationContext(), "Gasto Agregado",

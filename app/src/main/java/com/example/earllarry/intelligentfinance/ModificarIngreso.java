@@ -18,12 +18,18 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ModificarIngreso extends AppCompatActivity implements View.OnClickListener {
+
+    int mDay, mMonth, mYear;
+
+    private SimpleDateFormat dateFormatter;
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -48,6 +54,8 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoIngreso);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxIngreso);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaIngreso);
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarIngreso);
         buttonCancelar.setOnClickListener(this);
@@ -78,6 +86,31 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
         if(ayudaAutomatizar == true){
             checkBox.setChecked(true);
         }
+
+        editTextFecha.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(ModificarIngreso.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFecha.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +161,7 @@ public class ModificarIngreso extends AppCompatActivity implements View.OnClickL
                     ContentValues data=new ContentValues();
                     data.put("Concepto", helpConcepto1);
                     data.put("Monto", helpMonto);
-                    data.put("Fecha", myText);
+                    data.put("Fecha", helpFecha);
 
                     //if(connection.conceptoExist(helpConcepto1, "Ingreso", "Concepto")){
 

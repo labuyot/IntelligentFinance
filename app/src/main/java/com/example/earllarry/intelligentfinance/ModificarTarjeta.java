@@ -1,5 +1,6 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,16 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ModificarTarjeta extends AppCompatActivity implements View.OnClickListener {
+
+    int mDay, mMonth, mYear;
+    int fDay, fMonth, fYear;
+
+    private SimpleDateFormat dateFormatter;
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -45,6 +54,8 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
         final EditText editTextInteres = (EditText)findViewById(R.id.editTextInteresTarjeta);
         final EditText editTextCorte = (EditText)findViewById(R.id.editTextCorteTarjeta);
         final EditText editTextVencimiento = (EditText)findViewById(R.id.editTextVencimientoTarjeta);
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarTarjeta);
         buttonCancelar.setOnClickListener(this);
@@ -76,8 +87,58 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
         editTextMonto.setText(ayudaMonto.replaceAll("\\s+",""));
         editTextfourDigits.setText(String.valueOf(ayudafourDigits));
         editTextInteres.setText(ayudaInteres.replaceAll("\\s+",""));
-        editTextCorte.setText(ayudaCorte.replaceAll("\\s+",""));
+        editTextCorte.setText(ayudaCorte.replaceAll("\\s+", ""));
         editTextVencimiento.setText(ayudaVencimiento.replaceAll("\\s+",""));
+
+        editTextCorte.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(ModificarTarjeta.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyearC, int selectedmonthC, int selecteddayC) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyearC, selectedmonthC, selecteddayC);
+                        editTextCorte.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
+
+        editTextVencimiento.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                fYear = mcurrentDate.get(Calendar.YEAR);
+                fMonth = mcurrentDate.get(Calendar.MONTH);
+                fDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(ModificarTarjeta.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyearV, int selectedmonthV, int selecteddayV) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyearV, selectedmonthV, selecteddayV);
+                        editTextVencimiento.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, fYear, fMonth, fDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,14 +181,14 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
                     String myText2 = "";
 
                     try {
-                        myDate1 = df.parse(editTextCorte.getText().toString());
+                        myDate1 = df.parse(helpCorte);
                         myText1 = myDate1.getDate() + "-" + (myDate1.getMonth() + 1) + "-" + (1900 + myDate1.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
 
                     try {
-                        myDate2 = df.parse(editTextVencimiento.getText().toString());
+                        myDate2 = df.parse(helpVenciciemto);
                         myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1900 + myDate2.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -143,8 +204,8 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
                     data.put("Monto", helpMonto);
                     data.put("Cuatrodigitos", helpFourDigits);
                     data.put("Interes", helpInteres);
-                    data.put("Corte", myText1);
-                    data.put("Vencimiento", myText2);
+                    data.put("Corte", helpCorte);
+                    data.put("Vencimiento", helpVenciciemto);
 
                     //if(connection.fourDigitsExist(helpFourDigits, "Tarjeta", "Cuatrodigitos")){
 

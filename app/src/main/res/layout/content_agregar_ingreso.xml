@@ -88,6 +88,7 @@
         android:layout_alignStart="@+id/editTextMontoIngreso"
         android:layout_above="@+id/buttonCancelarIngreso"
         android:hint="dd-mm-yyyy"
+        android:focusable="false"
         android:gravity="center"/>
 
     <CheckBox
@@ -111,7 +112,7 @@
         android:text="Cancelar"
         android:id="@+id/buttonCancelarIngreso"
         android:layout_marginLeft="10dp"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_marginTop="80dp"
@@ -124,7 +125,7 @@
         android:layout_height="wrap_content"
         android:text="Guardar"
         android:id="@+id/buttonGuardarIngreso"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_marginLeft="50dp"

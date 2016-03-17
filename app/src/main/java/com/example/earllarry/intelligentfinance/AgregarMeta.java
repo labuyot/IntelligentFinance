@@ -1,5 +1,6 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,16 +10,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AgregarMeta extends AppCompatActivity implements View.OnClickListener {
+
+    int mDay, mMonth, mYear;
+    int fDay, fMonth, fYear;
+
+    private SimpleDateFormat dateFormatter;
 
     Button buttonCancelar;
     Button buttonGuardar;
@@ -42,10 +51,62 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
         final EditText editTextFechaInicio = (EditText)findViewById(R.id.editTextFechaInicioMeta);
         final EditText editTextFechaFinal = (EditText)findViewById(R.id.editTextFechaFinalMeta);
 
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarMeta);
         buttonCancelar.setOnClickListener(this);
         buttonGuardar = (Button)findViewById(R.id.buttonGuardarMeta);
         buttonGuardar.setOnClickListener(this);
+
+        editTextFechaInicio.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(AgregarMeta.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFechaInicio.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
+
+        editTextFechaFinal.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                fYear = mcurrentDate.get(Calendar.YEAR);
+                fMonth = mcurrentDate.get(Calendar.MONTH);
+                fDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(AgregarMeta.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(selectedyear, selectedmonth, selectedday);
+                        editTextFechaFinal.setText(dateFormatter.format(newDate.getTime()));
+                    }
+                }, fYear, fMonth, fDay);
+                mDatePicker.setTitle("Select date");
+                mDatePicker.show();
+            }
+        });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +172,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
 
                     }else {
 
-                        connection.insertMeta(helpConcepto1, helpMonto, myText1, myText2);
+                        connection.insertMeta(helpConcepto1, helpMonto, helpFecha1, helpFecha2);
 
                         Toast.makeText(getApplicationContext(), "Meta Agregada",
                                 Toast.LENGTH_LONG).show();

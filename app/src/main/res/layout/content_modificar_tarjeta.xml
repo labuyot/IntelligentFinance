@@ -128,6 +128,7 @@
         android:layout_alignBottom="@+id/textViewVencimientoTarjeta"
         android:layout_marginLeft="25dp"
         android:hint="dd-mm-yyyy"
+        android:focusable="false"
         android:gravity="center"/>
 
     <EditText
@@ -140,6 +141,7 @@
         android:layout_alignTop="@+id/textViewCorteTarjeta"
         android:layout_alignBottom="@+id/textViewCorteTarjeta"
         android:hint="dd-mm-yyyy"
+        android:focusable="false"
         android:gravity="center"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/editTextVencimientoTarjeta" />
@@ -152,7 +154,7 @@
         android:id="@+id/buttonCancelarTarjeta"
         android:layout_marginTop="44dp"
         android:layout_marginLeft="10dp"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_below="@+id/textViewVencimientoTarjeta"
@@ -164,7 +166,7 @@
         android:layout_height="wrap_content"
         android:text="Guardar"
         android:id="@+id/buttonGuardarTarjeta"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_marginLeft="10dp"

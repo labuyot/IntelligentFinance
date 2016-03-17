@@ -24,10 +24,10 @@
     <string name="title_activity_informe_meta">Informe Metas</string>
     <string name="title_activity_informe_tarjeta">Informe Tarjetas</string>
     <string name="title_activity_test">test</string>
-    <string name="title_activity_modificar_ingreso">ModificarIngreso</string>
-    <string name="title_activity_modificar_gasto">ModificarGasto</string>
-    <string name="title_activity_modificar_meta">ModificarMeta</string>
-    <string name="title_activity_modificar_tarjeta">ModificarTarjeta</string>
+    <string name="title_activity_modificar_ingreso">Modificar Ingreso</string>
+    <string name="title_activity_modificar_gasto">Modificar Gasto</string>
+    <string name="title_activity_modificar_meta">Modificar Meta</string>
+    <string name="title_activity_modificar_tarjeta">Modificar Tarjeta</string>
 
     <string-array name="recurrencia">
         <item>Diario</item>
