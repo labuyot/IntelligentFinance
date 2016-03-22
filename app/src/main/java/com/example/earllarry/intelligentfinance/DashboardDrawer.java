@@ -55,7 +55,9 @@ public class DashboardDrawer extends AppCompatActivity
         int helpIngreso = 0;
         int helpBalance = 0;
         int helpGasto = 0;
+        int helpGastoEfectivo = 0;
         int helpTarjeta = 0;
+        int gastoTarjeta = 0;
 
         List<Usuario> usuarios = connection.getAllUsuarios();
 
@@ -70,7 +72,9 @@ public class DashboardDrawer extends AppCompatActivity
         helpIngreso = connection.getTotal("Monto","Ingreso");
         helpGasto = connection.getTotal("Monto","Gasto");
         helpTarjeta = connection.getTotal("Monto","Tarjeta");
-        helpBalance = (helpIngreso + helpTarjeta) - helpGasto;
+        helpGastoEfectivo = connection.getTotalEfectivo("Monto","Gasto");
+        helpBalance = helpIngreso - helpGastoEfectivo;
+        gastoTarjeta = connection.getTotal("Gasto", "Tarjetagasto");
 
         if(helpBalance <= 0){
             textViewBalance.setTextColor(getResources().getColor(R.color.BalanceRed));
@@ -81,7 +85,7 @@ public class DashboardDrawer extends AppCompatActivity
         textViewBalance.setText("$ " + helpBalance);
         textViewIngresos.setText("$ " + helpIngreso);
         textViewGastos.setText("$ " + helpGasto);
-        textViewTarjetas.setText("$ " + helpTarjeta);
+        textViewTarjetas.setText("$ " + (helpTarjeta - gastoTarjeta));
 
         //cliqueables
         frameIngreso.setOnClickListener(new View.OnClickListener() {

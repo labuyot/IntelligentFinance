@@ -33,6 +33,8 @@
         <item>Diario</item>
         <item>Quincenal</item>
         <item>Mensual</item>
+        <item>Trimestral</item>
+        <item>Semestral</item>
         <item>Anual</item>
     </string-array>
 </resources>

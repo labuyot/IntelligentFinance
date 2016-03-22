@@ -1,6 +1,8 @@
 package com.example.earllarry.intelligentfinance;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,9 +22,12 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,15 +56,16 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
         final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoGasto);
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoGasto);
-        final Spinner spinnerTipo = (Spinner)findViewById(R.id.spinnerTipoGasto);
+        final Spinner spinnerTarjeta = (Spinner)findViewById(R.id.spinnerTarjetaGasto);
         final Spinner spinnerRecurrencia = (Spinner)findViewById(R.id.spinner2);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxGasto);
+        final CheckBox checkBoxTarjeta = (CheckBox) findViewById(R.id.checkboxTarjeta);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaGasto);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         spinnerRecurrencia.setVisibility(View.GONE);
-        spinnerTipo.setVisibility(View.GONE);
+        spinnerTarjeta.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarGasto);
         buttonCancelar.setOnClickListener(this);
@@ -100,6 +107,38 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        checkBoxTarjeta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if(connection.getCantidadDeFilas("Tarjeta") > 0){
+                        spinnerTarjeta.setVisibility(View.VISIBLE);
+
+                        List<Tarjeta> tarjetas = connection.getAllTarjetas();
+                        ArrayList<Integer> listaFourDigits = new ArrayList<>();
+
+                        //llena la lista con los 4digitos de las tarjetas
+                        for(int i = 0; i < tarjetas.size(); i++){
+                            Tarjeta tarjeta = tarjetas.get(i);
+                            listaFourDigits.add(tarjeta.getFourdigits());
+                        }
+
+                        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(AgregarGasto.this, android.R.layout.simple_spinner_dropdown_item, listaFourDigits);
+
+                        spinnerTarjeta.setAdapter(adapter);
+
+                    }else{
+
+                        checkBoxTarjeta.setChecked(false);
+                        Toast.makeText(getApplicationContext(), "No ha registrado tarjetas",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    spinnerTarjeta.setVisibility(View.GONE);
+                }
+            }
+        });
+
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +150,10 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
         buttonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                int helpIngreso = 0;
+                int helpBalance = 0;
+                int helpGastoEfectivo = 0;
 
                 String helpFecha = editTextFecha.getText().toString();
 
@@ -135,7 +178,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                     helpConcepto.replaceAll("\\s+", "");
                     String helpConceptoLower = helpConcepto.toLowerCase();
 
-                    String helpConcepto1 = helpConceptoLower.substring(0, 1).toUpperCase() + helpConceptoLower.substring(1);
+                    final String helpConcepto1 = helpConceptoLower.substring(0, 1).toUpperCase() + helpConceptoLower.substring(1);
 
                     String myText = "";
 
@@ -153,23 +196,78 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
                     }else {
 
-                        //Si automatizar esta activado inserta ingreso automatico
-                        if(checkBox.isChecked()){
+                        if(checkBoxTarjeta.isChecked()){
 
-                            String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
+                            int tarjeta = (int) spinnerTarjeta.getSelectedItem();
 
-                            connection.insertGasto(helpConcepto1, helpMonto, "", true, helpFecha, textRecurrencia);
-                        }//Si automatizar esta desactivado inserta ingreso
-                        else{
-                            connection.insertGasto(helpConcepto1, helpMonto, "", false, helpFecha, "");
+                            //Si automatizar esta activado inserta ingreso automatico
+                            if(checkBox.isChecked()){
+
+                                String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
+
+                                connection.insertTarjetaGasto(tarjeta, helpMonto);
+                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", true, helpFecha, textRecurrencia);
+                            }//Si automatizar esta desactivado inserta ingreso
+                            else{
+
+                                connection.insertTarjetaGasto(tarjeta, helpMonto);
+                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", false, helpFecha, "");
+                            }
+
+                            Toast.makeText(getApplicationContext(), "Gasto Agregado",
+                                    Toast.LENGTH_LONG).show();
+
+                            //ir al Menu Ingreso
+                            startActivity(new Intent(AgregarGasto.this, MenuGasto.class));
+                            finish();
+                        }else {
+                            //Si automatizar esta activado inserta ingreso automatico
+                            if(checkBox.isChecked()){
+
+                                String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
+
+                                connection.insertGasto(helpConcepto1, helpMonto, "Efectivo", true, helpFecha, textRecurrencia);
+                            }//Si automatizar esta desactivado inserta ingreso
+                            else{
+                                connection.insertGasto(helpConcepto1, helpMonto, "Efectivo", false, helpFecha, "");
+                            }
+
+                            helpIngreso = connection.getTotal("Monto","Ingreso");
+                            helpGastoEfectivo = connection.getTotalEfectivo("Monto","Gasto");
+                            helpBalance = helpIngreso - helpGastoEfectivo;
+
+                            if(helpBalance <= 0){
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(AgregarGasto.this);
+                                builder.setMessage("Su ha agotado su balance")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+
+                                                Toast.makeText(getApplicationContext(), "Gasto Agregado",
+                                                        Toast.LENGTH_LONG).show();
+
+                                                startActivity(new Intent(AgregarGasto.this, MenuGasto.class));
+                                                finish();
+                                            }
+                                        })
+                                        .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+
+                                                connection.deleteDataGasto("Gasto", helpConcepto1);
+
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                                    alert.show();
+
+                            }
+
+                            //ir al Menu Ingreso
+                            //startActivity(new Intent(AgregarGasto.this, MenuGasto.class));
+                            //finish();
                         }
-
-                        Toast.makeText(getApplicationContext(), "Gasto Agregado",
-                                Toast.LENGTH_LONG).show();
-
-                        //ir al Menu Ingreso
-                        startActivity(new Intent(AgregarGasto.this, MenuGasto.class));
-                        finish();
                     }
                 }
             }

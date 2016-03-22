@@ -21,6 +21,10 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String USUARIO_TABLE_NAME = "Usuario";
     private static final String USUARIO_COLUMN_NAME = "nombre";
 
+    private static final String TARJETAGASTO_TABLE_NAME = "Tarjetagasto";
+    private static final String TARJETAGASTO_COLUMN_CUATRODIGITOS = "Cuatrodigitos";
+    private static final String TARJETAGASTO_COLUMN_GASTO = "Gasto";
+
     private static final String INGRESO_TABLE_NAME = "Ingreso";
     private static final String INGRESO_COLUMN_ID = "Id";
     private static final String INGRESO_COLUMN_CONCEPTO = "Concepto";
@@ -56,6 +60,11 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public static final String[] ALL_COLUMNS_USUARIO = new String[] {
             USUARIO_COLUMN_NAME,
+    };
+
+    public static final String[] ALL_COLUMNS_TARJETAGASTO = new String[] {
+            TARJETAGASTO_COLUMN_CUATRODIGITOS,
+            TARJETAGASTO_COLUMN_GASTO
     };
 
     public static final String[] ALL_COLUMNS_INGRESO = new String[] {
@@ -100,6 +109,14 @@ public class DBConnection extends SQLiteOpenHelper {
                     USUARIO_TABLE_NAME +
                     "( " +
                     USUARIO_COLUMN_NAME + " text " +
+                    ")";
+
+    public static final String CREATE_TARJETAGASTO_TABLE =
+            "CREATE TABLE " +
+                    TARJETAGASTO_TABLE_NAME +
+                    "( " +
+                    TARJETAGASTO_COLUMN_CUATRODIGITOS + " integer, " +
+                    TARJETAGASTO_COLUMN_GASTO + " real " +
                     ")";
 
     public static final String CREATE_INGRESO_TABLE =
@@ -163,6 +180,7 @@ public class DBConnection extends SQLiteOpenHelper {
         db.execSQL(CREATE_META_TABLE);
         db.execSQL(CREATE_TARJETA_TABLE);
         db.execSQL(CREATE_USUARIO_TABLE);
+        db.execSQL(CREATE_TARJETAGASTO_TABLE);
     }
 
     @Override
@@ -172,6 +190,7 @@ public class DBConnection extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + META_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TARJETA_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + USUARIO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TARJETAGASTO_TABLE_NAME);
         onCreate(db);
     }
 
@@ -191,6 +210,17 @@ public class DBConnection extends SQLiteOpenHelper {
         values.put(USUARIO_COLUMN_NAME, nombre);
 
         db.insert(USUARIO_TABLE_NAME, null, values);
+    }
+
+    public void insertTarjetaGasto(int cuatroDigits, double gasto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(TARJETAGASTO_COLUMN_CUATRODIGITOS, cuatroDigits);
+        values.put(TARJETAGASTO_COLUMN_GASTO, gasto);
+
+        db.insert(TARJETAGASTO_TABLE_NAME, null, values);
     }
 
     public void insertIngreso(String concepto, double monto, boolean automatizar, String fecha, String frecuencia) {
@@ -420,10 +450,45 @@ public class DBConnection extends SQLiteOpenHelper {
         return total;
     }
 
+    public int getTotalEfectivo(String columnName, String tableName) {
+
+        int total =0;
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT SUM(" + columnName +  ") FROM " + tableName + " WHERE Tipo = 'Efectivo'", null);
+        if(cursor.moveToFirst()) {
+            total = cursor.getInt(0);
+        }
+
+        return total;
+    }
+
+    public int getTotalTarjetaGasto(int cuatrodigitos) {
+
+        int total =0;
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT SUM(Gasto) FROM Tarjetagasto WHERE Cuatrodigitos=" + cuatrodigitos, null);
+        if(cursor.moveToFirst()) {
+            total = cursor.getInt(0);
+        }
+
+        return total;
+    }
+
     public void deleteData(String tableName, int id) {
         SQLiteDatabase db = getReadableDatabase();
 
         db.delete(tableName, "Id=" + id, null);
+
+    }
+
+    public void deleteDataGasto(String tableName, String concepto) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.delete(tableName, "Concepto='" + concepto +"'", null);
 
     }
 
