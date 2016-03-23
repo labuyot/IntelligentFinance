@@ -52,12 +52,12 @@ public class DashboardDrawer extends AppCompatActivity
 
         String lista = "";
 
-        int helpIngreso = 0;
-        int helpBalance = 0;
-        int helpGasto = 0;
-        int helpGastoEfectivo = 0;
-        int helpTarjeta = 0;
-        int gastoTarjeta = 0;
+        double helpIngreso = 0;
+        double helpBalance = 0;
+        double helpGasto = 0;
+        double helpGastoEfectivo = 0;
+        double helpTarjeta = 0;
+        double gastoTarjeta = 0;
 
         List<Usuario> usuarios = connection.getAllUsuarios();
 

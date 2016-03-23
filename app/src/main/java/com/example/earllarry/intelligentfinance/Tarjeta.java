@@ -8,6 +8,7 @@ public class Tarjeta {
     private int id;
     private String banco;
     private double monto;
+    private  double consumo;
     private int fourdigits;
     private double interes;
     private String corte;
@@ -17,10 +18,11 @@ public class Tarjeta {
 
     }
 
-    public Tarjeta(int id, String banco, double monto, int fourdigits, double interes, String corte, String vencimiento) {
+    public Tarjeta(int id, String banco, double monto, double consumo, int fourdigits, double interes, String corte, String vencimiento) {
         this.id = id;
         this.banco = banco;
         this.monto = monto;
+        this.consumo = consumo;
         this.fourdigits = fourdigits;
         this.interes = interes;
         this.corte = corte;
@@ -38,6 +40,10 @@ public class Tarjeta {
     public double getMonto() { return monto; }
 
     public void setMonto(double monto) { this.monto = monto; }
+
+    public double getConsumo() { return consumo; }
+
+    public void setConsumo(double consumo) { this.consumo = consumo; }
 
     public int getFourdigits() { return fourdigits; }
 

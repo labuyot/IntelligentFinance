@@ -46,6 +46,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String TARJETA_COLUMN_ID = "Id";
     private static final String TARJETA_COLUMN_BANCO = "Banco";
     private static final String TARJETA_COLUMN_MONTO = "Monto";
+    private static final String TARJETA_COLUMN_CONSUMO = "Consumo";
     private static final String TARJETA_COLUMN_FOURDIGITS = "Cuatrodigitos";
     private static final String TARJETA_COLUMN_INTERES = "Interes";
     private static final String TARJETA_COLUMN_CORTE = "Corte";
@@ -90,6 +91,7 @@ public class DBConnection extends SQLiteOpenHelper {
             TARJETA_COLUMN_ID,
             TARJETA_COLUMN_BANCO,
             TARJETA_COLUMN_MONTO,
+            TARJETA_COLUMN_CONSUMO,
             TARJETA_COLUMN_FOURDIGITS,
             TARJETA_COLUMN_INTERES,
             TARJETA_COLUMN_CORTE,
@@ -162,6 +164,7 @@ public class DBConnection extends SQLiteOpenHelper {
                     TARJETA_COLUMN_ID + " integer primary key autoincrement, " +
                     TARJETA_COLUMN_BANCO + " text, " +
                     TARJETA_COLUMN_MONTO + " real, " +
+                    TARJETA_COLUMN_CONSUMO + " real, " +
                     TARJETA_COLUMN_FOURDIGITS + " integer, " +
                     TARJETA_COLUMN_INTERES + " real, " +
                     TARJETA_COLUMN_CORTE + " text, " +
@@ -428,17 +431,18 @@ public class DBConnection extends SQLiteOpenHelper {
         tarjeta.setId(cursor.getInt(0));
         tarjeta.setBanco(cursor.getString(1));
         tarjeta.setMonto(cursor.getDouble(2));
-        tarjeta.setFourdigits(cursor.getInt(3));
-        tarjeta.setInteres(cursor.getDouble(4));
-        tarjeta.setCorte(cursor.getString(5));
-        tarjeta.setVencimiento(cursor.getString(6));
+        tarjeta.setConsumo(cursor.getDouble(3));
+        tarjeta.setFourdigits(cursor.getInt(4));
+        tarjeta.setInteres(cursor.getDouble(5));
+        tarjeta.setCorte(cursor.getString(6));
+        tarjeta.setVencimiento(cursor.getString(7));
 
         return tarjeta;
     }
 
-    public int getTotal(String columnName, String tableName) {
+    public double getTotal(String columnName, String tableName) {
 
-        int total =0;
+        double total =0;
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
@@ -450,13 +454,13 @@ public class DBConnection extends SQLiteOpenHelper {
         return total;
     }
 
-    public int getTotalEfectivo(String columnName, String tableName) {
+    public double getTarjetaMonto(int cuatroDigitos) {
 
-        int total =0;
+        double total =0;
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT SUM(" + columnName +  ") FROM " + tableName + " WHERE Tipo = 'Efectivo'", null);
+                "SELECT Monto FROM Tarjeta WHERE Cuatrodigitos=" + cuatroDigitos, null);
         if(cursor.moveToFirst()) {
             total = cursor.getInt(0);
         }
@@ -464,13 +468,27 @@ public class DBConnection extends SQLiteOpenHelper {
         return total;
     }
 
-    public int getTotalTarjetaGasto(int cuatrodigitos) {
+    public double getTarjetaConsumo(int cuatroDigitos) {
 
-        int total =0;
+        double total =0;
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT SUM(Gasto) FROM Tarjetagasto WHERE Cuatrodigitos=" + cuatrodigitos, null);
+                "SELECT Consumo FROM Tarjeta WHERE Cuatrodigitos=" + cuatroDigitos, null);
+        if(cursor.moveToFirst()) {
+            total = cursor.getInt(0);
+        }
+
+        return total;
+    }
+
+    public double getTotalEfectivo(String columnName, String tableName) {
+
+        double total =0;
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT SUM(" + columnName +  ") FROM " + tableName + " WHERE Tipo = 'Efectivo'", null);
         if(cursor.moveToFirst()) {
             total = cursor.getInt(0);
         }
@@ -571,6 +589,13 @@ public class DBConnection extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         db.update("Tarjeta", data, "Id=" + id , null);
+
+    }
+
+    public void updateTarjetaConsumo(int cuatroDigitos, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Tarjeta", data, "Cuatrodigitos=" + cuatroDigitos , null);
 
     }
 

@@ -85,7 +85,7 @@ public class MenuTarjetas extends AppCompatActivity {
             TextView tv2 = new TextView(this);
             //tv2.setBackgroundResource(R.drawable.row_border);
             tv2.setTextSize(20);
-            tv2.setText("  4 Digitos  ");
+            tv2.setText("  Consumo  ");
             tv2.setTextColor(Color.BLACK);
             tv2.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv2);
@@ -93,7 +93,7 @@ public class MenuTarjetas extends AppCompatActivity {
             TextView tv3 = new TextView(this);
             //tv3.setBackgroundResource(R.drawable.row_border);
             tv3.setTextSize(20);
-            tv3.setText("  Interes  ");
+            tv3.setText("  4 Digitos  ");
             tv3.setTextColor(Color.BLACK);
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
@@ -101,7 +101,7 @@ public class MenuTarjetas extends AppCompatActivity {
             TextView tv4 = new TextView(this);
             //tv4.setBackgroundResource(R.drawable.row_border);
             tv4.setTextSize(20);
-            tv4.setText("  Corte  ");
+            tv4.setText("  Interes  ");
             tv4.setTextColor(Color.BLACK);
             tv4.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv4);
@@ -109,19 +109,27 @@ public class MenuTarjetas extends AppCompatActivity {
             TextView tv5 = new TextView(this);
             //tv5.setBackgroundResource(R.drawable.row_border);
             tv5.setTextSize(20);
-            tv5.setText("  Vencimiento  ");
+            tv5.setText("  Corte  ");
             tv5.setTextColor(Color.BLACK);
             tv5.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv5);
 
             TextView tv6 = new TextView(this);
-            //tv3.setBackgroundResource(R.drawable.row_border);
+            //tv6.setBackgroundResource(R.drawable.row_border);
             tv6.setTextSize(20);
-            tv6.setText("  Id  ");
+            tv6.setText("  Vencimiento  ");
             tv6.setTextColor(Color.BLACK);
             tv6.setGravity(Gravity.CENTER);
-            tv6.setVisibility(View.GONE);
             tbrowHead.addView(tv6);
+
+            TextView tv7 = new TextView(this);
+            //tv7.setBackgroundResource(R.drawable.row_border);
+            tv7.setTextSize(20);
+            tv7.setText("  Id  ");
+            tv7.setTextColor(Color.BLACK);
+            tv7.setGravity(Gravity.CENTER);
+            tv7.setVisibility(View.GONE);
+            tbrowHead.addView(tv7);
 
             stk.addView(tbrowHead);
 
@@ -133,6 +141,7 @@ public class MenuTarjetas extends AppCompatActivity {
         ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<String> listaBancos = new ArrayList<>();
         ArrayList<Double> listaMontos = new ArrayList<>();
+        ArrayList<Double> listaConsumos = new ArrayList<>();
         ArrayList<Integer> listaFourDigits = new ArrayList<>();
         ArrayList<Double> listaIntereses = new ArrayList<>();
         ArrayList<String> listaFechaCorte = new ArrayList<>();
@@ -154,6 +163,12 @@ public class MenuTarjetas extends AppCompatActivity {
         for(int i = 0; i < tarjetas.size(); i++){
             Tarjeta tarjeta = tarjetas.get(i);
             listaMontos.add(tarjeta.getMonto());
+        }
+
+        //llena la lista con los consumos de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaConsumos.add(tarjeta.getConsumo());
         }
 
         //llena la lista con los 4digitos de las tarjetas
@@ -202,6 +217,14 @@ public class MenuTarjetas extends AppCompatActivity {
             monto.setTextColor(Color.BLACK);
             monto.setGravity(Gravity.CENTER);
             tbrow.addView(monto);
+
+            TextView consumo = new TextView(this);
+            //consumo.setBackgroundResource(R.drawable.row_border);
+            consumo.setTextSize(18);
+            consumo.setText(" " + listaConsumos.get(i) + " ");
+            consumo.setTextColor(Color.BLACK);
+            consumo.setGravity(Gravity.CENTER);
+            tbrow.addView(consumo);
 
             TextView fourDigits = new TextView(this);
             //tipo.setBackgroundResource(R.drawable.row_border);
