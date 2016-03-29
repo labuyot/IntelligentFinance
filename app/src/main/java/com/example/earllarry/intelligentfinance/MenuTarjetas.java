@@ -93,7 +93,7 @@ public class MenuTarjetas extends AppCompatActivity {
             TextView tv3 = new TextView(this);
             //tv3.setBackgroundResource(R.drawable.row_border);
             tv3.setTextSize(20);
-            tv3.setText("  4 Digitos  ");
+            tv3.setText("  CVV  ");
             tv3.setTextColor(Color.BLACK);
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
