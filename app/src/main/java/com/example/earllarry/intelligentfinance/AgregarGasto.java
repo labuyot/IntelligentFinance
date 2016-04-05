@@ -177,7 +177,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
                 }else  if(validate(helpFecha)){
 
-                    SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     Date myDate;
 
                     String helpConcepto = String.valueOf(editTextConcepto.getText());
@@ -239,7 +239,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
 
-                                                connection.insertTarjetaGasto(tarjeta, helpMonto);
+                                                connection.insertTarjetaGasto(tarjeta, helpMonto, helpConcepto1);
                                                 connection.updateTarjetaConsumo(tarjeta, data);
 
                                                 Toast.makeText(getApplicationContext(), "Gasto Agregado",
@@ -261,7 +261,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                                 alert.show();
 
                             }else {
-                                connection.insertTarjetaGasto(tarjeta, helpMonto);
+                                connection.insertTarjetaGasto(tarjeta, helpMonto, helpConcepto1);
                                 connection.updateTarjetaConsumo(tarjeta, data);
 
                                 Toast.makeText(getApplicationContext(), "Gasto Agregado",

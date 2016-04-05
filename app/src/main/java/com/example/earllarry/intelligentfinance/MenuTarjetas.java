@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -276,11 +274,11 @@ public class MenuTarjetas extends AppCompatActivity {
                     TableRow tablerow = (TableRow) v;
                     TextView sampleBanco = (TextView) tablerow.getChildAt(0);
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
-                    TextView samplefourDigits = (TextView) tablerow.getChildAt(2);
-                    TextView sampleInteres = (TextView) tablerow.getChildAt(3);
-                    TextView sampleFechaCorte = (TextView) tablerow.getChildAt(4);
-                    TextView sampleFechaVencimiento = (TextView) tablerow.getChildAt(5);
-                    TextView sampleId = (TextView) tablerow.getChildAt(6);
+                    TextView samplefourDigits = (TextView) tablerow.getChildAt(3);
+                    TextView sampleInteres = (TextView) tablerow.getChildAt(4);
+                    TextView sampleFechaCorte = (TextView) tablerow.getChildAt(5);
+                    TextView sampleFechaVencimiento = (TextView) tablerow.getChildAt(6);
+                    TextView sampleId = (TextView) tablerow.getChildAt(7);
 
                     final String intentBanco = sampleBanco.getText().toString().replaceAll("\\s+","");
                     final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
@@ -313,6 +311,7 @@ public class MenuTarjetas extends AppCompatActivity {
 
                                     int dataId = Integer.parseInt(intentId);
                                     connection.deleteData("Tarjeta", dataId);
+                                    connection.deleteDataGastoTarjetaId(intentfourDigits);
 
                                     Intent i = new Intent(MenuTarjetas.this, MenuTarjetas.class);
                                     startActivity(i);

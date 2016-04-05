@@ -178,7 +178,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="55dp"
         android:id="@+id/frameLayout2"
         android:clickable="true"
         android:background="@drawable/layout_border"
@@ -211,5 +211,14 @@
         android:background="#ffffff">
 
     </FrameLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_below="@+id/frameLayoutTarjeta"
+        android:layout_alignEnd="@+id/frameLayout2"
+        android:layout_marginEnd="49dp" />
 
 </RelativeLayout>

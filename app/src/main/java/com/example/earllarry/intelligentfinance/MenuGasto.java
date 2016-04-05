@@ -233,11 +233,13 @@ public class MenuGasto extends AppCompatActivity {
                     TableRow tablerow = (TableRow) v;
                     TextView sampleConcepto = (TextView) tablerow.getChildAt(0);
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
+                    TextView sampleTipo = (TextView) tablerow.getChildAt(2);
                     TextView sampleAutomatizar = (TextView) tablerow.getChildAt(3);
                     TextView sampleFecha = (TextView) tablerow.getChildAt(4);
                     TextView sampleId = (TextView) tablerow.getChildAt(5);
                     final String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+", "");
                     final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
+                    final String intentTipo = sampleTipo.getText().toString().replaceAll("\\s+", "");
                     final String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
                     final String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+", "");
                     final String intentId = sampleId.getText().toString().replaceAll("\\s+", "");
@@ -266,6 +268,10 @@ public class MenuGasto extends AppCompatActivity {
 
                                     int dataId = Integer.parseInt(intentId);
                                     connection.deleteData("Gasto", dataId);
+
+                                    if (intentTipo.equals("Tarjeta")) {
+                                        connection.deleteDataGastoTarjetaConcepto(intentConcepto);
+                                    }
 
                                     Intent i = new Intent(MenuGasto.this, MenuGasto.class);
                                     startActivity(i);

@@ -83,6 +83,14 @@
             android:name=".ModificarTarjeta"
             android:label="@string/title_activity_modificar_tarjeta"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <receiver
+            android:name="AlaramReceiver"
+            android:process=":remote" >
+        </receiver>
+
+        <service android:name=".TaskService" >
+        </service>
     </application>
 
 </manifest>

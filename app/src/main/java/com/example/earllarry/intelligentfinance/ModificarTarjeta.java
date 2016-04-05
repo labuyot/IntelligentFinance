@@ -168,7 +168,7 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
 
                 } else if(validate(helpCorte) && validate(helpVenciciemto)){
 
-                    SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     Date myDate1;
                     Date myDate2;
 

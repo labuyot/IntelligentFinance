@@ -24,6 +24,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String TARJETAGASTO_TABLE_NAME = "Tarjetagasto";
     private static final String TARJETAGASTO_COLUMN_CUATRODIGITOS = "Cuatrodigitos";
     private static final String TARJETAGASTO_COLUMN_GASTO = "Gasto";
+    private static final String TARJETAGASTO_COLUMN_CONCEPTO = "Concepto";
 
     private static final String INGRESO_TABLE_NAME = "Ingreso";
     private static final String INGRESO_COLUMN_ID = "Id";
@@ -56,6 +57,7 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String META_COLUMN_ID = "Id";
     private static final String META_COLUMN_CONCEPTO = "Concepto";
     private static final String META_COLUMN_MONTO = "Monto";
+    private static final String META_COLUMN_AHORRO = "Ahorro";
     private static final String META_COLUMN_FECHAINICIO = "Fechainicio";
     private static final String META_COLUMN_FECHAFINAL = "Fechafinal";
 
@@ -65,7 +67,8 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public static final String[] ALL_COLUMNS_TARJETAGASTO = new String[] {
             TARJETAGASTO_COLUMN_CUATRODIGITOS,
-            TARJETAGASTO_COLUMN_GASTO
+            TARJETAGASTO_COLUMN_GASTO,
+            TARJETAGASTO_COLUMN_CONCEPTO
     };
 
     public static final String[] ALL_COLUMNS_INGRESO = new String[] {
@@ -102,6 +105,7 @@ public class DBConnection extends SQLiteOpenHelper {
             META_COLUMN_ID,
             META_COLUMN_CONCEPTO,
             META_COLUMN_MONTO,
+            META_COLUMN_AHORRO,
             META_COLUMN_FECHAINICIO,
             META_COLUMN_FECHAFINAL
     };
@@ -118,7 +122,8 @@ public class DBConnection extends SQLiteOpenHelper {
                     TARJETAGASTO_TABLE_NAME +
                     "( " +
                     TARJETAGASTO_COLUMN_CUATRODIGITOS + " integer, " +
-                    TARJETAGASTO_COLUMN_GASTO + " real " +
+                    TARJETAGASTO_COLUMN_GASTO + " real, " +
+                    TARJETAGASTO_COLUMN_CONCEPTO + " text " +
                     ")";
 
     public static final String CREATE_INGRESO_TABLE =
@@ -153,6 +158,7 @@ public class DBConnection extends SQLiteOpenHelper {
                     META_COLUMN_ID + " integer primary key autoincrement, " +
                     META_COLUMN_CONCEPTO + " text, " +
                     META_COLUMN_MONTO + " real, " +
+                    META_COLUMN_AHORRO + " real, " +
                     META_COLUMN_FECHAINICIO + " text, " +
                     META_COLUMN_FECHAFINAL + " text " +
                     ")";
@@ -215,13 +221,14 @@ public class DBConnection extends SQLiteOpenHelper {
         db.insert(USUARIO_TABLE_NAME, null, values);
     }
 
-    public void insertTarjetaGasto(int cuatroDigits, double gasto) {
+    public void insertTarjetaGasto(int cuatroDigits, double gasto, String concepto) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(TARJETAGASTO_COLUMN_CUATRODIGITOS, cuatroDigits);
         values.put(TARJETAGASTO_COLUMN_GASTO, gasto);
+        values.put(TARJETAGASTO_COLUMN_CONCEPTO, concepto);
 
         db.insert(TARJETAGASTO_TABLE_NAME, null, values);
     }
@@ -510,6 +517,20 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
+    public void deleteDataGastoTarjetaId(int cuatroDigitos) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.delete("Tarjetagasto", "Cuatrodigitos=" + cuatroDigitos, null);
+
+    }
+
+    public void deleteDataGastoTarjetaConcepto(String concepto) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.delete("Tarjetagasto", "Concepto='" + concepto + "'", null);
+
+    }
+
     public int getCantidadDeFilas(String tabla) {
         String countQuery = "SELECT  * FROM " + tabla;
 
@@ -585,6 +606,13 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
+    public void updateDataMetaAhorro(int id, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Meta", data, "Id=" + id, null);
+
+    }
+
     public void updateDataTarjeta(int id, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -596,6 +624,13 @@ public class DBConnection extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
 
         db.update("Tarjeta", data, "Cuatrodigitos=" + cuatroDigitos , null);
+
+    }
+
+    public void updateTarjetaConsumoId(int id, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Tarjeta", data, "Id=" + id, null);
 
     }
 

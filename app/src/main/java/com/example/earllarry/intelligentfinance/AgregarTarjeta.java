@@ -138,7 +138,7 @@ public class AgregarTarjeta extends AppCompatActivity implements View.OnClickLis
 
                 } else if(validate(helpCorte) && validate(helpVenciciemto)){
 
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     Date myDate1;
                     Date myDate2;
 
