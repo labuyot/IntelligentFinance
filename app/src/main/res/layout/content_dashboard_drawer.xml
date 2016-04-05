@@ -179,7 +179,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:id="@+id/frameLayout2"
+        android:id="@+id/frameLayoutMeta"
         android:clickable="true"
         android:background="@drawable/layout_border"
         android:layout_below="@+id/frameLayoutTarjeta"
@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Metas"
-            android:id="@+id/textView2"
+            android:id="@+id/textViewMetaDashboard"
             android:layout_gravity="left|bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="5dp"
@@ -206,7 +206,7 @@
         android:layout_height="46dp"
         android:id="@+id/frameLayout3"
         android:clickable="true"
-        android:layout_below="@+id/frameLayout2"
+        android:layout_below="@+id/frameLayoutMeta"
         android:layout_centerHorizontal="true"
         android:background="#ffffff">
 
@@ -218,7 +218,7 @@
         android:text="New Button"
         android:id="@+id/button"
         android:layout_below="@+id/frameLayoutTarjeta"
-        android:layout_alignEnd="@+id/frameLayout2"
+        android:layout_alignEnd="@+id/frameLayoutMeta"
         android:layout_marginEnd="49dp" />
 
 </RelativeLayout>
