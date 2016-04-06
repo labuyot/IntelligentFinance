@@ -99,8 +99,11 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
                         // TODO Auto-generated method stub
                     /*      Your code   to get date and time    */
                         Calendar newDate = Calendar.getInstance();
+                        Calendar newDate2 = Calendar.getInstance();
                         newDate.set(selectedyear, selectedmonth, selectedday);
+                        newDate2.set(selectedyear + 1, selectedmonth, selectedday);
                         editTextFechaInicio.setText(dateFormatter.format(newDate.getTime()));
+                        editTextFechaFinal.setText(dateFormatter.format(newDate2.getTime()));
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date");
@@ -108,6 +111,7 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
             }
         });
 
+        /*
         editTextFechaFinal.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -122,7 +126,7 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
                 DatePickerDialog mDatePicker = new DatePickerDialog(ModificarMeta.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
+                    //      Your code   to get date and time
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(selectedyear, selectedmonth, selectedday);
                         editTextFechaFinal.setText(dateFormatter.format(newDate.getTime()));
@@ -132,6 +136,7 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
                 mDatePicker.show();
             }
         });
+        */
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,8 +184,8 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
                     }
 
                     try {
-                        myDate2 = df.parse(editTextFechaFinal.getText().toString());
-                        myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1900 + myDate2.getYear());
+                        myDate2 = df.parse(editTextFechaInicio.getText().toString());
+                        myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1 + 1900 + myDate2.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -193,8 +198,8 @@ public class ModificarMeta extends AppCompatActivity implements View.OnClickList
                     ContentValues data=new ContentValues();
                     data.put("Concepto", helpConcepto1);
                     data.put("Monto", helpMonto);
-                    data.put("FechaInicio", helpFecha1);
-                    data.put("FechaFinal", helpFecha2);
+                    data.put("FechaInicio", myText1);
+                    data.put("FechaFinal", myText2);
 
                     //if(connection.conceptoExist(helpConcepto1, "Meta", "Concepto")){
 

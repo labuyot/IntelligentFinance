@@ -8,6 +8,7 @@ public class Meta {
     private int id;
     private String concepto;
     private double monto;
+    private double ahorrado;
     private String fechainicio;
     private String fechafinal;
 
@@ -15,10 +16,11 @@ public class Meta {
 
     }
 
-    public Meta(int id, String concepto, double monto, String fechainicio, String fechafinal) {
+    public Meta(int id, String concepto, double monto, double ahorrado, String fechainicio, String fechafinal) {
         this.id = id;
         this.concepto = concepto;
         this.monto = monto;
+        this.ahorrado = ahorrado;
         this.fechainicio = fechainicio;
         this.fechafinal = fechafinal;
     }
@@ -34,6 +36,10 @@ public class Meta {
     public double getMonto() { return monto; }
 
     public void setMonto(double monto) { this.monto = monto; }
+
+    public double getAhorrado() { return ahorrado; }
+
+    public void setAhorrado(double ahorrado) { this.ahorrado = ahorrado; }
 
     public String getFechaInicio() { return fechainicio; }
 

@@ -86,7 +86,7 @@ public class MenuMetas extends AppCompatActivity {
             TextView tv2 = new TextView(this);
             //tv2.setBackgroundResource(R.drawable.row_border);
             tv2.setTextSize(20);
-            tv2.setText("  Fecha Inicio  ");
+            tv2.setText("  Ahorro  ");
             tv2.setTextColor(Color.BLACK);
             tv2.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv2);
@@ -94,19 +94,27 @@ public class MenuMetas extends AppCompatActivity {
             TextView tv3 = new TextView(this);
             //tv3.setBackgroundResource(R.drawable.row_border);
             tv3.setTextSize(20);
-            tv3.setText("  Fecha Final  ");
+            tv3.setText("  Fecha Inicio  ");
             tv3.setTextColor(Color.BLACK);
             tv3.setGravity(Gravity.CENTER);
             tbrowHead.addView(tv3);
 
             TextView tv4 = new TextView(this);
-            //tv3.setBackgroundResource(R.drawable.row_border);
+            //tv4.setBackgroundResource(R.drawable.row_border);
             tv4.setTextSize(20);
-            tv4.setText("  Id  ");
+            tv4.setText("  Fecha Final  ");
             tv4.setTextColor(Color.BLACK);
             tv4.setGravity(Gravity.CENTER);
-            tv4.setVisibility(View.GONE);
             tbrowHead.addView(tv4);
+
+            TextView tv5 = new TextView(this);
+            //tv5.setBackgroundResource(R.drawable.row_border);
+            tv5.setTextSize(20);
+            tv5.setText("  Id  ");
+            tv5.setTextColor(Color.BLACK);
+            tv5.setGravity(Gravity.CENTER);
+            tv5.setVisibility(View.GONE);
+            tbrowHead.addView(tv5);
 
             stk.addView(tbrowHead);
 
@@ -118,6 +126,7 @@ public class MenuMetas extends AppCompatActivity {
         ArrayList<Integer> listaIds = new ArrayList<>();
         ArrayList<String> listaConceptos = new ArrayList<>();
         ArrayList<Double> listaMontos = new ArrayList<>();
+        ArrayList<Double> listaAhorrado = new ArrayList<>();
         ArrayList<String> listaFechaInicio = new ArrayList<>();
         ArrayList<String> listaFechaFinal = new ArrayList<>();
 
@@ -139,13 +148,19 @@ public class MenuMetas extends AppCompatActivity {
             listaMontos.add(meta.getMonto());
         }
 
-        //llena la lista con los automatizar de las metas
+        //llena la lista con los ahorros de las metas
+        for(int i = 0; i < metas.size(); i++){
+            Meta meta = metas.get(i);
+            listaAhorrado.add(meta.getAhorrado());
+        }
+
+        //llena la lista con los fecha inicio de las metas
         for(int i = 0; i < metas.size(); i++){
             Meta meta = metas.get(i);
             listaFechaInicio.add(meta.getFechaInicio());
         }
 
-        //llena la lista con las fechas de las metas
+        //llena la lista con las fechas finales de las metas
         for(int i = 0; i < metas.size(); i++){
             Meta meta = metas.get(i);
             listaFechaFinal.add(meta.getFechaFinal());
@@ -172,6 +187,14 @@ public class MenuMetas extends AppCompatActivity {
             monto.setTextColor(Color.BLACK);
             monto.setGravity(Gravity.CENTER);
             tbrow.addView(monto);
+
+            TextView ahorro = new TextView(this);
+            //ahorro.setBackgroundResource(R.drawable.row_border);
+            ahorro.setTextSize(18);
+            ahorro.setText(" " + listaAhorrado.get(i) + " ");
+            ahorro.setTextColor(Color.BLACK);
+            ahorro.setGravity(Gravity.CENTER);
+            tbrow.addView(ahorro);
 
             TextView fechaInicial = new TextView(this);
             //tipo.setBackgroundResource(R.drawable.row_border);
@@ -207,9 +230,9 @@ public class MenuMetas extends AppCompatActivity {
                     TableRow tablerow = (TableRow) v;
                     TextView sampleConcepto = (TextView) tablerow.getChildAt(0);
                     TextView sampleMonto = (TextView) tablerow.getChildAt(1);
-                    TextView sampleFechaInicio = (TextView) tablerow.getChildAt(2);
-                    TextView sampleFechaFinal = (TextView) tablerow.getChildAt(3);
-                    TextView sampleId = (TextView) tablerow.getChildAt(4);
+                    TextView sampleFechaInicio = (TextView) tablerow.getChildAt(3);
+                    TextView sampleFechaFinal = (TextView) tablerow.getChildAt(4);
+                    TextView sampleId = (TextView) tablerow.getChildAt(5);
                     final String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+","");
                     final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
                     final String intentFechaInicio = sampleFechaInicio.getText().toString().replaceAll("\\s+", "");

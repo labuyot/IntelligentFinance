@@ -74,8 +74,11 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
                         // TODO Auto-generated method stub
                     /*      Your code   to get date and time    */
                         Calendar newDate = Calendar.getInstance();
+                        Calendar newDate2 = Calendar.getInstance();
                         newDate.set(selectedyear, selectedmonth, selectedday);
+                        newDate2.set(selectedyear + 1, selectedmonth, selectedday);
                         editTextFechaInicio.setText(dateFormatter.format(newDate.getTime()));
+                        editTextFechaFinal.setText(dateFormatter.format(newDate2.getTime()));
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date");
@@ -83,6 +86,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
             }
         });
 
+        /*
         editTextFechaFinal.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -97,7 +101,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
                 DatePickerDialog mDatePicker = new DatePickerDialog(AgregarMeta.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
+                    //      Your code   to get date and time
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(selectedyear, selectedmonth, selectedday);
                         editTextFechaFinal.setText(dateFormatter.format(newDate.getTime()));
@@ -106,7 +110,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
                 mDatePicker.setTitle("Select date");
                 mDatePicker.show();
             }
-        });
+        }); */
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +163,8 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
                     }
 
                     try {
-                        myDate2 = df.parse(editTextFechaFinal.getText().toString());
-                        myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1900 + myDate2.getYear());
+                        myDate2 = df.parse(editTextFechaInicio.getText().toString());
+                        myText2 = myDate2.getDate() + "-" + (myDate2.getMonth() + 1) + "-" + (1 + 1900 + myDate2.getYear());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -172,7 +176,7 @@ public class AgregarMeta extends AppCompatActivity implements View.OnClickListen
 
                     }else {
 
-                        connection.insertMeta(helpConcepto1, helpMonto, helpFecha1, helpFecha2);
+                        connection.insertMeta(helpConcepto1, helpMonto, myText1, myText2);
 
                         Toast.makeText(getApplicationContext(), "Meta Agregada",
                                 Toast.LENGTH_LONG).show();

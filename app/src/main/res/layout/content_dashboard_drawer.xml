@@ -178,7 +178,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:id="@+id/frameLayoutMeta"
         android:clickable="true"
         android:background="@drawable/layout_border"
@@ -192,7 +192,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Metas"
             android:id="@+id/textViewMetaDashboard"
-            android:layout_gravity="left|bottom"
+            android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="5dp"
             android:textColor="#ea21dc"
@@ -203,13 +203,29 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:id="@+id/frameLayout3"
+        android:layout_height="50dp"
+        android:id="@+id/frameLayoutAhorrado"
         android:clickable="true"
         android:layout_below="@+id/frameLayoutMeta"
         android:layout_centerHorizontal="true"
-        android:background="#ffffff">
+        android:background="@drawable/layout_border">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ahorrado"
+            android:id="@+id/textViewAhorro"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="$ 0.00 / 0.00"
+            android:id="@+id/textViewAhorroMonto"
+            android:layout_gravity="right|center_vertical" />
     </FrameLayout>
 
     <Button

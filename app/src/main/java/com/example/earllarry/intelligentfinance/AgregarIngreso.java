@@ -158,7 +158,7 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
 
                             String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
 
-                            connection.insertIngreso(helpConcepto1, helpMonto, true, helpFecha, textRecurrencia);
+                            connection.insertIngreso(helpConcepto1, helpMonto, true, myText, textRecurrencia);
 
                         }//Si automatizar esta desactivado inserta ingreso
                         else{

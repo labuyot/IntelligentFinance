@@ -407,8 +407,9 @@ public class DBConnection extends SQLiteOpenHelper {
         meta.setId(cursor.getInt(0));
         meta.setConcepto(cursor.getString(1));
         meta.setMonto(cursor.getDouble(2));
-        meta.setFechaInicio(cursor.getString(3));
-        meta.setFechaFinal(cursor.getString(4));
+        meta.setAhorrado(cursor.getDouble(3));
+        meta.setFechaInicio(cursor.getString(4));
+        meta.setFechaFinal(cursor.getString(5));
 
         return meta;
     }

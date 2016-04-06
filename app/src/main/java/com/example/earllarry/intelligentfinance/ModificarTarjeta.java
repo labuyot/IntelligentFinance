@@ -204,8 +204,8 @@ public class ModificarTarjeta extends AppCompatActivity implements View.OnClickL
                     data.put("Monto", helpMonto);
                     data.put("Cuatrodigitos", helpFourDigits);
                     data.put("Interes", helpInteres);
-                    data.put("Corte", helpCorte);
-                    data.put("Vencimiento", helpVenciciemto);
+                    data.put("Corte", myText1);
+                    data.put("Vencimiento", myText2);
 
                     //if(connection.fourDigitsExist(helpFourDigits, "Tarjeta", "Cuatrodigitos")){
 

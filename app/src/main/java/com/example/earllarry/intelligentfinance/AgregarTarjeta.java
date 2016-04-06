@@ -176,7 +176,7 @@ public class AgregarTarjeta extends AppCompatActivity implements View.OnClickLis
 
                     }else {
 
-                        connection.insertTarjeta(helpBanco1, helpMonto, helpFourDigits, helpInteres, helpCorte, helpVenciciemto);
+                        connection.insertTarjeta(helpBanco1, helpMonto, helpFourDigits, helpInteres, myText1, myText2);
 
                         Toast.makeText(getApplicationContext(), "Tarjeta Agregada",
                                 Toast.LENGTH_LONG).show();

@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class DashboardDrawer extends AppCompatActivity
     private TextView textViewGastos;
     private TextView textViewTarjetas;
     private TextView textViewMetas;
+    private TextView textViewMetasAhorrado;
+    private TextView textViewMetasText;
     private TextView textViewIngresoFijoDashboard;
     private TextView textViewGastoFijoDashboard;
     private TextView textViewTarjetaFijoDashboard;
@@ -53,154 +56,37 @@ public class DashboardDrawer extends AppCompatActivity
         textViewGastos = (TextView) findViewById(R.id.textViewGastoDashboard);
         textViewTarjetas = (TextView) findViewById(R.id.textViewTarjetDashboard);
         textViewMetas = (TextView) findViewById(R.id.textViewMetaDashboard);
+        textViewMetasAhorrado = (TextView) findViewById(R.id.textViewAhorroMonto);
+        textViewMetasText = (TextView) findViewById(R.id.textViewAhorro);
         final FrameLayout frameIngreso = (FrameLayout) findViewById(R.id.frameLayoutIngreso);
         final FrameLayout frameGasto = (FrameLayout) findViewById(R.id.frameLayoutGasto);
         final FrameLayout frameTarjeta = (FrameLayout) findViewById(R.id.frameLayoutTarjeta);
         final FrameLayout frameMeta = (FrameLayout) findViewById(R.id.frameLayoutMeta);
+        final FrameLayout frameMetaAhorro = (FrameLayout) findViewById(R.id.frameLayoutAhorrado);
         final DBConnection connection = new DBConnection(DashboardDrawer.this);
         textViewIngresoFijoDashboard = (TextView) findViewById(R.id.textViewIngresoFijoDashboard);
         textViewGastoFijoDashboard = (TextView) findViewById(R.id.textViewGastoFijoDashboard);
         textViewTarjetaFijoDashboard = (TextView) findViewById(R.id.textViewTarjetaFijoDashboard);
 
-        /*
+
         Button button = (Button)findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final DBConnection connection = new DBConnection(DashboardDrawer.this);
+                CorteVenciMethod();
+                MetaMethod();
 
-                int rowCount = connection.getCantidadDeFilas("Tarjeta");
-
-                //Carga todos los gastos de la base de datos
-                List<Tarjeta> tarjetas = connection.getAllTarjetas();
-
-                ArrayList<Integer> listaIds = new ArrayList<>();
-                ArrayList<Integer> listaFourDigits = new ArrayList<>();
-                ArrayList<Double> listaConsumos = new ArrayList<>();
-                ArrayList<String> listaFechaCorte = new ArrayList<>();
-                ArrayList<String> listaFechaVencimiento = new ArrayList<>();
-
-                //llena la lista con los Ids de las tarjetas
-                for(int i = 0; i < tarjetas.size(); i++){
-                    Tarjeta tarjeta = tarjetas.get(i);
-                    listaIds.add(tarjeta.getId());
-                }
-
-                //llena la lista con los cvv de las tarjetas
-                for(int i = 0; i < tarjetas.size(); i++){
-                    Tarjeta tarjeta = tarjetas.get(i);
-                    listaFourDigits.add(tarjeta.getFourdigits());
-                }
-
-                //llena la lista con los consumos de las tarjetas
-                for(int i = 0; i < tarjetas.size(); i++){
-                    Tarjeta tarjeta = tarjetas.get(i);
-                    listaConsumos.add(tarjeta.getConsumo());
-                }
-
-                //llena la lista con las fechas de corte de las tarjetas
-                for(int i = 0; i < tarjetas.size(); i++){
-                    Tarjeta tarjeta = tarjetas.get(i);
-                    listaFechaCorte.add(tarjeta.getCorte());
-                }
-
-                //llena la lista con las fechas de vencimiento de las tarjetas
-                for(int i = 0; i < tarjetas.size(); i++){
-                    Tarjeta tarjeta = tarjetas.get(i);
-                    listaFechaVencimiento.add(tarjeta.getVencimiento());
-                }
-
-                int j = 0;
-                while (j < rowCount){
-
-                    Calendar calendar = Calendar.getInstance();
-
-                    int systemDay = calendar.get(calendar.DAY_OF_MONTH);
-                    int systemMonth = calendar.get(calendar.MONTH) + 1;
-                    int systemYear = calendar.get(calendar.YEAR);
-
-                    final ContentValues dataConsumo=new ContentValues();
-                    dataConsumo.put("Consumo", 0);
-
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    Date myDate;
-
-                    String dateVenci = listaFechaVencimiento.get(j);
-                    String dateCorte = listaFechaCorte.get(j);
-
-                    int dayCorte = 0;
-                    int monthCorte = 0;
-                    int day = 0;
-                    int month = 0;
-                    int year = 0;
-
-                    try {
-                        myDate = df.parse(dateVenci);
-
-                        day = myDate.getDate();
-                        month = myDate.getMonth() + 1;
-                        year = myDate.getYear() + 1900;
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        myDate = df.parse(dateCorte);
-
-                        dayCorte = myDate.getDate();
-                        monthCorte = myDate.getMonth() + 1;
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    if(monthCorte == 2){
-                        if(dayCorte == 29 || dayCorte == 30 || dayCorte == 31 && systemYear%4 == 1){
-                            if(systemDay == 28){
-                                connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
-                                connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
-                            }
-                        }else if(dayCorte == 30 || dayCorte == 31 && systemYear%4 == 0){
-                            if(systemDay == 29){
-                                connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
-                                connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
-                            }
-                        }
-                    }else if(monthCorte == 4 || monthCorte == 6 || monthCorte == 9 || monthCorte == 11){
-                        if(dayCorte == 31){
-                            if(systemDay == 30){
-                                connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
-                                connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
-                            }
-                        }else if(dayCorte == systemDay){
-                            connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
-                            connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
-                        }
-                    }else if(dayCorte == systemDay){
-                        connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
-                        connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
-                    }
-
-                    if(year == systemYear && month == systemMonth && day == systemDay){
-
-                        connection.deleteData("Tarjeta", listaIds.get(j));
-
-                    }
-
-                    j++;
-
-                }
             }
         });
-        */
 
+
+        /*
         Calendar calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.HOUR_OF_DAY, 19); // For 1 PM or 2 PM
-        calendar.set(Calendar.MINUTE, 36);
+        calendar.set(Calendar.HOUR_OF_DAY, 24); // For 1 PM or 2 PM
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
         AlarmManager alarms = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
@@ -211,15 +97,7 @@ public class DashboardDrawer extends AppCompatActivity
         final PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarms.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_DAY, pIntent);
-
-        boolean alarmUp = (PendingIntent.getBroadcast(this, 0,
-                new Intent("com.example.earllarry.intelligentfinance.MY_UNIQUE_ACTION"),
-                PendingIntent.FLAG_NO_CREATE) != null);
-
-        if (alarmUp)
-        {
-            Log.d("myTag", "Alarm is already active");
-        }
+        */
 
 
         String lista = "";
@@ -230,8 +108,11 @@ public class DashboardDrawer extends AppCompatActivity
         double helpGastoEfectivo = 0;
         double helpTarjeta = 0;
         double gastoTarjeta = 0;
+        double helpAhorro = 0;
+        double helpTotalAhorro = 0;
 
         List<Usuario> usuarios = connection.getAllUsuarios();
+        List<Meta> metas = connection.getAllMetas();
 
         //llena la lista con los nombres de los usuarios
         for(int i = 0; i < usuarios.size(); i++){
@@ -239,11 +120,23 @@ public class DashboardDrawer extends AppCompatActivity
             lista += usuario.getNombre().toString();
         }
 
+        //llena la lista con los ahorros de las metas
+        for(int i = 0; i < metas.size(); i++){
+            Meta meta = metas.get(i);
+            helpAhorro += meta.getAhorrado();
+        }
+
+        //llena la lista con los montos de las metas
+        for(int i = 0; i < metas.size(); i++){
+            Meta meta = metas.get(i);
+            helpTotalAhorro += meta.getMonto();
+        }
+
         textViewBienvenida.setText("Bienvenido, " + lista);
 
         helpIngreso = connection.getTotal("Monto","Ingreso");
-        helpGasto = connection.getTotal("Monto","Gasto");
-        helpTarjeta = connection.getTotal("Monto","Tarjeta");
+        helpGasto = connection.getTotal("Monto", "Gasto");
+        helpTarjeta = connection.getTotal("Monto", "Tarjeta");
         helpGastoEfectivo = connection.getTotalEfectivo("Monto","Gasto");
         helpBalance = helpIngreso - helpGastoEfectivo;
         gastoTarjeta = connection.getTotal("Gasto", "Tarjetagasto");
@@ -258,6 +151,7 @@ public class DashboardDrawer extends AppCompatActivity
         textViewIngresos.setText("$ " + helpIngreso);
         textViewGastos.setText("$ " + helpGasto);
         textViewTarjetas.setText("$ " + (helpTarjeta - gastoTarjeta));
+        textViewMetasAhorrado.setText("$ " + helpAhorro + " / " + helpTotalAhorro);
 
         //cliqueables
         frameIngreso.setOnClickListener(new View.OnClickListener() {
@@ -288,6 +182,13 @@ public class DashboardDrawer extends AppCompatActivity
             }
         });
 
+        frameMetaAhorro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuMetas.class));
+            }
+        });
+
         textViewIngresos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,6 +211,20 @@ public class DashboardDrawer extends AppCompatActivity
         });
 
         textViewMetas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuMetas.class));
+            }
+        });
+
+        textViewMetasAhorrado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuMetas.class));
+            }
+        });
+
+        textViewMetasText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuMetas.class));
@@ -345,6 +260,284 @@ public class DashboardDrawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void CorteVenciMethod() {
+
+        final DBConnection connection = new DBConnection(DashboardDrawer.this);
+
+        int rowCount = connection.getCantidadDeFilas("Tarjeta");
+
+        //Carga todos los gastos de la base de datos
+        List<Tarjeta> tarjetas = connection.getAllTarjetas();
+
+        ArrayList<Integer> listaIds = new ArrayList<>();
+        ArrayList<Integer> listaFourDigits = new ArrayList<>();
+        ArrayList<Double> listaConsumos = new ArrayList<>();
+        ArrayList<String> listaFechaCorte = new ArrayList<>();
+        ArrayList<String> listaFechaVencimiento = new ArrayList<>();
+
+        //llena la lista con los Ids de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaIds.add(tarjeta.getId());
+        }
+
+        //llena la lista con los cvv de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaFourDigits.add(tarjeta.getFourdigits());
+        }
+
+        //llena la lista con los consumos de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaConsumos.add(tarjeta.getConsumo());
+        }
+
+        //llena la lista con las fechas de corte de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaFechaCorte.add(tarjeta.getCorte());
+        }
+
+        //llena la lista con las fechas de vencimiento de las tarjetas
+        for(int i = 0; i < tarjetas.size(); i++){
+            Tarjeta tarjeta = tarjetas.get(i);
+            listaFechaVencimiento.add(tarjeta.getVencimiento());
+        }
+
+        int j = 0;
+        while (j < rowCount){
+
+            Calendar calendar = Calendar.getInstance();
+
+            int systemDay = calendar.get(calendar.DAY_OF_MONTH);
+            int systemMonth = calendar.get(calendar.MONTH) + 1;
+            int systemYear = calendar.get(calendar.YEAR);
+
+            final ContentValues dataConsumo=new ContentValues();
+            dataConsumo.put("Consumo", 0);
+
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            Date myDateVenci;
+            Date myDateCorte;
+
+            String dateVenci = listaFechaVencimiento.get(j);
+            String dateCorte = listaFechaCorte.get(j);
+
+            int dayCorte = 0;
+            int monthCorte = 0;
+            int day = 0;
+            int month = 0;
+            int year = 0;
+
+            try {
+                myDateVenci = df.parse(dateVenci);
+
+                day = myDateVenci.getDate();
+                month = myDateVenci.getMonth() + 1;
+                year = myDateVenci.getYear() + 1900;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                myDateCorte = df.parse(dateCorte);
+
+                dayCorte = myDateCorte.getDate();
+                monthCorte = myDateCorte.getMonth() + 1;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(monthCorte == 2){
+                if(dayCorte == 29 || dayCorte == 30 || dayCorte == 31 && systemYear%4 == 1){
+                    if(systemDay == 28){
+                        connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
+                        connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
+                    }
+                }else if(dayCorte == 30 || dayCorte == 31 && systemYear%4 == 0){
+                    if(systemDay == 29){
+                        connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
+                        connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
+                    }
+                }
+            }else if(monthCorte == 4 || monthCorte == 6 || monthCorte == 9 || monthCorte == 11){
+                if(dayCorte == 31){
+                    if(systemDay == 30){
+                        connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
+                        connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
+                    }
+                }else if(dayCorte == systemDay){
+                    connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
+                    connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
+                }
+            }else if(dayCorte == systemDay){
+                connection.deleteDataGastoTarjetaId(listaFourDigits.get(j));
+                connection.updateTarjetaConsumoId(listaIds.get(j), dataConsumo);
+            }
+
+            if(month == 2){
+                if(day == 29 && year%4 != 0){
+                    if(systemDay == 28 && month == systemMonth && year == systemYear){
+                        connection.deleteData("Tarjeta", listaIds.get(j));
+                    }
+                }
+            }else if(year == systemYear && month == systemMonth && day == systemDay){
+
+                connection.deleteData("Tarjeta", listaIds.get(j));
+
+            }
+
+            j++;
+
+        }
+    }
+
+    private void MetaMethod() {
+
+        final DBConnection connection = new DBConnection(DashboardDrawer.this);
+
+        int rowCount = connection.getCantidadDeFilas("Meta");
+
+        //Carga todos los metas de la base de datos
+        List<Meta> metas = connection.getAllMetas();
+
+        ArrayList<Integer> listaIds = new ArrayList<>();
+        ArrayList<String> listaConceptos = new ArrayList<>();
+        ArrayList<Double> listaMontos = new ArrayList<>();
+        ArrayList<Double> listaAhorrados = new ArrayList<>();
+        ArrayList<String> listaFechaInicio = new ArrayList<>();
+        ArrayList<String> listaFechaFinal = new ArrayList<>();
+
+        //llena la lista con los ids de las metas
+        for (int i = 0; i < metas.size(); i++) {
+            Meta meta = metas.get(i);
+            listaIds.add(meta.getId());
+        }
+
+        //llena la lista con los conceptos de las metas
+        for(int i = 0; i < metas.size(); i++){
+            Meta meta = metas.get(i);
+            listaConceptos.add(meta.getConcepto());
+        }
+
+        //llena la lista con los montos de las metas
+        for (int i = 0; i < metas.size(); i++) {
+            Meta meta = metas.get(i);
+            listaMontos.add(meta.getMonto());
+        }
+
+        //llena la lista con los ahorros de las metas
+        for (int i = 0; i < metas.size(); i++) {
+            Meta meta = metas.get(i);
+            listaAhorrados.add(meta.getAhorrado());
+        }
+
+        //llena la lista con los fecha inicio de las metas
+        for (int i = 0; i < metas.size(); i++) {
+            Meta meta = metas.get(i);
+            listaFechaInicio.add(meta.getFechaInicio());
+        }
+
+        //llena la lista con las fechas finales de las metas
+        for (int i = 0; i < metas.size(); i++) {
+            Meta meta = metas.get(i);
+            listaFechaFinal.add(meta.getFechaFinal());
+        }
+
+        int j = 0;
+        while (j < rowCount) {
+
+            Calendar calendar = Calendar.getInstance();
+
+            int systemDay = calendar.get(calendar.DAY_OF_MONTH);
+            int systemMonth = calendar.get(calendar.MONTH) + 1;
+            int systemYear = calendar.get(calendar.YEAR);
+
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            Date myDateInicio;
+            Date myDateFinal;
+
+            double helpMonto = listaMontos.get(j);
+            double helpAhorroMensual = helpMonto / 12;
+            double ahorroMensual = Double.parseDouble(new DecimalFormat("##.##").format(helpAhorroMensual));
+            double helpAhorro = listaAhorrados.get(j);
+            double updateAhorro = helpAhorro + ahorroMensual;
+
+            ContentValues data = new ContentValues();
+            data.put("Ahorro", updateAhorro);
+
+            String dateInicio = listaFechaInicio.get(j);
+            String dateFinal = listaFechaFinal.get(j);
+            String systemDate = systemDay + "-" + systemMonth + "-" + systemYear;
+
+            int dayInicio = 0;
+            int monthInicio = 0;
+            int yearInico = 0;
+            int dayFinal = 0;
+            int monthFinal = 0;
+            int yearFinal = 0;
+
+            try {
+                myDateInicio = df.parse(dateInicio);
+
+                dayInicio = myDateInicio.getDate();
+                monthInicio = myDateInicio.getMonth() + 1;
+                yearInico = myDateInicio.getYear() + 1900;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                myDateFinal = df.parse(dateFinal);
+
+                dayFinal = myDateFinal.getDate();
+                monthFinal = myDateFinal.getMonth() + 1;
+                yearFinal = myDateFinal.getYear() + 1900;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (systemMonth == 2 && systemMonth != monthInicio) {
+                if (systemDay == 28 && systemYear % 4 != 0) {
+                    if (dayInicio == 29 || dayInicio == 30 || dayInicio == 31) {
+                        connection.updateDataMeta(listaIds.get(j), data);
+                        connection.insertGasto(listaConceptos.get(j), ahorroMensual,"Efectivo", false, systemDate,"");
+                    }
+                }
+            } else if (systemMonth == 4 || systemMonth == 6 || systemMonth == 9 || systemMonth == 11) {
+                if (systemMonth != monthInicio) {
+                    if (dayInicio == 31) {
+                        if (systemDay == 30) {
+                            connection.updateDataMeta(listaIds.get(j), data);
+                            connection.insertGasto(listaConceptos.get(j), ahorroMensual,"Efectivo", false, systemDate,"");
+                        }
+                    } else if (systemDay == dayInicio) {
+                        connection.updateDataMeta(listaIds.get(j), data);
+                        connection.insertGasto(listaConceptos.get(j), ahorroMensual,"Efectivo", false, systemDate,"");
+                    }
+                }
+            }else if (systemDay == dayInicio && systemMonth != monthInicio) {
+                connection.updateDataMeta(listaIds.get(j), data);
+                connection.insertGasto(listaConceptos.get(j), ahorroMensual,"Efectivo", false, systemDate,"");
+
+            }else if (systemMonth == monthInicio && systemYear == yearFinal) {
+                //data.put("Estado", "Completo");
+                ContentValues data2 = new ContentValues();
+                data2.put("Ahorro", helpMonto);
+                connection.updateDataMeta(listaIds.get(j), data2);
+                connection.insertGasto(listaConceptos.get(j), ahorroMensual,"Efectivo", false, systemDate,"");
+            }
+
+            j++;
+
+        }
     }
 
     @Override
@@ -396,10 +589,6 @@ public class DashboardDrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_metas) {
             startActivity(new Intent(DashboardDrawer.this, MenuMetas.class));
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

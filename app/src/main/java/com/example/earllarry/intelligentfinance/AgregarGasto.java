@@ -221,11 +221,11 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
 
                                 String textRecurrencia = spinnerRecurrencia.getSelectedItem().toString();
 
-                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", true, helpFecha, textRecurrencia);
+                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", true, myText, textRecurrencia);
                             }//Si automatizar esta desactivado inserta ingreso
                             else{
 
-                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", false, helpFecha, "");
+                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", false, myText, "");
                             }
 
                             balanceTarjeta = connection.getTarjetaMonto(tarjeta);

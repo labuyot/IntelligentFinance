@@ -164,7 +164,7 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
                     ContentValues data=new ContentValues();
                     data.put("Concepto", helpConcepto1);
                     data.put("Monto", helpMonto);
-                    data.put("Fecha", helpFecha);
+                    data.put("Fecha", myText);
 
                     //if(connection.conceptoExist(helpConcepto1, "Gasto", "Concepto")){
 
