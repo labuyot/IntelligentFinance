@@ -78,6 +78,8 @@ public class DashboardDrawer extends AppCompatActivity
                 CorteVenciMethod();
                 MetaMethod();
 
+                startActivity(new Intent(DashboardDrawer.this, DashboardDrawer.class));
+
             }
         });
 
