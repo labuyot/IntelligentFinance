@@ -82,15 +82,26 @@
         <activity
             android:name=".ModificarTarjeta"
             android:label="@string/title_activity_modificar_tarjeta"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
-            android:name="AlaramReceiver"
-            android:process=":remote" >
-        </receiver>
+            android:name=".AlaramReceiver"
+            android:process=":remote" />
 
-        <service android:name=".TaskService" >
-        </service>
+        <service android:name=".TaskService" />
+
+        <activity
+            android:name=".AgregarDeuda"
+            android:label="@string/title_activity_agregar_deuda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MenuDeuda"
+            android:label="@string/title_activity_menu_deuda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ModificarDeuda"
+            android:label="@string/title_activity_modificar_deuda"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

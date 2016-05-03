@@ -37,4 +37,7 @@
         <item>Semestral</item>
         <item>Anual</item>
     </string-array>
+    <string name="title_activity_agregar_deuda">AgregarDeuda</string>
+    <string name="title_activity_menu_deuda">MenuDeuda</string>
+    <string name="title_activity_modificar_deuda">ModificarDeuda</string>
 </resources>

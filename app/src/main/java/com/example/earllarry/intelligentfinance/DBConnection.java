@@ -43,6 +43,14 @@ public class DBConnection extends SQLiteOpenHelper {
     private static final String GASTO_COLUMN_FECHA = "Fecha";
     private static final String GASTO_COLUMN_FRECUENCIA = "Frecuencia";
 
+    private static final String DEUDA_TABLE_NAME = "Deuda";
+    private static final String DEUDA_COLUMN_ID = "Id";
+    private static final String DEUDA_COLUMN_CONCEPTO = "Concepto";
+    private static final String DEUDA_COLUMN_MONTO = "Monto";
+    private static final String DEUDA_COLUMN_STATUS = "Status";
+    private static final String DEUDA_COLUMN_TIPO = "Tipo";
+    private static final String DEUDA_COLUMN_FECHA = "Fecha";
+
     private static final String TARJETA_TABLE_NAME = "Tarjeta";
     private static final String TARJETA_COLUMN_ID = "Id";
     private static final String TARJETA_COLUMN_BANCO = "Banco";
@@ -88,6 +96,16 @@ public class DBConnection extends SQLiteOpenHelper {
             GASTO_COLUMN_AUTOMATIZAR,
             GASTO_COLUMN_FECHA,
             GASTO_COLUMN_FRECUENCIA
+    };
+
+    public static final String[] ALL_COLUMNS_DEUDA = new String[] {
+            DEUDA_TABLE_NAME,
+            DEUDA_COLUMN_ID,
+            DEUDA_COLUMN_CONCEPTO,
+            DEUDA_COLUMN_MONTO,
+            DEUDA_COLUMN_STATUS,
+            DEUDA_COLUMN_TIPO,
+            DEUDA_COLUMN_FECHA
     };
 
     public static final String[] ALL_COLUMNS_TARJETA = new String[] {
@@ -151,6 +169,18 @@ public class DBConnection extends SQLiteOpenHelper {
                     GASTO_COLUMN_FRECUENCIA + " text " +
                     ")";
 
+    public static final String CREATE_DEUDA_TABLE =
+            "CREATE TABLE " +
+                    DEUDA_TABLE_NAME +
+                    "( " +
+                    DEUDA_COLUMN_ID + " integer primary key autoincrement, " +
+                    DEUDA_COLUMN_CONCEPTO + " text, " +
+                    DEUDA_COLUMN_MONTO + " real, " +
+                    DEUDA_COLUMN_STATUS + " real, " +
+                    DEUDA_COLUMN_TIPO + " text, " +
+                    DEUDA_COLUMN_FECHA + " text " +
+                    ")";
+
     public static final String CREATE_META_TABLE =
             "CREATE TABLE " +
                     META_TABLE_NAME +
@@ -186,6 +216,7 @@ public class DBConnection extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_INGRESO_TABLE);
         db.execSQL(CREATE_GASTO_TABLE);
+        db.execSQL(CREATE_DEUDA_TABLE);
         db.execSQL(CREATE_META_TABLE);
         db.execSQL(CREATE_TARJETA_TABLE);
         db.execSQL(CREATE_USUARIO_TABLE);
@@ -196,6 +227,7 @@ public class DBConnection extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + INGRESO_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + GASTO_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DEUDA_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + META_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TARJETA_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + USUARIO_TABLE_NAME);
@@ -260,6 +292,20 @@ public class DBConnection extends SQLiteOpenHelper {
         values.put(GASTO_COLUMN_FRECUENCIA, frecuencia);
 
         db.insert(GASTO_TABLE_NAME, null, values);
+    }
+
+    public void insertDeuda(String concepto, double monto, double status, String tipo, String fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DEUDA_COLUMN_CONCEPTO, concepto);
+        values.put(DEUDA_COLUMN_MONTO, monto);
+        values.put(DEUDA_COLUMN_STATUS, status);
+        values.put(DEUDA_COLUMN_TIPO, tipo);
+        values.put(DEUDA_COLUMN_FECHA, fecha);
+
+        db.insert(DEUDA_TABLE_NAME, null, values);
     }
 
     public void insertMeta(String concepto, double monto, String fechainicio, String fechafinal) {
@@ -380,6 +426,38 @@ public class DBConnection extends SQLiteOpenHelper {
         gasto.setFrecuencia(cursor.getString(6));
 
         return gasto;
+    }
+
+    public List<Deuda> getAllDeudas(){
+        List<Deuda> deudas = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(DEUDA_TABLE_NAME, ALL_COLUMNS_DEUDA, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()){
+            Deuda deuda = cursorToDeudas(cursor);
+            deudas.add(deuda);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return deudas;
+    }
+
+    private Deuda cursorToDeudas(Cursor cursor){
+        Deuda deuda = new Deuda();
+
+        deuda.setId(cursor.getInt(0));
+        deuda.setConcepto(cursor.getString(1));
+        deuda.setMonto(cursor.getDouble(2));
+        deuda.setStatus(cursor.getDouble(3));
+        deuda.setTipo(cursor.getString(4));
+        deuda.setFecha(cursor.getString(5));
+
+        return deuda;
     }
 
     public List<Meta> getAllMetas(){
@@ -518,6 +596,13 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
+    public void deleteDataDeuda(String tableName, String concepto) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.delete(tableName, "Concepto='" + concepto +"'", null);
+
+    }
+
     public void deleteDataGastoTarjetaId(int cuatroDigitos) {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -600,6 +685,13 @@ public class DBConnection extends SQLiteOpenHelper {
 
     }
 
+    public void updateDataDeuda(int id, ContentValues data) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        db.update("Deuda", data, "Id=" + id, null);
+
+    }
+
     public void updateDataMeta(int id, ContentValues data) {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -634,125 +726,4 @@ public class DBConnection extends SQLiteOpenHelper {
         db.update("Tarjeta", data, "Id=" + id, null);
 
     }
-
-
-
-    /*
-    public ArrayList<String> getDetalleDePartidaByID(String id){
-        ArrayList<String> lista = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(
-                DETALLE_TABLE_NAME,
-                ALL_COLUMNS_DETALLE,
-                "id = ?",
-                new String[] {id},
-                null,
-                null,
-                null
-        );
-
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()){
-            String partida = cursorToDetalle(cursor);
-            lista.add(partida);
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-        return lista;
-    }
-
-    private String cursorToDetalle(Cursor cursor){
-        String jugada = "";
-
-        jugada += cursor.getString(1);
-        jugada += ": ";
-        jugada += cursor.getString(3);
-        jugada += "\t\t\t\t";
-        jugada += cursor.getString(2);
-        jugada += ": ";
-        jugada += cursor.getString(4);
-
-        return jugada;
-    }
-
-    public int getCantidadDePartidas() {
-        String countQuery = "SELECT  * FROM " + PARTIDA_TABLE_NAME;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        int cnt = cursor.getCount();
-        cursor.close();
-
-        return cnt;
-    }
-
-    public Boolean gameExists(String nombre){
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT nombre FROM " +
-                        GAME_TABLE_NAME + " WHERE " +
-                        GAME_COLUMN_NAME + " = ?",
-                new String[] {nombre}
-        );
-
-        if (cursor.getCount() <= 0){
-            //este juego no esta registrado
-            return false;
-        }
-        else{
-            //este juego si esta registrado
-            return true;
-        }
-
-    }
-
-    public Boolean teamExists(String equipo){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT nombre FROM " +
-                        TEAM_TABLE_NAME + " WHERE " +
-                        TEAM_COLUMN_NAME + " = ?",
-                new String[] {equipo}
-        );
-
-        if (cursor.getCount() <= 0){
-            //este juego no esta registrado
-            return false;
-        }
-        else{
-            //este juego si esta registrado
-            return true;
-        }
-    }
-
-    public Boolean partidaExists(String juego, String equipoA, String equipoB){
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(
-                "SELECT * FROM " +
-                        PARTIDA_TABLE_NAME + " WHERE " +
-                        PARTIDA_COLUMN_JUEGO + " = ? AND " +
-                        PARTIDA_COLUMN_EQUIPO_A + " = ? AND " +
-                        PARTIDA_COLUMN_EQUIPO_B + " = ?",
-                new String[] {juego, equipoA, equipoB}
-        );
-
-        if (cursor.getCount() <= 0){
-            //esta partida no esta registrado
-            return false;
-        }
-        else{
-            //esta partida si esta registrado
-            return true;
-        }
-
-    }
-    */
 }
