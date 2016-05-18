@@ -162,7 +162,7 @@ public class AgregarIngreso extends AppCompatActivity implements View.OnClickLis
 
                         }//Si automatizar esta desactivado inserta ingreso
                         else{
-                            connection.insertIngreso(helpConcepto1, helpMonto, false, helpFecha, "");
+                            connection.insertIngreso(helpConcepto1, helpMonto, false, helpFecha, "No");
                         }
 
                         Toast.makeText(getApplicationContext(), "Ingreso Agregado",

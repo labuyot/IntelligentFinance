@@ -1,6 +1,7 @@
 package com.example.earllarry.intelligentfinance;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -106,13 +107,21 @@ public class MenuGasto extends AppCompatActivity {
             tbrowHead.addView(tv4);
 
             TextView tv5 = new TextView(this);
-            //tv3.setBackgroundResource(R.drawable.row_border);
+            //tv5.setBackgroundResource(R.drawable.row_border);
             tv5.setTextSize(20);
             tv5.setText("  Id  ");
             tv5.setTextColor(Color.BLACK);
             tv5.setGravity(Gravity.CENTER);
             tv5.setVisibility(View.GONE);
             tbrowHead.addView(tv5);
+
+            TextView tv6 = new TextView(this);
+            //tv6.setBackgroundResource(R.drawable.row_border);
+            tv6.setTextSize(20);
+            tv6.setText("  Recurrencia  ");
+            tv6.setTextColor(Color.BLACK);
+            tv6.setGravity(Gravity.CENTER);
+            tbrowHead.addView(tv6);
 
             stk.addView(tbrowHead);
 
@@ -127,6 +136,7 @@ public class MenuGasto extends AppCompatActivity {
         ArrayList<String> listaTipos = new ArrayList<>();
         ArrayList<Integer> listaAutomatizar = new ArrayList<>();
         ArrayList<String> listaFecha = new ArrayList<>();
+        ArrayList<String> listaRecurrencia = new ArrayList<>();
 
         //llena la lista con los ids de los gastos
         for(int i = 0; i < gastos.size(); i++){
@@ -163,6 +173,13 @@ public class MenuGasto extends AppCompatActivity {
             Gasto gasto = gastos.get(i);
             listaFecha.add(gasto.getFecha());
         }
+
+        //llena la lista con las recurrencias de los gastos
+        for(int i = 0; i < gastos.size(); i++){
+            Gasto gasto = gastos.get(i);
+            listaRecurrencia.add(gasto.getFrecuencia());
+        }
+
 
         for (int i = 0; i < rowCount; i++) {
 
@@ -224,6 +241,14 @@ public class MenuGasto extends AppCompatActivity {
             id.setVisibility(View.GONE);
             tbrow.addView(id);
 
+            TextView recurrencia = new TextView(this);
+            //recurrencia.setBackgroundResource(R.drawable.row_border);
+            recurrencia.setTextSize(18);
+            recurrencia.setText(" " + listaRecurrencia.get(i) + " ");
+            recurrencia.setTextColor(Color.BLACK);
+            recurrencia.setGravity(Gravity.CENTER);
+            tbrow.addView(recurrencia);
+
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -237,12 +262,15 @@ public class MenuGasto extends AppCompatActivity {
                     TextView sampleAutomatizar = (TextView) tablerow.getChildAt(3);
                     TextView sampleFecha = (TextView) tablerow.getChildAt(4);
                     TextView sampleId = (TextView) tablerow.getChildAt(5);
+                    TextView sampleRecurrencia = (TextView) tablerow.getChildAt(6);
                     final String intentConcepto = sampleConcepto.getText().toString().replaceAll("\\s+", "");
                     final String intentMonto = sampleMonto.getText().toString().replaceAll("\\s+", "");
                     final String intentTipo = sampleTipo.getText().toString().replaceAll("\\s+", "");
                     final String intentAutomatizar = sampleAutomatizar.getText().toString().replaceAll("\\s+", "");
                     final String intentFecha = sampleFecha.getText().toString().replaceAll("\\s+", "");
                     final String intentId = sampleId.getText().toString().replaceAll("\\s+", "");
+                    final String intentRecurrencia = sampleRecurrencia.getText().toString().replaceAll("\\s+", "");
+
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MenuGasto.this);
                     builder.setMessage("Que desea hacer?")
@@ -254,6 +282,8 @@ public class MenuGasto extends AppCompatActivity {
                                     i.putExtra("concepto", intentConcepto);
                                     i.putExtra("monto", intentMonto);
                                     i.putExtra("fecha", intentFecha);
+                                    i.putExtra("tipo", intentTipo);
+                                    i.putExtra("recurrencia", intentRecurrencia);
                                     i.putExtra("id", intentId);
                                     if (Objects.equals("Si", intentAutomatizar)) {
                                         i.putExtra("automatizar", true);

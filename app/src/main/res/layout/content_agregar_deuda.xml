@@ -24,7 +24,7 @@
         android:textSize="25dp"
         android:layout_below="@+id/textViewConceptoDeuda"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,9 +48,9 @@
         android:layout_marginLeft="10dp"
         android:textColor="#000000"
         android:textSize="25dp"
-        android:layout_below="@+id/checkboxTarjetaDeuda"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/textViewMontoDeuda" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -62,8 +62,8 @@
         android:gravity="center"
         android:layout_below="@+id/editTextConceptoDeuda"
         android:layout_alignStart="@+id/editTextConceptoDeuda"
-        android:layout_marginTop="24dp"
-        android:layout_above="@+id/checkboxTarjetaDeuda" />
+        android:layout_marginTop="50dp"
+        android:layout_above="@+id/textViewFechaDeuda" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -98,12 +98,12 @@
         android:layout_height="wrap_content"
         android:text="Cancelar"
         android:id="@+id/buttonCancelarDeuda"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_below="@+id/textViewFechaDeuda" />
 
     <Button
@@ -115,32 +115,8 @@
         android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
-        android:layout_marginLeft="10dp"
-        android:layout_alignTop="@+id/buttonCancelarDeuda" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerTarjetaDeuda"
-        android:background="@android:drawable/btn_dropdown"
-        android:gravity="center"
-        android:layout_below="@+id/textViewMontoDeuda"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/checkboxTarjetaDeuda"
-        android:layout_marginTop="14dp"
-        android:layout_above="@+id/textViewFechaDeuda"
-        android:layout_marginLeft="185dp" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tarjeta"
-        android:id="@+id/checkboxTarjetaDeuda"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:textColor="#000000"
-        android:textSize="25dp"
-        android:layout_below="@+id/textViewMontoDeuda"
-        android:layout_alignParentStart="true" />
+        android:layout_marginLeft="50dp"
+        android:layout_alignTop="@+id/buttonCancelarDeuda"
+        android:layout_toEndOf="@+id/buttonCancelarDeuda" />
 
 </RelativeLayout>

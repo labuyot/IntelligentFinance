@@ -1,17 +1,22 @@
 package com.example.earllarry.intelligentfinance;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,6 +26,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class MenuDeuda extends AppCompatActivity {
+
+    private static final String TAG = "DialogActivity";
+    private static final int TEXT_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +104,7 @@ public class MenuDeuda extends AppCompatActivity {
             tv3.setText("  Tipo  ");
             tv3.setTextColor(Color.BLACK);
             tv3.setGravity(Gravity.CENTER);
+            tv3.setVisibility(View.GONE);
             tbrowHead.addView(tv3);
 
             TextView tv4 = new TextView(this);
@@ -191,7 +200,7 @@ public class MenuDeuda extends AppCompatActivity {
             TextView status = new TextView(this);
             //status.setBackgroundResource(R.drawable.row_border);
             status.setTextSize(18);
-            status.setText(" " + listaMontos.get(i) + " ");
+            status.setText(" " + listaStatus.get(i) + " ");
             status.setTextColor(Color.BLACK);
             status.setGravity(Gravity.CENTER);
             tbrow.addView(status);
@@ -202,6 +211,7 @@ public class MenuDeuda extends AppCompatActivity {
             tipo.setText(" " + listaTipos.get(i) + " ");
             tipo.setTextColor(Color.BLACK);
             tipo.setGravity(Gravity.CENTER);
+            tipo.setVisibility(View.GONE);
             tbrow.addView(tipo);
 
             TextView fecha = new TextView(this);
@@ -242,46 +252,85 @@ public class MenuDeuda extends AppCompatActivity {
                     final String intentId = sampleId.getText().toString().replaceAll("\\s+", "");
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MenuDeuda.this);
-                    builder.setMessage("Que desea hacer?")
-                            .setCancelable(false)
-                            .setPositiveButton("Modificar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                    builder.setTitle("Que desea hacer?")
+                            .setItems(R.array.itemmenu, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
 
-                                    Intent i = new Intent(getApplicationContext(), ModificarDeuda.class);
-                                    i.putExtra("concepto", intentConcepto);
-                                    i.putExtra("monto", intentMonto);
-                                    i.putExtra("status", intentStatus);
-                                    i.putExtra("fecha", intentFecha);
-                                    i.putExtra("id", intentId);
-                                    startActivity(i);
-                                }
-                            })
-                            .setNeutralButton("Eliminar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+                                    if (which == 1) {
 
-                                    int dataId = Integer.parseInt(intentId);
-                                    connection.deleteData("Deuda", dataId);
+                                        Intent i = new Intent(getApplicationContext(), ModificarDeuda.class);
+                                        i.putExtra("concepto", intentConcepto);
+                                        i.putExtra("monto", intentMonto);
+                                        i.putExtra("status", intentStatus);
+                                        i.putExtra("fecha", intentFecha);
+                                        i.putExtra("id", intentId);
+                                        startActivity(i);
 
-                                    if (intentTipo.equals("Tarjeta")) {
-                                        connection.deleteDataGastoTarjetaConcepto(intentConcepto);
+                                    } else if (which == 2) {
+
+                                        int dataId = Integer.parseInt(intentId);
+                                        connection.deleteData("Deuda", dataId);
+
+                                        if (intentTipo.equals("Tarjeta")) {
+                                            connection.deleteDataGastoTarjetaConcepto(intentConcepto);
+                                        }
+
+                                        Intent j = new Intent(MenuDeuda.this, MenuDeuda.class);
+                                        startActivity(j);
+                                        finish();
+
+                                    } else if (which == 3) {
+
+                                        AlertDialog.Builder builderActualizar = new AlertDialog.Builder(MenuDeuda.this);
+                                        builderActualizar.setTitle("Actualizar deuda");
+                                        builderActualizar.setMessage("Monto");
+
+                                        // Use an EditText view to get user input.
+                                        final EditText input = new EditText(MenuDeuda.this);
+                                        input.setId(TEXT_ID);
+                                        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+                                        builderActualizar.setView(input);
+
+                                        builderActualizar.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                String value = input.getText().toString();
+                                                Log.d(TAG, "Monto: " + value);
+                                                Double helpValue = Double.parseDouble(value);
+                                                Double helpStatus = Double.parseDouble(intentStatus);
+                                                Double updateStatus = helpStatus + helpValue;
+
+                                                int helpId = Integer.parseInt(intentId);
+
+                                                ContentValues data = new ContentValues();
+                                                data.put("Status", updateStatus);
+
+                                                connection.updateDataDeuda(helpId, data);
+
+                                                startActivity(new Intent(MenuDeuda.this, MenuDeuda.class));
+                                                finish();
+
+                                            }
+                                        });
+                                        builderActualizar.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                        AlertDialog alert1 = builderActualizar.create();
+                                        alert1.show();
+
+                                    } else if (which == 4) {
+
+                                        dialog.cancel();
                                     }
-
-                                    Intent i = new Intent(MenuDeuda.this, MenuDeuda.class);
-                                    startActivity(i);
-                                    finish();
-                                    //dialog.cancel();
                                 }
-                            })
-                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                    //startActivity(new Intent(MenuGasto.this, DashboardDrawer.class));
-                    //finish();
+                            }
+                    );
+                AlertDialog alert = builder.create();
+                alert.show();
                 }
             });
 

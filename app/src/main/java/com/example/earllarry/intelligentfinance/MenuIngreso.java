@@ -107,6 +107,14 @@ public class MenuIngreso extends AppCompatActivity {
             tv4.setVisibility(View.GONE);
             tbrowHead.addView(tv4);
 
+            TextView tv5 = new TextView(this);
+            //tv5.setBackgroundResource(R.drawable.row_border);
+            tv5.setTextSize(20);
+            tv5.setText("  Recurrencia  ");
+            tv5.setTextColor(Color.BLACK);
+            tv5.setGravity(Gravity.CENTER);
+            tbrowHead.addView(tv5);
+
             stk.addView(tbrowHead);
 
         }
@@ -119,6 +127,7 @@ public class MenuIngreso extends AppCompatActivity {
         ArrayList<Double> listaMontos = new ArrayList<>();
         ArrayList<Integer> listaAutomatizar = new ArrayList<>();
         ArrayList<String> listaFecha = new ArrayList<>();
+        ArrayList<String> listaRecurrencia = new ArrayList<>();
 
         //llena la lista con los ids de los ingresos
         for(int i = 0; i < ingresos.size(); i++){
@@ -148,6 +157,12 @@ public class MenuIngreso extends AppCompatActivity {
         for(int i = 0; i < ingresos.size(); i++){
             Ingreso ingreso = ingresos.get(i);
             listaFecha.add(ingreso.getFecha());
+        }
+
+        //llena la lista con las frecuencias de los ingresos
+        for(int i = 0; i < ingresos.size(); i++){
+            Ingreso ingreso = ingresos.get(i);
+            listaRecurrencia.add(ingreso.getFrecuencia());
         }
 
         for (int i = 0; i < rowCount; i++) {
@@ -193,13 +208,21 @@ public class MenuIngreso extends AppCompatActivity {
             tbrow.addView(fecha);
 
             TextView id = new TextView(this);
-            //concepto.setBackgroundResource(R.drawable.row_border);
+            //id.setBackgroundResource(R.drawable.row_border);
             id.setTextSize(18);
             id.setText(" " + listaIds.get(i) + " ");
             id.setTextColor(Color.BLACK);
             id.setGravity(Gravity.CENTER);
             id.setVisibility(View.GONE);
             tbrow.addView(id);
+
+            TextView recurrencia = new TextView(this);
+            //recurrencia.setBackgroundResource(R.drawable.row_border);
+            recurrencia.setTextSize(18);
+            recurrencia.setText(" " + listaRecurrencia.get(i) + " ");
+            recurrencia.setTextColor(Color.BLACK);
+            recurrencia.setGravity(Gravity.CENTER);
+            tbrow.addView(recurrencia);
 
             tbrow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

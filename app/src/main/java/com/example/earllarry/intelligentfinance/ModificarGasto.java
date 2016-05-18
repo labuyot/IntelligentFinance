@@ -9,8 +9,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -18,8 +20,10 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,13 +55,16 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
 
         final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoGasto);
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoGasto);
-        final Spinner spinnerTipo = (Spinner)findViewById(R.id.spinnerTipoGasto);
+        final Spinner spinnerRecurrencia = (Spinner)findViewById(R.id.spinner2);
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxGasto);
+        final Spinner spinnerTarjeta = (Spinner)findViewById(R.id.spinnerTarjetaGasto);
+        final CheckBox checkBoxTarjeta = (CheckBox) findViewById(R.id.checkboxTarjeta);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaGasto);
 
-        spinnerTipo.setVisibility(View.GONE);
-
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        spinnerRecurrencia.setVisibility(View.GONE);
+        spinnerTarjeta.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarGasto);
         buttonCancelar.setOnClickListener(this);
@@ -67,6 +74,8 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
         String ayudaConcepto = "";
         String ayudaMonto = "";
         String ayudaFecha = "";
+        String ayudaTipo = "";
+        String ayudaRecurrencia = "";
         boolean ayudaAutomatizar = false;
         String ayudaId = "";
 
@@ -76,6 +85,8 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
             ayudaMonto = extras.getString("monto");
             ayudaAutomatizar = extras.getBoolean("automatizar");
             ayudaFecha = extras.getString("fecha");
+            ayudaTipo = extras.getString("tipo");
+            ayudaRecurrencia = extras.getString("recurrencia");
             ayudaId = extras.getString("id");
 
         }
@@ -88,6 +99,17 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
 
         if(ayudaAutomatizar == true){
             checkBox.setChecked(true);
+
+            for (int i = 0; i < spinnerRecurrencia.getCount(); i++) {
+                if (spinnerRecurrencia.getItemAtPosition(i).equals(ayudaRecurrencia)) {
+                    spinnerRecurrencia.setSelection(i);
+                    break;
+                }
+            }
+        }
+
+        if(ayudaTipo == "Tarjeta"){
+            checkBoxTarjeta.setChecked(true);
         }
 
         editTextFecha.setOnClickListener(new View.OnClickListener() {
@@ -96,12 +118,12 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 //To show current date in the datepicker
-                Calendar mcurrentDate=Calendar.getInstance();
-                mYear=mcurrentDate.get(Calendar.YEAR);
-                mMonth=mcurrentDate.get(Calendar.MONTH);
-                mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                Calendar mcurrentDate = Calendar.getInstance();
+                mYear = mcurrentDate.get(Calendar.YEAR);
+                mMonth = mcurrentDate.get(Calendar.MONTH);
+                mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog mDatePicker=new DatePickerDialog(ModificarGasto.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog mDatePicker = new DatePickerDialog(ModificarGasto.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         // TODO Auto-generated method stub
                     /*      Your code   to get date and time    */
@@ -111,7 +133,51 @@ public class ModificarGasto extends AppCompatActivity implements View.OnClickLis
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date");
-                mDatePicker.show();  }
+                mDatePicker.show();
+            }
+        });
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    spinnerRecurrencia.setVisibility(View.VISIBLE);
+                } else {
+                    spinnerRecurrencia.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        checkBoxTarjeta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if (connection.getCantidadDeFilas("Tarjeta") > 0) {
+                        spinnerTarjeta.setVisibility(View.VISIBLE);
+
+                        List<Tarjeta> tarjetas = connection.getAllTarjetas();
+                        ArrayList<Integer> listaFourDigits = new ArrayList<>();
+
+                        //llena la lista con los 4digitos de las tarjetas
+                        for (int i = 0; i < tarjetas.size(); i++) {
+                            Tarjeta tarjeta = tarjetas.get(i);
+                            listaFourDigits.add(tarjeta.getFourdigits());
+                        }
+
+                        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(ModificarGasto.this, android.R.layout.simple_spinner_dropdown_item, listaFourDigits);
+
+                        spinnerTarjeta.setAdapter(adapter);
+
+                    } else {
+
+                        checkBoxTarjeta.setChecked(false);
+                        Toast.makeText(getApplicationContext(), "No ha registrado tarjetas",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    spinnerTarjeta.setVisibility(View.GONE);
+                }
+            }
         });
 
         buttonCancelar.setOnClickListener(new View.OnClickListener() {

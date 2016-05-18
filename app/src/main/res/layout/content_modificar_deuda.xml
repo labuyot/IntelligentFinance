@@ -24,7 +24,7 @@
         android:textSize="25dp"
         android:layout_below="@+id/textViewConceptoDeuda"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,31 +39,18 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="50dp" />
 
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tarjeta"
-        android:id="@+id/checkBoxDeuda"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:textColor="#000000"
-        android:textSize="25dp"
-        android:layout_below="@+id/textViewMontoDeuda"
-        android:layout_alignParentStart="true"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Fecha"
         android:id="@+id/textViewFechaDeuda"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:textColor="#000000"
         android:textSize="25dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/checkBoxDeuda" />
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/textViewMontoDeuda" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,11 +58,12 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/editTextMontoDeuda"
-        android:layout_alignTop="@+id/textViewMontoDeuda"
         android:background="@drawable/edit_text_style"
         android:gravity="center"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/checkBoxDeuda" />
+        android:layout_below="@+id/editTextConceptoDeuda"
+        android:layout_alignStart="@+id/editTextConceptoDeuda"
+        android:layout_marginTop="50dp"
+        android:layout_above="@+id/textViewFechaDeuda" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -96,13 +84,13 @@
         android:ems="10"
         android:id="@+id/editTextFechaDeuda"
         android:background="@drawable/edit_text_style"
+        android:layout_alignStart="@+id/editTextMontoDeuda"
         android:maxLength="10"
+        android:layout_alignBottom="@+id/textViewFechaDeuda"
         android:hint="dd-mm-yyyy"
-        android:focusable="false"
         android:gravity="center"
-        android:layout_alignTop="@+id/textViewFechaDeuda"
-        android:layout_alignEnd="@+id/editTextConceptoDeuda"
-        android:layout_above="@+id/buttonCancelarDeuda" />
+        android:focusable="false"
+        android:layout_alignTop="@+id/textViewFechaDeuda" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -110,10 +98,11 @@
         android:layout_height="wrap_content"
         android:text="Cancelar"
         android:id="@+id/buttonCancelarDeuda"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/textViewFechaDeuda" />
 
@@ -126,22 +115,8 @@
         android:textSize="20dp"
         android:textColor="#FFFFFF"
         android:background="#006735"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="50dp"
         android:layout_alignTop="@+id/buttonCancelarDeuda"
-        android:layout_toEndOf="@+id/buttonCancelarDeuda"
-        android:layout_marginStart="50dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerTipoDeuda"
-        android:background="@drawable/edit_text_style"
-        android:layout_alignEnd="@+id/editTextTipoDeuda"
-        android:layout_toEndOf="@+id/textViewTipoDeuda"
-        android:layout_alignStart="@+id/editTextMontoDeuda"
-        android:visibility="visible"
-        android:gravity="center"
-        android:layout_above="@+id/textViewFechaDeuda"
-        android:layout_alignTop="@+id/checkBoxDeuda" />
+        android:layout_toEndOf="@+id/buttonCancelarDeuda" />
 
 </RelativeLayout>

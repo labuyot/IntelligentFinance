@@ -51,11 +51,7 @@ public class ModificarDeuda extends AppCompatActivity implements View.OnClickLis
 
         final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoDeuda);
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoDeuda);
-        final Spinner spinnerTipo = (Spinner)findViewById(R.id.spinnerTipoDeuda);
-        final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxDeuda);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaDeuda);
-
-        spinnerTipo.setVisibility(View.GONE);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
@@ -163,21 +159,15 @@ public class ModificarDeuda extends AppCompatActivity implements View.OnClickLis
                     data.put("Monto", helpMonto);
                     data.put("Fecha", myText);
 
-                    //if(connection.conceptoExist(helpConcepto1, "Gasto", "Concepto")){
-
-                    //    Toast.makeText(getApplicationContext(), "Concepto ya existe",
-                    //            Toast.LENGTH_LONG).show();
-
-                    //}else {
-
+                    connection.updateDataDeuda(conceptoAModificar, data);
 
                     Toast.makeText(getApplicationContext(), "Deuda Modificada",
                             Toast.LENGTH_LONG).show();
 
-                    //ir al Menu Ingreso
+                    //ir al Menu Deuda
                     startActivity(new Intent(ModificarDeuda.this, MenuDeuda.class));
                     finish();
-                    //}
+
                 }
             }
         });

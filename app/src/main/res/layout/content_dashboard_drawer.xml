@@ -19,8 +19,8 @@
         android:background="@drawable/layout_border"
         android:id="@+id/frameLayout"
         android:layout_below="@+id/textViewBienvenida"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:textColor="#000000"
         android:editable="true" />
 
@@ -146,7 +146,7 @@
         android:id="@+id/frameLayoutTarjeta"
         android:clickable="true"
         android:background="@drawable/layout_border"
-        android:layout_below="@+id/frameLayoutGasto"
+        android:layout_below="@+id/frameLayoutDeuda"
         android:layout_alignParentStart="true">
 
         <TextView
@@ -184,7 +184,7 @@
         android:background="@drawable/layout_border"
         android:layout_below="@+id/frameLayoutTarjeta"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="49dp">
+        android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -228,13 +228,40 @@
             android:layout_gravity="right|center_vertical" />
     </FrameLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test"
-        android:id="@+id/button"
-        android:layout_below="@+id/frameLayoutTarjeta"
-        android:layout_alignEnd="@+id/frameLayoutMeta"
-        android:layout_marginEnd="49dp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:id="@+id/frameLayoutDeuda"
+        android:clickable="true"
+        android:background="@drawable/layout_border"
+        android:layout_below="@+id/frameLayoutGasto"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="$ 0.00"
+            android:id="@+id/textViewDeudaMonto"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#843308"
+            android:textAlignment="textEnd" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Deuda"
+            android:id="@+id/textViewDeuda"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#843308"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:clickable="true" />
+    </FrameLayout>
 
 </RelativeLayout>

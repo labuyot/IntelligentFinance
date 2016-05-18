@@ -55,13 +55,9 @@ public class AgregarDeuda extends AppCompatActivity implements View.OnClickListe
 
         final EditText editTextConcepto = (EditText)findViewById(R.id.editTextConceptoDeuda);
         final EditText editTextMonto = (EditText)findViewById(R.id.editTextMontoDeuda);
-        final Spinner spinnerTarjeta = (Spinner)findViewById(R.id.spinnerTarjetaDeuda);
-        final CheckBox checkBoxTarjeta = (CheckBox) findViewById(R.id.checkboxTarjetaDeuda);
         final EditText editTextFecha = (EditText)findViewById(R.id.editTextFechaDeuda);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-
-        spinnerTarjeta.setVisibility(View.GONE);
 
         buttonCancelar = (Button)findViewById(R.id.buttonCancelarDeuda);
         buttonCancelar.setOnClickListener(this);
@@ -92,39 +88,6 @@ public class AgregarDeuda extends AppCompatActivity implements View.OnClickListe
                 mDatePicker.show();  }
         });
 
-
-        checkBoxTarjeta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if(connection.getCantidadDeFilas("Tarjeta") > 0){
-                        spinnerTarjeta.setVisibility(View.VISIBLE);
-
-                        List<Tarjeta> tarjetas = connection.getAllTarjetas();
-                        ArrayList<Integer> listaFourDigits = new ArrayList<>();
-
-                        //llena la lista con los 4digitos de las tarjetas
-                        for(int i = 0; i < tarjetas.size(); i++){
-                            Tarjeta tarjeta = tarjetas.get(i);
-                            listaFourDigits.add(tarjeta.getFourdigits());
-                        }
-
-                        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(AgregarDeuda.this, android.R.layout.simple_spinner_dropdown_item, listaFourDigits);
-
-                        spinnerTarjeta.setAdapter(adapter);
-
-                    }else{
-
-                        checkBoxTarjeta.setChecked(false);
-                        Toast.makeText(getApplicationContext(), "No ha registrado tarjetas",
-                                Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    spinnerTarjeta.setVisibility(View.GONE);
-                }
-            }
-        });
-
         buttonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +111,7 @@ public class AgregarDeuda extends AppCompatActivity implements View.OnClickListe
                 double helpBalance = 0;
                 double helpGastoEfectivo = 0;
 
-                String helpFecha = editTextFecha.getText().toString();
+                final String helpFecha = editTextFecha.getText().toString();
 
                 if (editTextConcepto.getText().toString().isEmpty() || editTextMonto.getText().toString().isEmpty() ||
                         editTextFecha.getText().toString().isEmpty()) {
@@ -191,101 +154,18 @@ public class AgregarDeuda extends AppCompatActivity implements View.OnClickListe
 
                         final ContentValues data=new ContentValues();
 
-                        if(checkBoxTarjeta.isChecked()){
 
-                            final int tarjeta = (int) spinnerTarjeta.getSelectedItem();
+                        helpIngreso = connection.getTotal("Monto","Ingreso");
+                        helpGastoEfectivo = connection.getTotalEfectivo("Monto","Gasto");
+                        helpBalance = helpIngreso - helpGastoEfectivo;
 
-                            helpTarjetaConsumo = connection.getTarjetaConsumo(tarjeta);
+                        connection.insertDeuda(helpConcepto1, helpMonto, helpFecha);
 
-                            helpTarjetaConsumoUpdate = helpTarjetaConsumo + helpMonto;
+                        Toast.makeText(getApplicationContext(), "Deuda Agregada",
+                                Toast.LENGTH_LONG).show();
 
-                            data.put("Consumo", helpTarjetaConsumoUpdate);
-
-                            balanceTarjeta = connection.getTarjetaMonto(tarjeta);
-                            helpBalanceTarjeta = balanceTarjeta - helpTarjetaConsumoUpdate;
-
-                            if(helpBalanceTarjeta <= 0){
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AgregarDeuda.this);
-                                builder.setMessage("Ha sobrepasado el límite de su tarjeta")
-                                        .setCancelable(false)
-                                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-
-                                                connection.insertTarjetaGasto(tarjeta, helpMonto, helpConcepto1);
-                                                connection.updateTarjetaConsumo(tarjeta, data);
-
-                                                Toast.makeText(getApplicationContext(), "Deuda Agregada",
-                                                        Toast.LENGTH_LONG).show();
-
-                                                startActivity(new Intent(AgregarDeuda.this, MenuDeuda.class));
-                                                finish();
-                                            }
-                                        })
-                                        .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-
-                                                connection.deleteDataDeuda("Deuda", helpConcepto1);
-
-                                                dialog.cancel();
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-
-                            }else {
-                                connection.insertTarjetaGasto(tarjeta, helpMonto, helpConcepto1);
-                                connection.updateTarjetaConsumo(tarjeta, data);
-
-                                Toast.makeText(getApplicationContext(), "Deuda Agregada",
-                                        Toast.LENGTH_LONG).show();
-
-                                //ir al Menu Ingreso
-                                startActivity(new Intent(AgregarDeuda.this, MenuDeuda.class));
-                                finish();
-                            }
-
-                        }else {
-
-                            helpIngreso = connection.getTotal("Monto","Ingreso");
-                            helpGastoEfectivo = connection.getTotalEfectivo("Monto","Gasto");
-                            helpBalance = helpIngreso - helpGastoEfectivo;
-
-                            if(helpBalance <= 0){
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AgregarDeuda.this);
-                                builder.setMessage("Su ha agotado su balance")
-                                        .setCancelable(false)
-                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-
-                                                Toast.makeText(getApplicationContext(), "Deuda Agregada",
-                                                        Toast.LENGTH_LONG).show();
-
-                                                startActivity(new Intent(AgregarDeuda.this, MenuDeuda.class));
-                                                finish();
-                                            }
-                                        })
-                                        .setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-
-                                                connection.deleteDataGasto("Deuda", helpConcepto1);
-
-                                                dialog.cancel();
-                                            }
-                                        });
-                                AlertDialog alert = builder.create();
-                                alert.show();
-                            }else {
-
-                                Toast.makeText(getApplicationContext(), "Deuda Agregada",
-                                        Toast.LENGTH_LONG).show();
-
-                                //ir al Menu Deuda
-                                startActivity(new Intent(AgregarDeuda.this, MenuDeuda.class));
-                                finish();
-                            }
-                        }
+                        startActivity(new Intent(AgregarDeuda.this, MenuDeuda.class));
+                        finish();
                     }
                 }
             }

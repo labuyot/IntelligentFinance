@@ -225,7 +225,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                             }//Si automatizar esta desactivado inserta ingreso
                             else{
 
-                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", false, myText, "");
+                                connection.insertGasto(helpConcepto1, helpMonto, "Tarjeta", false, myText, "No");
                             }
 
                             balanceTarjeta = connection.getTarjetaMonto(tarjeta);
@@ -281,7 +281,7 @@ public class AgregarGasto extends AppCompatActivity implements View.OnClickListe
                                 connection.insertGasto(helpConcepto1, helpMonto, "Efectivo", true, helpFecha, textRecurrencia);
                             }//Si automatizar esta desactivado inserta ingreso
                             else{
-                                connection.insertGasto(helpConcepto1, helpMonto, "Efectivo", false, helpFecha, "");
+                                connection.insertGasto(helpConcepto1, helpMonto, "Efectivo", false, helpFecha, "No");
                             }
 
                             helpIngreso = connection.getTotal("Monto","Ingreso");

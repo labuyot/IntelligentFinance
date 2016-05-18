@@ -36,6 +36,16 @@ public class TaskService extends IntentService {
 
     }
 
+
+    public void ingresoRecurrente(){
+
+        final DBConnection connection = new DBConnection(TaskService.this);
+
+        //Carga todos los ingresos de la base de datos
+        List<Ingreso> ingresos = connection.getAllIngresos();
+
+    }
+
     public void CorteVenciMethod() {
 
         final DBConnection connection = new DBConnection(TaskService.this);

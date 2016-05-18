@@ -36,6 +36,8 @@ public class DashboardDrawer extends AppCompatActivity
     private TextView textViewBalance;
     private TextView textViewIngresos;
     private TextView textViewGastos;
+    private TextView textViewDeudas;
+    private TextView textViewDeudasMonto;
     private TextView textViewTarjetas;
     private TextView textViewMetas;
     private TextView textViewMetasAhorrado;
@@ -54,12 +56,15 @@ public class DashboardDrawer extends AppCompatActivity
         textViewBalance = (TextView) findViewById(R.id.textViewBalanceDashboard);
         textViewIngresos = (TextView) findViewById(R.id.textViewIngresoDashboard);
         textViewGastos = (TextView) findViewById(R.id.textViewGastoDashboard);
+        textViewDeudas = (TextView) findViewById(R.id.textViewDeuda);
+        textViewDeudasMonto = (TextView) findViewById(R.id.textViewDeudaMonto);
         textViewTarjetas = (TextView) findViewById(R.id.textViewTarjetDashboard);
         textViewMetas = (TextView) findViewById(R.id.textViewMetaDashboard);
         textViewMetasAhorrado = (TextView) findViewById(R.id.textViewAhorroMonto);
         textViewMetasText = (TextView) findViewById(R.id.textViewAhorro);
         final FrameLayout frameIngreso = (FrameLayout) findViewById(R.id.frameLayoutIngreso);
         final FrameLayout frameGasto = (FrameLayout) findViewById(R.id.frameLayoutGasto);
+        final FrameLayout frameDeuda = (FrameLayout) findViewById(R.id.frameLayoutDeuda);
         final FrameLayout frameTarjeta = (FrameLayout) findViewById(R.id.frameLayoutTarjeta);
         final FrameLayout frameMeta = (FrameLayout) findViewById(R.id.frameLayoutMeta);
         final FrameLayout frameMetaAhorro = (FrameLayout) findViewById(R.id.frameLayoutAhorrado);
@@ -67,21 +72,6 @@ public class DashboardDrawer extends AppCompatActivity
         textViewIngresoFijoDashboard = (TextView) findViewById(R.id.textViewIngresoFijoDashboard);
         textViewGastoFijoDashboard = (TextView) findViewById(R.id.textViewGastoFijoDashboard);
         textViewTarjetaFijoDashboard = (TextView) findViewById(R.id.textViewTarjetaFijoDashboard);
-
-
-        Button button = (Button)findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                CorteVenciMethod();
-                MetaMethod();
-
-                startActivity(new Intent(DashboardDrawer.this, DashboardDrawer.class));
-
-            }
-        });
 
 
         /*
@@ -107,6 +97,7 @@ public class DashboardDrawer extends AppCompatActivity
         double helpIngreso = 0;
         double helpBalance = 0;
         double helpGasto = 0;
+        double helpDeuda = 0;
         double helpGastoEfectivo = 0;
         double helpTarjeta = 0;
         double gastoTarjeta = 0;
@@ -138,6 +129,7 @@ public class DashboardDrawer extends AppCompatActivity
 
         helpIngreso = connection.getTotal("Monto","Ingreso");
         helpGasto = connection.getTotal("Monto", "Gasto");
+        helpDeuda = connection.getTotal("Monto", "Deuda");
         helpTarjeta = connection.getTotal("Monto", "Tarjeta");
         helpGastoEfectivo = connection.getTotalEfectivo("Monto","Gasto");
         helpBalance = helpIngreso - helpGastoEfectivo;
@@ -152,6 +144,7 @@ public class DashboardDrawer extends AppCompatActivity
         textViewBalance.setText("$ " + helpBalance);
         textViewIngresos.setText("$ " + helpIngreso);
         textViewGastos.setText("$ " + helpGasto);
+        textViewDeudasMonto.setText("$ " + helpDeuda);
         textViewTarjetas.setText("$ " + (helpTarjeta - gastoTarjeta));
         textViewMetasAhorrado.setText("$ " + helpAhorro + " / " + helpTotalAhorro);
 
@@ -167,6 +160,13 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
+            }
+        });
+
+        frameDeuda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuDeuda.class));
             }
         });
 
@@ -202,6 +202,20 @@ public class DashboardDrawer extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
+            }
+        });
+
+        textViewDeudas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuDeuda.class));
+            }
+        });
+
+        textViewDeudasMonto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardDrawer.this, MenuDeuda.class));
             }
         });
 
@@ -585,6 +599,9 @@ public class DashboardDrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_gastos) {
             startActivity(new Intent(DashboardDrawer.this, MenuGasto.class));
+
+        } else if (id == R.id.nav_deudas) {
+            startActivity(new Intent(DashboardDrawer.this, MenuDeuda.class));
 
         } else if (id == R.id.nav_tarjetas) {
             startActivity(new Intent(DashboardDrawer.this, MenuTarjetas.class));

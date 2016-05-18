@@ -99,7 +99,6 @@ public class DBConnection extends SQLiteOpenHelper {
     };
 
     public static final String[] ALL_COLUMNS_DEUDA = new String[] {
-            DEUDA_TABLE_NAME,
             DEUDA_COLUMN_ID,
             DEUDA_COLUMN_CONCEPTO,
             DEUDA_COLUMN_MONTO,
@@ -294,16 +293,15 @@ public class DBConnection extends SQLiteOpenHelper {
         db.insert(GASTO_TABLE_NAME, null, values);
     }
 
-    public void insertDeuda(String concepto, double monto, double status, String tipo, String fecha) {
+    public void insertDeuda(String concepto, double monto, String fecha) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(DEUDA_COLUMN_CONCEPTO, concepto);
         values.put(DEUDA_COLUMN_MONTO, monto);
-        values.put(DEUDA_COLUMN_STATUS, status);
-        values.put(DEUDA_COLUMN_TIPO, tipo);
         values.put(DEUDA_COLUMN_FECHA, fecha);
+        values.put(DEUDA_COLUMN_STATUS, 0);
 
         db.insert(DEUDA_TABLE_NAME, null, values);
     }

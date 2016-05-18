@@ -94,7 +94,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Automatizar"
+        android:text="Recurrencia"
         android:id="@+id/checkBoxIngreso"
         android:textColor="#000000"
         android:textSize="25dp"
@@ -131,5 +131,17 @@
         android:layout_marginLeft="50dp"
         android:layout_alignTop="@+id/buttonCancelarIngreso"
         android:layout_toEndOf="@+id/buttonCancelarIngreso" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_below="@+id/editTextMontoIngreso"
+        android:layout_toEndOf="@+id/checkBoxIngreso"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:entries="@array/recurrencia"
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_alignBottom="@+id/checkBoxIngreso" />
 
 </RelativeLayout>
