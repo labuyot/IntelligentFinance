@@ -594,7 +594,10 @@ public class DashboardDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_ingresos) {
+        if (id == R.id.nav_dashboard) {
+            startActivity(new Intent(DashboardDrawer.this, DashboardDrawer.class));
+
+        } else if (id == R.id.nav_ingresos) {
             startActivity(new Intent(DashboardDrawer.this, MenuIngreso.class));
 
         } else if (id == R.id.nav_gastos) {

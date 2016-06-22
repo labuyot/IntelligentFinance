@@ -526,13 +526,13 @@ public class DBConnection extends SQLiteOpenHelper {
 
     public double getTotal(String columnName, String tableName) {
 
-        double total =0;
+        double total = 0;
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
                 "SELECT SUM(" + columnName +  ") FROM " + tableName, null);
         if(cursor.moveToFirst()) {
-            total = cursor.getInt(0);
+            total = cursor.getDouble(0);
         }
 
         return total;
@@ -546,7 +546,7 @@ public class DBConnection extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(
                 "SELECT Monto FROM Tarjeta WHERE Cuatrodigitos=" + cuatroDigitos, null);
         if(cursor.moveToFirst()) {
-            total = cursor.getInt(0);
+            total = cursor.getDouble(0);
         }
 
         return total;
@@ -560,7 +560,7 @@ public class DBConnection extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(
                 "SELECT Consumo FROM Tarjeta WHERE Cuatrodigitos=" + cuatroDigitos, null);
         if(cursor.moveToFirst()) {
-            total = cursor.getInt(0);
+            total = cursor.getDouble(0);
         }
 
         return total;
@@ -574,7 +574,7 @@ public class DBConnection extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(
                 "SELECT SUM(" + columnName +  ") FROM " + tableName + " WHERE Tipo = 'Efectivo'", null);
         if(cursor.moveToFirst()) {
-            total = cursor.getInt(0);
+            total = cursor.getDouble(0);
         }
 
         return total;

@@ -11,10 +11,10 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_dashboard_drawer">Dashboard</string>
-    <string name="title_activity_menu_ingreso">Menu Ingreso</string>
-    <string name="title_activity_menu_gasto">Menu Gasto</string>
-    <string name="title_activity_menu_metas">Menu Metas</string>
-    <string name="title_activity_menu_tarjetas">Menu Tarjetas</string>
+    <string name="title_activity_menu_ingreso">Menú Ingreso</string>
+    <string name="title_activity_menu_gasto">Menú Gasto</string>
+    <string name="title_activity_menu_metas">Menú Metas</string>
+    <string name="title_activity_menu_tarjetas">Menú Tarjetas</string>
     <string name="title_activity_agregar_ingreso">Ingresos</string>
     <string name="title_activity_agregar_gasto">Gastos</string>
     <string name="title_activity_agregar_meta">Metas</string>
@@ -45,7 +45,7 @@
         <item>Actualizar</item>
     </string-array>
 
-    <string name="title_activity_agregar_deuda">AgregarDeuda</string>
-    <string name="title_activity_menu_deuda">MenuDeuda</string>
-    <string name="title_activity_modificar_deuda">ModificarDeuda</string>
+    <string name="title_activity_agregar_deuda">Agregar Deuda</string>
+    <string name="title_activity_menu_deuda">Menú Deuda</string>
+    <string name="title_activity_modificar_deuda">Modificar Deuda</string>
 </resources>
